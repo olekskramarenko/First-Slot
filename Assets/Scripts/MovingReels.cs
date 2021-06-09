@@ -6,21 +6,29 @@ using UnityEngine.UI;
 
 public class MovingReels : MonoBehaviour
 {
-    [SerializeField] private Ease ease;
+    [SerializeField] private Ease easeStart, easeWay, easeStop;
     [SerializeField] private RectTransform[] allReels;
-    [Range(0,10)][SerializeField] private float animationTime;
-    // Start is called before the first frame update
+    [SerializeField] private float delay;
+    [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
+    [Range(0, 20)] [SerializeField] private float distanceStart, distanceWay, distanceStop;
+
     public void MovingStart()
     {
         foreach (RectTransform reel in allReels)
         {
-            Tweener tweener = reel.DOAnchorPosY(-3200, animationTime).SetEase(ease);       
+            Tweener tweener = reel.DOAnchorPosY(-(distanceStart * 800), timeStart).SetDelay(delay).SetEase(easeStart).OnComplete(() => MovingWay(reel));
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    public void MovingWay(RectTransform reel)
     {
-      
+        DOTween.Kill(reel);
+        reel.DOAnchorPosY(-((distanceWay + distanceStart) * 800), timeWay).SetEase(easeWay).OnComplete(() => MovingStop(reel));
     }
+    public void MovingStop(RectTransform reel)
+    {
+        DOTween.Kill(reel);
+        reel.DOAnchorPosY(-((distanceStop + distanceWay + distanceStart) * 800), timeStop).SetEase(easeStop);
+       
+    }
+
 }

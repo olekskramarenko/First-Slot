@@ -6,13 +6,7 @@ using UnityEngine.UI;
 public class MovingSymbols : MonoBehaviour
 {
     [SerializeField] private Sprite[] allSymbolImages;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         foreach (Transform child in transform)
