@@ -710,7 +710,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1194259404}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2067729591}
+        m_TargetAssemblyTypeName: MovingReels, Assembly-CSharp
+        m_MethodName: MovingStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1194259404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1305,12 +1317,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20e3d8e88f6a0a41a7d5db8459073d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ease: 0
+  easeStart: 8
+  easeWay: 1
+  easeStop: 9
   allReels:
   - {fileID: 646886784}
   - {fileID: 1975011743}
   - {fileID: 1158911256}
-  animationTime: 0
+  delay: 1
+  timeStart: 2
+  timeWay: 4
+  timeStop: 4
+  distanceStart: 2
+  distanceWay: 12
+  distanceStop: 4
 --- !u!114 &2067729592
 MonoBehaviour:
   m_ObjectHideFlags: 0
