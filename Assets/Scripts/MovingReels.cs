@@ -23,28 +23,33 @@ public class MovingReels : MonoBehaviour
         stopButton.SetActive(true);
         foreach (RectTransform reel in allReels)
         {
-            Tweener tweener = reel.DOAnchorPosY(-(distanceStart * 800), timeStart).SetDelay(delay).SetEase(easeStart).OnComplete(() => MovingWay(reel));
+            Tweener tweener = reel.DOAnchorPosY(-(distanceStart * 800), timeStart)
+                .SetDelay(delay)
+                .SetEase(easeStart)
+                .OnComplete(() => MovingWay(reel));
         }
     }
     public void MovingWay(RectTransform reel)
     {
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-((distanceWay + distanceStart) * 800), timeWay).SetEase(easeWay).OnComplete(() => MovingStop(reel));
+        reel.DOAnchorPosY(-((distanceWay + distanceStart) * 800), timeWay)
+            .SetEase(easeWay)
+            .OnComplete(() => MovingSlowDown(reel));
     }
-    public void MovingStop(RectTransform reel)
+    public void MovingSlowDown (RectTransform reel)
     {
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-((distanceStop + distanceWay + distanceStart) * 800), timeStop).SetEase(easeStop);
+        reel.DOAnchorPosY(-((distanceStop + distanceWay + distanceStart) * 800), timeStop)
+            .SetEase(easeStop);
     }
-    public void MovingPause()
+    public void MovingStop()
     {
-
         playButton.SetActive(true);
         stopButton.SetActive(false);
         foreach (RectTransform reel in allReels)
         {
             DOTween.Kill(reel);
-            MovingStop(reel); 
+            MovingSlowDown(reel); 
         }
     }
 

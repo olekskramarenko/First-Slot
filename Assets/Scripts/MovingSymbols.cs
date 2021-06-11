@@ -14,7 +14,7 @@ public class MovingSymbols : MonoBehaviour
             if (child.position.y <= 223)
             {
                 child.position += Vector3.up * 800.0f;
-                child.GetComponent<Image>().sprite = allSymbolImages[Random.Range(0, 7)];
+                child.GetComponent<Image>().sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
             };
         }
 

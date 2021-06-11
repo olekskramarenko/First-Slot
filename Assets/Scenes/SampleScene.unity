@@ -906,7 +906,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2067729591}
         m_TargetAssemblyTypeName: MovingReels, Assembly-CSharp
-        m_MethodName: MovingPause
+        m_MethodName: MovingStop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1359,6 +1359,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3300633645756760966, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300633645756760966, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
@@ -1389,6 +1393,10 @@ PrefabInstance:
     - target: {fileID: 7955223671574503747, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: m_Name
       value: Reel2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195307843812299282, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
