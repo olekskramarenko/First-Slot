@@ -11,9 +11,16 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private float delay;
     [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
     [Range(0, 20)] [SerializeField] private float distanceStart, distanceWay, distanceStop;
+    [SerializeField] private GameObject playButton, stopButton;
 
+    private void Start()
+    {
+        stopButton.SetActive(false);
+    }
     public void MovingStart()
     {
+        playButton.SetActive(false);
+        stopButton.SetActive(true);
         foreach (RectTransform reel in allReels)
         {
             Tweener tweener = reel.DOAnchorPosY(-(distanceStart * 800), timeStart).SetDelay(delay).SetEase(easeStart).OnComplete(() => MovingWay(reel));
@@ -28,7 +35,17 @@ public class MovingReels : MonoBehaviour
     {
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-((distanceStop + distanceWay + distanceStart) * 800), timeStop).SetEase(easeStop);
-       
+    }
+    public void MovingPause()
+    {
+
+        playButton.SetActive(true);
+        stopButton.SetActive(false);
+        foreach (RectTransform reel in allReels)
+        {
+            DOTween.Kill(reel);
+            MovingStop(reel); 
+        }
     }
 
 }
