@@ -13,7 +13,9 @@ public class MovingSymbols : MonoBehaviour
         {
             if (child.position.y <= 223)
             {
-                child.position += Vector3.up * 800.0f;
+                //var symbol = child.gameObject.GetComponent<RectTransform>();
+                //print(symbol.rect.height);
+                child.position = new Vector3(child.position.x, child.position.y + 800, child.position.z);
                 child.GetComponent<Image>().sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
             };
         }

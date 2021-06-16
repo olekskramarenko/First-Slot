@@ -21,10 +21,11 @@ public class MovingReels : MonoBehaviour
     {
         playButton.SetActive(false);
         stopButton.SetActive(true);
-        foreach (RectTransform reel in allReels)
+        for (int i = 0; i < allReels.Length; i++)
         {
+            var reel = allReels[i];
             Tweener tweener = reel.DOAnchorPosY(-(distanceStart * 800), timeStart)
-                .SetDelay(delay)
+                .SetDelay(i * delay)
                 .SetEase(easeStart)
                 .OnComplete(() => MovingWay(reel));
         }
@@ -36,7 +37,7 @@ public class MovingReels : MonoBehaviour
             .SetEase(easeWay)
             .OnComplete(() => MovingSlowDown(reel));
     }
-    public void MovingSlowDown (RectTransform reel)
+    public void MovingSlowDown(RectTransform reel)
     {
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-((distanceStop + distanceWay + distanceStart) * 800), timeStop)
@@ -49,7 +50,7 @@ public class MovingReels : MonoBehaviour
         foreach (RectTransform reel in allReels)
         {
             DOTween.Kill(reel);
-            MovingSlowDown(reel); 
+            MovingSlowDown(reel);
         }
     }
 
