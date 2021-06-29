@@ -12,6 +12,7 @@ public class MovingReels : MonoBehaviour
     [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
     [Range(0, 20)] [SerializeField] private float distanceStart, distanceWay, distanceStop;
     [SerializeField] private GameObject playButton, stopButton;
+    private bool slowDownIsActive;
 
     private void Start()
     {
@@ -19,6 +20,7 @@ public class MovingReels : MonoBehaviour
     }
     public void MovingStart()
     {
+        slowDownIsActive = false;
         playButton.SetActive(false);
         stopButton.SetActive(true);
         for (int i = 0; i < allReels.Length; i++)
@@ -39,9 +41,11 @@ public class MovingReels : MonoBehaviour
     }
     public void MovingSlowDown(RectTransform reel)
     {
+        slowDownIsActive = true;
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-((distanceStop + distanceWay + distanceStart) * 800), timeStop)
             .SetEase(easeStop);
+
     }
     public void MovingStop()
     {
@@ -54,4 +58,11 @@ public class MovingReels : MonoBehaviour
         }
     }
 
+    public bool SlowDownIsActive
+    {
+        get
+        {
+            return slowDownIsActive;
+        }
+    }
 }

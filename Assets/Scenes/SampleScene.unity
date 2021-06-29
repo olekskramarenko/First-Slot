@@ -214,6 +214,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: AllReels
+      value: 
+      objectReference: {fileID: 2067729589}
     - target: {fileID: 3300633645756760966, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -332,11 +336,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144140109}
   m_CullTransparentMesh: 1
---- !u!1 &422324743 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7430266471285919479, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
-  m_PrefabInstance: {fileID: 1781685460}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +515,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: AllReels
+      value: 
+      objectReference: {fileID: 2067729589}
     - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -619,11 +622,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752443417}
   m_CullTransparentMesh: 1
---- !u!1 &924180648 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6925908975166308082, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
-  m_PrefabInstance: {fileID: 1781685460}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1080475480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,6 +1356,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: AllReels
+      value: 
+      objectReference: {fileID: 2067729589}
     - target: {fileID: 3300633645756760966, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1373,15 +1375,15 @@ PrefabInstance:
     - target: {fileID: 5276166078617828075, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: symbol0
       value: 
-      objectReference: {fileID: 924180648}
+      objectReference: {fileID: 0}
     - target: {fileID: 5276166078617828075, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: symbol3
       value: 
-      objectReference: {fileID: 422324743}
+      objectReference: {fileID: 0}
     - target: {fileID: 5276166078617828075, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: zeroReel
       value: 
-      objectReference: {fileID: 924180648}
+      objectReference: {fileID: 0}
     - target: {fileID: 5276166078617828075, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1583,7 +1585,7 @@ MonoBehaviour:
   timeStop: 4
   distanceStart: 2
   distanceWay: 12
-  distanceStop: 4
+  distanceStop: 1
   playButton: {fileID: 1194259401}
   stopButton: {fileID: 1207686633}
 --- !u!114 &2067729592
