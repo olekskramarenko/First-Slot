@@ -7,6 +7,9 @@ public class MovingSymbols : MonoBehaviour
 {
     [SerializeField] private Sprite[] allSymbolImages;
     [SerializeField] private GameObject AllReels;
+    [SerializeField] private float symbolHeight;
+    [SerializeField] private int symbolsCount;
+    private readonly int exitPosition = 223;
 
 
 
@@ -18,6 +21,7 @@ public class MovingSymbols : MonoBehaviour
         finalScreens[2] = new int[9] { 3, 3, 3, 3, 3, 3, 3, 3, 3 };
         finalScreens[3] = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         finalScreens[4] = new int[9] { 4, 4, 4, 4, 4, 4, 4, 4, 4 };
+
     }
      
     void Update()
@@ -26,33 +30,24 @@ public class MovingSymbols : MonoBehaviour
         {
             foreach (Transform child in transform)
             {
-                if (child.position.y <= 223)
+                if (child.position.y <= exitPosition)
                 {
-                    child.position += Vector3.up * 800.0f;
+                    child.position += Vector3.up * symbolHeight * symbolsCount;
                     child.GetComponent<Image>().sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
                 };
             }
         }
         if (AllReels.GetComponent<MovingReels>().SlowDownIsActive)
         {
-            //foreach (Transform child in transform)
-            //{
-            //if (child.position.y <= 223)
-            //{
-            //    child.position += Vector3.up * 800.0f;
-            //    child.GetComponent<Image>().sprite = allSymbolImages[1];
-            //};
-            //}
-            for (int i = 1; i < transform.childCount; i++)
+            for (int i = 0; i < transform.childCount; i++)
             {
-                if (transform.GetChild(i).position.y <= 223)
+                var child = transform.GetChild(i);
+                if (child.position.y <= exitPosition)
                 {
-                    transform.GetChild(i).position += Vector3.up * 800.0f;
-                    transform.GetChild(i).GetComponent<Image>().sprite = allSymbolImages[1];
+                    child.position += Vector3.up * symbolHeight * symbolsCount;
+                    child.GetComponent<Image>().sprite = allSymbolImages[1];
                 };
             }
-
         }
-
     }
 }

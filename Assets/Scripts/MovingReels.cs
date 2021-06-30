@@ -12,21 +12,28 @@ public class MovingReels : MonoBehaviour
     [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
     [Range(0, 20)] [SerializeField] private float distanceStart, distanceWay, distanceStop;
     [SerializeField] private GameObject playButton, stopButton;
+    [SerializeField] private float symbolHeight;
+    [SerializeField] private int symbolsCount;
     private bool slowDownIsActive;
+    private float fullDistance;
+    private float oneSpinDistance;
+
 
     private void Start()
     {
         stopButton.SetActive(false);
+        oneSpinDistance = (distanceStop + distanceWay + distanceStart) * symbolHeight * symbolsCount;
     }
     public void MovingStart()
     {
+        print($"first-full={fullDistance}, one={oneSpinDistance}");
         slowDownIsActive = false;
         playButton.SetActive(false);
         stopButton.SetActive(true);
         for (int i = 0; i < allReels.Length; i++)
         {
             var reel = allReels[i];
-            Tweener tweener = reel.DOAnchorPosY(-(distanceStart * 800), timeStart)
+            Tweener tweener = reel.DOAnchorPosY(-(fullDistance+(distanceStart * symbolHeight * symbolsCount)), timeStart)
                 .SetDelay(i * delay)
                 .SetEase(easeStart)
                 .OnComplete(() => MovingWay(reel));
@@ -35,7 +42,7 @@ public class MovingReels : MonoBehaviour
     public void MovingWay(RectTransform reel)
     {
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-((distanceWay + distanceStart) * 800), timeWay)
+        reel.DOAnchorPosY(-(fullDistance+((distanceWay + distanceStart) * symbolHeight * symbolsCount)), timeWay)
             .SetEase(easeWay)
             .OnComplete(() => MovingSlowDown(reel));
     }
@@ -43,9 +50,19 @@ public class MovingReels : MonoBehaviour
     {
         slowDownIsActive = true;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-((distanceStop + distanceWay + distanceStart) * 800), timeStop)
-            .SetEase(easeStop);
+        reel.DOAnchorPosY(-(fullDistance+((distanceStop + distanceWay + distanceStart) * symbolHeight * symbolsCount)), timeStop)
+            .SetEase(easeStop)
+            .OnComplete(() => SetSymbolDefaultPosition(reel));
 
+    }
+    public void SetSymbolDefaultPosition(RectTransform reel)
+    {
+        fullDistance += oneSpinDistance/allReels.Length;
+        if (!playButton.activeSelf)
+        {
+            playButton.SetActive(true);
+            stopButton.SetActive(false);
+        }
     }
     public void MovingStop()
     {

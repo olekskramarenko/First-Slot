@@ -326,6 +326,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 218e710dfdc13d14c8f27805682c1df9, type: 3}
   - {fileID: 21300000, guid: f03becc3df6a9a24ab418bb56b45ae29, type: 3}
   - {fileID: 21300000, guid: 3d992524bb8f0494a9a5bdbf053fd91e, type: 3}
+  AllReels: {fileID: 0}
+  symbolHeight: 200
+  symbolsCount: 4
 --- !u!1 &6873028963509626478
 GameObject:
   m_ObjectHideFlags: 0
