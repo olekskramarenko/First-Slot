@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee04d616e35aa8946b25a11957c834a9, type: 3}
   m_Name: Symbol_2_3
   m_EditorClassIdentifier: 
-  symbolId: 23
+  symbolId: 7
   symbolImage: {fileID: 21300000, guid: b8a379625aa830e4592c7932afca7334, type: 3}

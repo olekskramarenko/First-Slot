@@ -8,6 +8,7 @@ public class MovingReels : MonoBehaviour
 {
     [SerializeField] private Ease easeStart, easeWay, easeStop;
     [SerializeField] private RectTransform[] allReels;
+    [SerializeField] private FinalResult FinalResult;
     [SerializeField] private float delay;
     [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
     [Range(0, 20)] [SerializeField] private float distanceStart, distanceWay, distanceStop;
@@ -26,36 +27,36 @@ public class MovingReels : MonoBehaviour
     }
     public void MovingStart()
     {
-        print($"first-full={fullDistance}, one={oneSpinDistance}");
         slowDownIsActive = false;
         playButton.SetActive(false);
         stopButton.SetActive(true);
         for (int i = 0; i < allReels.Length; i++)
         {
             var reel = allReels[i];
+            var index = i;
             Tweener tweener = reel.DOAnchorPosY(-(fullDistance+(distanceStart * symbolHeight * symbolsCount)), timeStart)
                 .SetDelay(i * delay)
                 .SetEase(easeStart)
-                .OnComplete(() => MovingWay(reel));
+                .OnComplete(() => MovingWay(reel, index));
         }
     }
-    public void MovingWay(RectTransform reel)
+    public void MovingWay(RectTransform reel, int index)
     {
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(fullDistance+((distanceWay + distanceStart) * symbolHeight * symbolsCount)), timeWay)
             .SetEase(easeWay)
-            .OnComplete(() => MovingSlowDown(reel));
+            .OnComplete(() => MovingSlowDown(reel, index));
     }
-    public void MovingSlowDown(RectTransform reel)
+    public void MovingSlowDown(RectTransform reel, int index)
     {
         slowDownIsActive = true;
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(fullDistance+((distanceStop + distanceWay + distanceStart) * symbolHeight * symbolsCount)), timeStop)
             .SetEase(easeStop)
-            .OnComplete(() => SetSymbolDefaultPosition(reel));
+            .OnComplete(() => SetSymbolDefaultPosition(reel, index));
 
     }
-    public void SetSymbolDefaultPosition(RectTransform reel)
+    public void SetSymbolDefaultPosition(RectTransform reel, int index)
     {
         fullDistance += oneSpinDistance/allReels.Length;
         if (!playButton.activeSelf)
@@ -63,17 +64,22 @@ public class MovingReels : MonoBehaviour
             playButton.SetActive(true);
             stopButton.SetActive(false);
         }
-    }
-    public void MovingStop()
-    {
-        playButton.SetActive(true);
-        stopButton.SetActive(false);
-        foreach (RectTransform reel in allReels)
+        if (index == allReels.Length-1)
         {
-            DOTween.Kill(reel);
-            MovingSlowDown(reel);
+            FinalResult.SetNextFinalScreen();
         }
     }
+
+    //public void MovingStop()
+    //{
+    //    playButton.SetActive(true);
+    //    stopButton.SetActive(false);
+    //    foreach (RectTransform reel in allReels)
+    //    {
+    //        DOTween.Kill(reel);
+    //        MovingSlowDown(reel);
+    //    }
+    //}
 
     public bool SlowDownIsActive
     {
@@ -82,4 +88,6 @@ public class MovingReels : MonoBehaviour
             return slowDownIsActive;
         }
     }
+
+
 }
