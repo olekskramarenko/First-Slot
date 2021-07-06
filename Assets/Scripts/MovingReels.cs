@@ -17,24 +17,27 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private int symbolsCount;
     private bool slowDownIsActive;
     private float fullDistance;
-    private float oneSpinDistance;
-
+    private float lastSpinDistance;
+    private float startReelPosition, finalReelPosition;
+    private float[] distBeforeStopPressed;
 
     private void Start()
     {
         stopButton.SetActive(false);
-        oneSpinDistance = (distanceStop + distanceWay + distanceStart) * symbolHeight * symbolsCount;
+        distBeforeStopPressed = new float[allReels.Length];
     }
-    public void MovingStart()
+public void MovingStart()
     {
         slowDownIsActive = false;
         playButton.SetActive(false);
         stopButton.SetActive(true);
+        startReelPosition = allReels[0].position.y;
+        print("##### startRellPos=" + startReelPosition);
         for (int i = 0; i < allReels.Length; i++)
         {
             var reel = allReels[i];
-            var index = i;
-            Tweener tweener = reel.DOAnchorPosY(-(fullDistance+(distanceStart * symbolHeight * symbolsCount)), timeStart)
+            var index = i; // ƒл€ определени€ последнего оборота рилов, перед SetNextFinalScreen() Tweener tweener = 
+            reel.DOAnchorPosY(-(fullDistance+(distanceStart * symbolHeight * symbolsCount)), timeStart)
                 .SetDelay(i * delay)
                 .SetEase(easeStart)
                 .OnComplete(() => MovingWay(reel, index));
@@ -42,23 +45,25 @@ public class MovingReels : MonoBehaviour
     }
     public void MovingWay(RectTransform reel, int index)
     {
+        print("##### MovingWay");
+        float previousDistance = (distanceWay + distanceStart) * symbolHeight * symbolsCount;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-(fullDistance+((distanceWay + distanceStart) * symbolHeight * symbolsCount)), timeWay)
+        reel.DOAnchorPosY(-(fullDistance + previousDistance), timeWay)
             .SetEase(easeWay)
-            .OnComplete(() => MovingSlowDown(reel, index));
+            .OnComplete(() => MovingSlowDown(reel, index, previousDistance));
     }
-    public void MovingSlowDown(RectTransform reel, int index)
+    public void MovingSlowDown(RectTransform reel, int index, float previousDistance)
     {
+        print("### MovingSlowDown");
         slowDownIsActive = true;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-(fullDistance+((distanceStop + distanceWay + distanceStart) * symbolHeight * symbolsCount)), timeStop)
+        reel.DOAnchorPosY(-(fullDistance + previousDistance + (distanceStop  * symbolHeight * symbolsCount)), timeStop)
             .SetEase(easeStop)
             .OnComplete(() => SetSymbolDefaultPosition(reel, index));
-
     }
     public void SetSymbolDefaultPosition(RectTransform reel, int index)
     {
-        fullDistance += oneSpinDistance/allReels.Length;
+        print("### SetSymbolDefaultPosition");
         if (!playButton.activeSelf)
         {
             playButton.SetActive(true);
@@ -67,19 +72,31 @@ public class MovingReels : MonoBehaviour
         if (index == allReels.Length-1)
         {
             FinalResult.SetNextFinalScreen();
+            finalReelPosition = reel.position.y;
+            lastSpinDistance = -(finalReelPosition - startReelPosition);
+            fullDistance += lastSpinDistance;
+            print("##### finalRellPos=" + finalReelPosition);
+            print("##### lastSpinDistance=" + lastSpinDistance);
+            print("##### fullDistance=" + fullDistance);
         }
     }
 
-    //public void MovingStop()
-    //{
-    //    playButton.SetActive(true);
-    //    stopButton.SetActive(false);
-    //    foreach (RectTransform reel in allReels)
-    //    {
-    //        DOTween.Kill(reel);
-    //        MovingSlowDown(reel);
-    //    }
-    //}
+    public void MovingStop()
+    {
+        stopButton.SetActive(false);
+        for (int i = 0; i < allReels.Length; i++)
+        {
+            var reel = allReels[i];
+            var index = i;
+            DOTween.Kill(reel);
+            distBeforeStopPressed[i] = -(reel.position.y - startReelPosition);
+            print("### distBeforeStopPressed[i]=" + distBeforeStopPressed[i]);
+            print("### MovingStop() alldist=" + (-(fullDistance + distBeforeStopPressed[i] + 400)));
+            reel.DOAnchorPosY(-(fullDistance + distBeforeStopPressed[i] + 400), timeWay)
+            .SetEase(easeWay)
+            .OnComplete(() => MovingSlowDown(reel, index, distBeforeStopPressed[i]));
+        } 
+    }
 
     public bool SlowDownIsActive
     {
