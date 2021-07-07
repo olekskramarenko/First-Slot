@@ -8,13 +8,16 @@ public class SymbolData : ScriptableObject
 {
     [SerializeField] private int symbolId;
     [SerializeField] private Sprite symbolImage;
+    [SerializeField] private int reelId;
 
-    public int SymbolId
-    {
-        get
-        {
-            return symbolId;
-        }
-    }
+    //public int SymbolId
+    //{
+    //    get
+    //    {
+    //        return SymbolId1;
+    //    }
+    //}
 
+    public int ReelId { get => reelId;}
+    public int SymbolId { get => symbolId;}
 }

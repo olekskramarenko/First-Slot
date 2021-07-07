@@ -17,7 +17,7 @@ public class FinalResult : MonoBehaviour
 
     public int GetFinalImageId(int symbolId)
     {
-        int finalImageId = finalScreens[currentFinalScreen][symbolId];
+        int finalImageId = finalScreens[currentFinalScreen][symbolId-1];
         return finalImageId;
     }
 

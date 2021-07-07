@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   symbolId: 7
   symbolImage: {fileID: 21300000, guid: b8a379625aa830e4592c7932afca7334, type: 3}
+  reelId: 1

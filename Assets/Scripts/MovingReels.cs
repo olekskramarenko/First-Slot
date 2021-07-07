@@ -15,29 +15,27 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private GameObject playButton, stopButton;
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount;
-    private bool slowDownIsActive;
-    private float fullDistance;
-    private float lastSpinDistance;
-    private float startReelPosition, finalReelPosition;
-    private float[] distBeforeStopPressed;
+    private bool[] slowDownIsActive;
+    private float[] startReelPosition, fullReelDistance;
 
     private void Start()
     {
         stopButton.SetActive(false);
-        distBeforeStopPressed = new float[allReels.Length];
+        //distBeforeStopPressed = new float[allReels.Length];
+        startReelPosition = new float[allReels.Length];
+        fullReelDistance = new float[allReels.Length];
+        slowDownIsActive = new bool[allReels.Length];
     }
 public void MovingStart()
     {
-        slowDownIsActive = false;
         playButton.SetActive(false);
-        stopButton.SetActive(true);
-        startReelPosition = allReels[0].position.y;
-        print("##### startRellPos=" + startReelPosition);
         for (int i = 0; i < allReels.Length; i++)
         {
             var reel = allReels[i];
-            var index = i; // Для определения последнего оборота рилов, перед SetNextFinalScreen() Tweener tweener = 
-            reel.DOAnchorPosY(-(fullDistance+(distanceStart * symbolHeight * symbolsCount)), timeStart)
+            var index = i; // Для корректной работы счетчика циклов вне цикла
+            slowDownIsActive[index] = false;
+            startReelPosition[index] = reel.position.y;
+            reel.DOAnchorPosY(-(fullReelDistance[index]+(distanceStart * symbolHeight * symbolsCount)), timeStart)
                 .SetDelay(i * delay)
                 .SetEase(easeStart)
                 .OnComplete(() => MovingWay(reel, index));
@@ -45,25 +43,34 @@ public void MovingStart()
     }
     public void MovingWay(RectTransform reel, int index)
     {
-        print("##### MovingWay");
+        stopButton.SetActive(true);
+        //print("##### MovingWay");
         float previousDistance = (distanceWay + distanceStart) * symbolHeight * symbolsCount;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-(fullDistance + previousDistance), timeWay)
+        reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance), timeWay)
             .SetEase(easeWay)
             .OnComplete(() => MovingSlowDown(reel, index, previousDistance));
     }
     public void MovingSlowDown(RectTransform reel, int index, float previousDistance)
     {
+        //print("### previousDistance=" + "reel №" + index + " = " + previousDistance);
+        if (!playButton.activeSelf)
+        {
+            stopButton.SetActive(false);
+        }
         print("### MovingSlowDown");
-        slowDownIsActive = true;
+        slowDownIsActive[index] = true;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-(fullDistance + previousDistance + (distanceStop  * symbolHeight * symbolsCount)), timeStop)
+        reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance + (distanceStop  * symbolHeight * symbolsCount)), timeStop)
             .SetEase(easeStop)
             .OnComplete(() => SetSymbolDefaultPosition(reel, index));
     }
     public void SetSymbolDefaultPosition(RectTransform reel, int index)
     {
-        print("### SetSymbolDefaultPosition");
+        //print("### SetSymbolDefaultPosition");
+        var finalReelPosition = reel.position.y;
+        var lastSpinDistance = -(finalReelPosition - startReelPosition[index]);
+        fullReelDistance[index] += lastSpinDistance;
         if (!playButton.activeSelf)
         {
             playButton.SetActive(true);
@@ -72,12 +79,6 @@ public void MovingStart()
         if (index == allReels.Length-1)
         {
             FinalResult.SetNextFinalScreen();
-            finalReelPosition = reel.position.y;
-            lastSpinDistance = -(finalReelPosition - startReelPosition);
-            fullDistance += lastSpinDistance;
-            print("##### finalRellPos=" + finalReelPosition);
-            print("##### lastSpinDistance=" + lastSpinDistance);
-            print("##### fullDistance=" + fullDistance);
         }
     }
 
@@ -89,22 +90,22 @@ public void MovingStart()
             var reel = allReels[i];
             var index = i;
             DOTween.Kill(reel);
-            distBeforeStopPressed[i] = -(reel.position.y - startReelPosition);
-            print("### distBeforeStopPressed[i]=" + distBeforeStopPressed[i]);
-            print("### MovingStop() alldist=" + (-(fullDistance + distBeforeStopPressed[i] + 400)));
-            reel.DOAnchorPosY(-(fullDistance + distBeforeStopPressed[i] + 400), timeWay)
+            var distBeforeStopPressed = -(reel.position.y - startReelPosition[index]);
+            var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeStopPressed, index);
+            //print("### correctSymbolsDist=" + "reel №" + index + " = " + correctedSymbolsDist);
+            //print("### distBeforeStopPressed[index]=" + "reel №" + index + " = " + distBeforeStopPressed);
+            //print("### MovingStop() alldist=" + (-(fullReelDistance[index] + correctedSymbolsDist)));
+            reel.DOAnchorPosY(-(fullReelDistance[index] + correctedSymbolsDist), 1)
             .SetEase(easeWay)
-            .OnComplete(() => MovingSlowDown(reel, index, distBeforeStopPressed[i]));
+            .OnComplete(() => MovingSlowDown(reel, index, correctedSymbolsDist));
         } 
     }
 
-    public bool SlowDownIsActive
+    private float CalculateCorrectSymbolsDist(float distBeforeStopPressed, int index)
     {
-        get
-        {
-            return slowDownIsActive;
-        }
+        float correctedSymbolsDist;
+        correctedSymbolsDist = Mathf.Ceil(distBeforeStopPressed / 200) * 200;
+        return correctedSymbolsDist;
     }
-
-
+    public bool[] SlowDownIsActive { get => slowDownIsActive; }
 }
