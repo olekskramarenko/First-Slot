@@ -47,11 +47,12 @@ public class MovingSymbols : MonoBehaviour
                 {
                     symbol.transform.position += Vector3.up * symbolHeight * symbolsCount;
                     int symbolFinalId = symbolReelsCounter[reelId];
-                    symbolReelsCounter[reelId]++;
-                    int symbolId = (reelId * allSymbols.Length) + (symbolFinalId + 1);
+                    
+                    if (symbolFinalId < 3) symbolReelsCounter[reelId]++;
+                    int symbolId = (reelId * allSymbols.Length) + symbolFinalId;
                     int finalImageId = FinalResult.GetFinalImageId(symbolId);
                     symbol.GetComponent<Image>().sprite = allSymbolImages[finalImageId];
-                };
+                }
             }
         }
     }

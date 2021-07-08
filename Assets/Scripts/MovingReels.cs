@@ -58,14 +58,14 @@ public class MovingReels : MonoBehaviour
         }
         slowDownIsActive[index] = true;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance + (distanceStop  * symbolHeight * symbolsCount)), timeStop)
+        reel.DOAnchorPosY(-(Mathf.Ceil(fullReelDistance[index] + previousDistance + (distanceStop  * symbolHeight * symbolsCount))), timeStop)
             .SetEase(easeStop)
             .OnComplete(() => SetSymbolDefaultPosition(reel, index));
     }
     private void SetSymbolDefaultPosition(RectTransform reel, int index)
     {
         var finalReelPosition = reel.position.y;
-        var lastSpinDistance = -(finalReelPosition - startReelPosition[index]);
+        var lastSpinDistance = -(Mathf.Ceil(finalReelPosition - startReelPosition[index]));
         fullReelDistance[index] += lastSpinDistance;
         MovingSymbols[index].ResetSymbolReelsCounter();
         if (!playButton.activeSelf)

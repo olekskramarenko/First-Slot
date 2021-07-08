@@ -219,6 +219,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: reelId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: AllReels
       value: 
       objectReference: {fileID: 2067729589}
@@ -394,7 +398,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168947665}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -444,6 +448,17 @@ RectTransform:
   m_AnchoredPosition: {x: 907.95056, y: 796.0676}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &405764448 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+  m_PrefabInstance: {fileID: 1781685460}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91dfa0150b6616b4582ed955b610f5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,6 +1209,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1388201200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+  m_PrefabInstance: {fileID: 689955432}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91dfa0150b6616b4582ed955b610f5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1462764985 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2320888377644153366, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
@@ -1517,6 +1543,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: reelId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: AllReels
       value: 
       objectReference: {fileID: 2067729589}
@@ -1615,6 +1645,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2320888377644153366, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
   m_PrefabInstance: {fileID: 1781685460}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1888169812 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+  m_PrefabInstance: {fileID: 140680002}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91dfa0150b6616b4582ed955b610f5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1917456237
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,6 +1808,10 @@ MonoBehaviour:
   stopButton: {fileID: 1207686633}
   symbolHeight: 200
   symbolsCount: 4
+  MovingSymbols:
+  - {fileID: 1388201200}
+  - {fileID: 405764448}
+  - {fileID: 1888169812}
 --- !u!114 &2067729592
 MonoBehaviour:
   m_ObjectHideFlags: 0

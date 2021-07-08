@@ -5,7 +5,6 @@ using UnityEngine;
 public class FinalResult : MonoBehaviour
 {
     private int[][] finalScreens = new int[5][];
-    private int finalSymbol;
     private int currentFinalScreen = 0;
     public int CurrentFinalScreen
     {
@@ -17,7 +16,7 @@ public class FinalResult : MonoBehaviour
 
     public int GetFinalImageId(int symbolId)
     {
-        int finalImageId = finalScreens[currentFinalScreen][symbolId-1];
+        int finalImageId = finalScreens[currentFinalScreen][symbolId];
         return finalImageId;
     }
 
@@ -34,6 +33,7 @@ public class FinalResult : MonoBehaviour
     }
     void Start()
     {
+                                     // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11 };
         finalScreens[0] = new int[12] { 7, 2, 0, 0, 7, 2, 0, 0, 7, 2, 0, 0 };
         finalScreens[1] = new int[12] { 0, 3, 1, 1, 0, 3, 1, 1, 0, 3, 1, 1 };
         finalScreens[2] = new int[12] { 7, 3, 2, 2, 7, 3, 2, 2, 7, 3, 2, 2 };
