@@ -34,10 +34,10 @@ public class FinalResult : MonoBehaviour
     }
     void Start()
     {
-        finalScreens[0] = new int[12] { 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2 };
-        finalScreens[1] = new int[12] { 0, 1, 1, 3, 0, 1, 1, 3, 0, 1, 1, 3 };
-        finalScreens[2] = new int[12] { 0, 2, 2, 3, 0, 2, 2, 4, 0, 2, 2, 3 };
-        finalScreens[3] = new int[12] { 0, 3, 3, 0, 3, 3, 0, 0, 0, 3, 3, 1 };
-        finalScreens[4] = new int[12] { 0, 4, 4, 0, 0, 4, 4, 0, 0, 4, 4, 0 };
+        finalScreens[0] = new int[12] { 7, 2, 0, 0, 7, 2, 0, 0, 7, 2, 0, 0 };
+        finalScreens[1] = new int[12] { 0, 3, 1, 1, 0, 3, 1, 1, 0, 3, 1, 1 };
+        finalScreens[2] = new int[12] { 7, 3, 2, 2, 7, 3, 2, 2, 7, 3, 2, 2 };
+        finalScreens[3] = new int[12] { 0, 5, 3, 3, 0, 5, 3, 3, 0, 5, 3, 3 };
+        finalScreens[4] = new int[12] { 6, 0, 4, 4, 6, 0, 4, 4, 6, 0, 4, 4 };
     }
 }

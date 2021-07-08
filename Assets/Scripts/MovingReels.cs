@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MovingReels : MonoBehaviour
 {
     [SerializeField] private Ease easeStart, easeWay, easeStop;
-    [SerializeField] private RectTransform[] allReels;
+    [SerializeField] private RectTransform[] allReels; 
     [SerializeField] private FinalResult FinalResult;
     [SerializeField] private float delay;
     [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
@@ -15,18 +15,18 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private GameObject playButton, stopButton;
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount;
+    [SerializeField] private MovingSymbols[] MovingSymbols;
     private bool[] slowDownIsActive;
     private float[] startReelPosition, fullReelDistance;
 
     private void Start()
     {
         stopButton.SetActive(false);
-        //distBeforeStopPressed = new float[allReels.Length];
         startReelPosition = new float[allReels.Length];
         fullReelDistance = new float[allReels.Length];
         slowDownIsActive = new bool[allReels.Length];
     }
-public void MovingStart()
+    public void MovingStart()
     {
         playButton.SetActive(false);
         for (int i = 0; i < allReels.Length; i++)
@@ -41,36 +41,33 @@ public void MovingStart()
                 .OnComplete(() => MovingWay(reel, index));
         }
     }
-    public void MovingWay(RectTransform reel, int index)
+    private void MovingWay(RectTransform reel, int index)
     {
         stopButton.SetActive(true);
-        //print("##### MovingWay");
         float previousDistance = (distanceWay + distanceStart) * symbolHeight * symbolsCount;
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance), timeWay)
             .SetEase(easeWay)
             .OnComplete(() => MovingSlowDown(reel, index, previousDistance));
     }
-    public void MovingSlowDown(RectTransform reel, int index, float previousDistance)
+    private void MovingSlowDown(RectTransform reel, int index, float previousDistance)
     {
-        //print("### previousDistance=" + "reel ¹" + index + " = " + previousDistance);
         if (!playButton.activeSelf)
         {
             stopButton.SetActive(false);
         }
-        print("### MovingSlowDown");
         slowDownIsActive[index] = true;
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance + (distanceStop  * symbolHeight * symbolsCount)), timeStop)
             .SetEase(easeStop)
             .OnComplete(() => SetSymbolDefaultPosition(reel, index));
     }
-    public void SetSymbolDefaultPosition(RectTransform reel, int index)
+    private void SetSymbolDefaultPosition(RectTransform reel, int index)
     {
-        //print("### SetSymbolDefaultPosition");
         var finalReelPosition = reel.position.y;
         var lastSpinDistance = -(finalReelPosition - startReelPosition[index]);
         fullReelDistance[index] += lastSpinDistance;
+        MovingSymbols[index].ResetSymbolReelsCounter();
         if (!playButton.activeSelf)
         {
             playButton.SetActive(true);
@@ -92,10 +89,7 @@ public void MovingStart()
             DOTween.Kill(reel);
             var distBeforeStopPressed = -(reel.position.y - startReelPosition[index]);
             var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeStopPressed, index);
-            //print("### correctSymbolsDist=" + "reel ¹" + index + " = " + correctedSymbolsDist);
-            //print("### distBeforeStopPressed[index]=" + "reel ¹" + index + " = " + distBeforeStopPressed);
-            //print("### MovingStop() alldist=" + (-(fullReelDistance[index] + correctedSymbolsDist)));
-            reel.DOAnchorPosY(-(fullReelDistance[index] + correctedSymbolsDist), 1)
+            reel.DOAnchorPosY(-(fullReelDistance[index] + correctedSymbolsDist), 0.1f)
             .SetEase(easeWay)
             .OnComplete(() => MovingSlowDown(reel, index, correctedSymbolsDist));
         } 
@@ -104,7 +98,7 @@ public void MovingStart()
     private float CalculateCorrectSymbolsDist(float distBeforeStopPressed, int index)
     {
         float correctedSymbolsDist;
-        correctedSymbolsDist = Mathf.Ceil(distBeforeStopPressed / 200) * 200;
+        correctedSymbolsDist = Mathf.Ceil(distBeforeStopPressed / symbolHeight) * symbolHeight;
         return correctedSymbolsDist;
     }
     public bool[] SlowDownIsActive { get => slowDownIsActive; }
