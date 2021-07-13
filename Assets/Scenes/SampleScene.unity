@@ -227,6 +227,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2067729589}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: mainCanvas
+      value: 
+      objectReference: {fileID: 1670087919}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: FinalResult
       value: 
       objectReference: {fileID: 168947666}
@@ -254,6 +258,30 @@ PrefabInstance:
       propertyPath: symbolData
       value: 
       objectReference: {fileID: 11400000, guid: 00efce9b0c89afd44a7a27646d72c696, type: 2}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4293523084630455741, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: symbolData
       value: 
@@ -647,6 +675,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2067729589}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: mainCanvas
+      value: 
+      objectReference: {fileID: 1670087919}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: FinalResult
       value: 
       objectReference: {fileID: 168947666}
@@ -654,6 +686,30 @@ PrefabInstance:
       propertyPath: symbolData
       value: 
       objectReference: {fileID: 11400000, guid: eaf9b13db6c962f479c6200a3251377f, type: 2}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -1412,17 +1468,17 @@ Canvas:
   m_GameObject: {fileID: 1670087913}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1670087919
 RectTransform:
@@ -1551,6 +1607,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2067729589}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: mainCanvas
+      value: 
+      objectReference: {fileID: 1670087919}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: FinalResult
       value: 
       objectReference: {fileID: 168947666}
@@ -1566,6 +1626,30 @@ PrefabInstance:
       propertyPath: symbolData
       value: 
       objectReference: {fileID: 11400000, guid: b820a640147a40143991c7d09c046e76, type: 2}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921676398497247234, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4293523084630455741, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: symbolData
       value: 
@@ -1798,9 +1882,9 @@ MonoBehaviour:
   - {fileID: 1975011743}
   FinalResult: {fileID: 168947666}
   delay: 0.1
-  timeStart: 2
-  timeWay: 4
-  timeStop: 4
+  timeStart: 1
+  timeWay: 2.01
+  timeStop: 1.55
   distanceStart: 2
   distanceWay: 12
   distanceStop: 1
@@ -1812,6 +1896,7 @@ MonoBehaviour:
   - {fileID: 1388201200}
   - {fileID: 405764448}
   - {fileID: 1888169812}
+  mainCanvas: {fileID: 1670087919}
 --- !u!114 &2067729592
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ public class MovingSymbols : MonoBehaviour
     [SerializeField] private FinalResult FinalResult;
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount, reelId;
+    [SerializeField] private RectTransform mainCanvas;
+    private float mainCanvasScale;
     private readonly int exitPosition = 223;
     private bool[] slowDownIsActive;
     private int[] symbolReelsCounter;
@@ -19,6 +21,7 @@ public class MovingSymbols : MonoBehaviour
     {
         symbolReelsCounter = new int[3];
         slowDownIsActive = new bool[3];
+        mainCanvasScale = mainCanvas.lossyScale.y;
     }
 
     public void ResetSymbolReelsCounter()
@@ -35,17 +38,17 @@ public class MovingSymbols : MonoBehaviour
             var symbol = allSymbols[i];
             if (!slowDownIsActive[reelId])
             {
-                if (symbol.transform.position.y <= exitPosition)
+                if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
                 {
-                    symbol.transform.position += Vector3.up * symbolHeight * symbolsCount;
+                    symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
                     symbol.GetComponent<Image>().sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
                 };
             }
             if (slowDownIsActive[reelId])
             {
-                if (symbol.transform.position.y <= exitPosition)
+                if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
                 {
-                    symbol.transform.position += Vector3.up * symbolHeight * symbolsCount;
+                    symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
                     int symbolFinalId = symbolReelsCounter[reelId];
                     
                     if (symbolFinalId < 3) symbolReelsCounter[reelId]++;

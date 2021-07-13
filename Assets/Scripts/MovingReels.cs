@@ -16,6 +16,8 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount;
     [SerializeField] private MovingSymbols[] MovingSymbols;
+    [SerializeField] private RectTransform mainCanvas;
+    private float mainCanvasScale ;
     private bool[] slowDownIsActive;
     private float[] startReelPosition, fullReelDistance;
 
@@ -25,6 +27,7 @@ public class MovingReels : MonoBehaviour
         startReelPosition = new float[allReels.Length];
         fullReelDistance = new float[allReels.Length];
         slowDownIsActive = new bool[allReels.Length];
+        mainCanvasScale = mainCanvas.lossyScale.y;
     }
     public void MovingStart()
     {
@@ -34,7 +37,7 @@ public class MovingReels : MonoBehaviour
             var reel = allReels[i];
             var index = i; // Для корректной работы счетчика циклов вне цикла
             slowDownIsActive[index] = false;
-            startReelPosition[index] = reel.position.y;
+            startReelPosition[index] = reel.localPosition.y;
             reel.DOAnchorPosY(-(fullReelDistance[index]+(distanceStart * symbolHeight * symbolsCount)), timeStart)
                 .SetDelay(i * delay)
                 .SetEase(easeStart)
@@ -58,14 +61,14 @@ public class MovingReels : MonoBehaviour
         }
         slowDownIsActive[index] = true;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-(Mathf.Ceil(fullReelDistance[index] + previousDistance + (distanceStop  * symbolHeight * symbolsCount))), timeStop)
+        reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance + (distanceStop  * symbolHeight * symbolsCount)), timeStop, true)
             .SetEase(easeStop)
             .OnComplete(() => SetSymbolDefaultPosition(reel, index));
     }
     private void SetSymbolDefaultPosition(RectTransform reel, int index)
     {
-        var finalReelPosition = reel.position.y;
-        var lastSpinDistance = -(Mathf.Ceil(finalReelPosition - startReelPosition[index]));
+        var finalReelPosition = reel.localPosition.y;
+        var lastSpinDistance = -(finalReelPosition - startReelPosition[index]);
         fullReelDistance[index] += lastSpinDistance;
         MovingSymbols[index].ResetSymbolReelsCounter();
         if (!playButton.activeSelf)
@@ -87,7 +90,7 @@ public class MovingReels : MonoBehaviour
             var reel = allReels[i];
             var index = i;
             DOTween.Kill(reel);
-            var distBeforeStopPressed = -(reel.position.y - startReelPosition[index]);
+            var distBeforeStopPressed = -(reel.localPosition.y - startReelPosition[index]);
             var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeStopPressed, index);
             reel.DOAnchorPosY(-(fullReelDistance[index] + correctedSymbolsDist), 0.1f)
             .SetEase(easeWay)
@@ -95,7 +98,7 @@ public class MovingReels : MonoBehaviour
         } 
     }
 
-    private float CalculateCorrectSymbolsDist(float distBeforeStopPressed, int index)
+    private float CalculateCorrectSymbolsDist(float distBeforeStopPressed, int index) 
     {
         float correctedSymbolsDist;
         correctedSymbolsDist = Mathf.Ceil(distBeforeStopPressed / symbolHeight) * symbolHeight;
