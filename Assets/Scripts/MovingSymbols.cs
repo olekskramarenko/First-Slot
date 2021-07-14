@@ -1,26 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MovingSymbols : MonoBehaviour
 {
-    [SerializeField] private GameObject[] allSymbols;
+    [SerializeField] private Symbol[] allSymbols;
     [SerializeField] private Sprite[] allSymbolImages;
-    [SerializeField] private GameObject AllReels;
+    [SerializeField] private MovingReels MovingReels;
     [SerializeField] private FinalResult FinalResult;
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount, reelId;
     [SerializeField] private RectTransform mainCanvas;
     private float mainCanvasScale;
     private readonly int exitPosition = 223;
-    private bool[] slowDownIsActive;
+    private readonly int numberOfReels = 3;
+    private bool slowDownIsActive;
     private int[] symbolReelsCounter;
 
     void Start()
     {
-        symbolReelsCounter = new int[3];
-        slowDownIsActive = new bool[3];
+        symbolReelsCounter = new int[numberOfReels];
+        //slowDownIsActive = new bool[numberOfReels];
         mainCanvasScale = mainCanvas.lossyScale.y;
     }
 
@@ -31,20 +29,20 @@ public class MovingSymbols : MonoBehaviour
             symbolReelsCounter[i] = 0;
         }
     }
-    void ChangeSymbolAndSprite(bool[] slowDownIsActive)
+    void ChangeSymbolAndSprite(bool slowDownIsActive)
     {
         for (int i = 0; i < allSymbols.Length; i++)
         {
             var symbol = allSymbols[i];
-            if (!slowDownIsActive[reelId])
+            if (!slowDownIsActive)
             {
                 if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
                 {
                     symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
-                    symbol.GetComponent<Image>().sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
+                    symbol.SymbolImage.sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
                 };
             }
-            if (slowDownIsActive[reelId])
+            if (slowDownIsActive)
             {
                 if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
                 {
@@ -54,14 +52,14 @@ public class MovingSymbols : MonoBehaviour
                     if (symbolFinalId < 3) symbolReelsCounter[reelId]++;
                     int symbolId = (reelId * allSymbols.Length) + symbolFinalId;
                     int finalImageId = FinalResult.GetFinalImageId(symbolId);
-                    symbol.GetComponent<Image>().sprite = allSymbolImages[finalImageId];
+                    symbol.SymbolImage.sprite = allSymbolImages[finalImageId];
                 }
             }
         }
     }
     void Update()
     {
-        slowDownIsActive = AllReels.GetComponent<MovingReels>().SlowDownIsActive;
+        slowDownIsActive = MovingReels.GetSlowDownStatus(reelId);
 
         ChangeSymbolAndSprite(slowDownIsActive);
     }

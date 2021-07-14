@@ -7,7 +7,6 @@ using UnityEngine;
 public class SymbolData : ScriptableObject
 {
     [SerializeField] private int symbolId;
-    [SerializeField] private Sprite symbolImage;
     [SerializeField] private int reelId;
 
     public int ReelId { get => reelId;}
