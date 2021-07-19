@@ -35,25 +35,24 @@ public class MovingReels : MonoBehaviour
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];
-            var index = i; // For correct work cycle counter outside of the cycle
             reelsDictionary[reel].ReelState = ReelState.Spin;
             reelsDictionary[reel].StartReelPos = reel.localPosition.y;
             reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + (distanceStart * symbolHeight * symbolsCount)), timeStart)
                 .SetDelay(i * delay)
                 .SetEase(easeStart)
-                .OnComplete(() => MovingWay(reel, index));
+                .OnComplete(() => MovingWay(reel));
         }
     }
-    private void MovingWay(RectTransform reel, int index)
+    private void MovingWay(RectTransform reel)
     {
         stopButton.SetActive(true);
         float previousDistance = (distanceWay + distanceStart) * symbolHeight * symbolsCount;
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + previousDistance), timeWay)
             .SetEase(easeWay)
-            .OnComplete(() => MovingSlowDown(reel, index, previousDistance));
+            .OnComplete(() => MovingSlowDown(reel, previousDistance));
     }
-    private void MovingSlowDown(RectTransform reel, int index, float previousDistance)
+    private void MovingSlowDown(RectTransform reel, float previousDistance)
     {
         if (!playButton.activeSelf)
         {
@@ -63,21 +62,18 @@ public class MovingReels : MonoBehaviour
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + previousDistance + (distanceStop * symbolHeight * symbolsCount)), timeStop, true)
             .SetEase(easeStop)
-            .OnComplete(() => SetSymbolDefaultPosition(reel, index));
+            .OnComplete(() => SetSymbolDefaultPosition(reel));
     }
-    private void SetSymbolDefaultPosition(RectTransform reel, int index)
+    private void SetSymbolDefaultPosition(RectTransform reel)
     {
         var finalReelPosition = reel.localPosition.y;
         var lastSpinDistance = -(finalReelPosition - reelsDictionary[reel].StartReelPos);
         reelsDictionary[reel].FullSpinDistance += lastSpinDistance;
-        MovingSymbols[index].ResetSymbolReelsCounter();
-        if (!playButton.activeSelf && index == 2)
+        reelsDictionary[reel].ResetSymbolReelsCounter();
+        if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
         {
             playButton.SetActive(true);
             stopButton.SetActive(false);
-        }
-        if (index == allReelsRT.Length - 1)
-        {
             FinalResult.SetNextFinalScreen();
         }
     }
@@ -94,7 +90,7 @@ public class MovingReels : MonoBehaviour
             var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeStopPressed);
             reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist), 0.1f)
             .SetEase(easeWay)
-            .OnComplete(() => MovingSlowDown(reel, index, correctedSymbolsDist));
+            .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist));
         }
     }
 
