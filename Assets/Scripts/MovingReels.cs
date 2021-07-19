@@ -1,30 +1,36 @@
 using UnityEngine;
 using DG.Tweening;
-
+using System.Collections.Generic;
 
 public class MovingReels : MonoBehaviour
 {
-    [SerializeField] private Ease easeStart, easeWay, easeStop;
-    [SerializeField] private RectTransform[] allReelsRT; 
+    
+    [SerializeField] private RectTransform[] allReelsRT;
+    [SerializeField] private MovingSymbols[] MovingSymbols;
     [SerializeField] private FinalResult FinalResult;
     [SerializeField] private float delay;
     [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
+    [SerializeField] private Ease easeStart, easeWay, easeStop;
     [SerializeField] private GameObject playButton, stopButton;
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount;
-    [SerializeField] private MovingSymbols[] MovingSymbols;
-    private bool[] slowDownIsActive;
     private float[] startReelPosition, fullReelDistance;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
     private readonly float distanceStop = 1; // Important, value 1 nedded for correct showing final screens
+    private Dictionary<RectTransform, MovingSymbols> reelsDictionary;
+
 
     private void Start()
     {
         stopButton.SetActive(false);
         startReelPosition = new float[allReelsRT.Length];
         fullReelDistance = new float[allReelsRT.Length];
-        slowDownIsActive = new bool[allReelsRT.Length];
+        reelsDictionary = new Dictionary<RectTransform, MovingSymbols>();
+        for (int i = 0; i < allReelsRT.Length; i++)
+        {
+            reelsDictionary.Add(allReelsRT[i], MovingSymbols[i]);
+        }
     }
     public void MovingStart()
     {
@@ -33,7 +39,7 @@ public class MovingReels : MonoBehaviour
         {
             var reel = allReelsRT[i];
             var index = i; // For correct work cycle counter outside of the cycle
-            slowDownIsActive[index] = false;
+            reelsDictionary[reel].ReelState = ReelState.Spin;
             startReelPosition[index] = reel.localPosition.y;
             reel.DOAnchorPosY(-(fullReelDistance[index]+(distanceStart * symbolHeight * symbolsCount)), timeStart)
                 .SetDelay(i * delay)
@@ -56,7 +62,7 @@ public class MovingReels : MonoBehaviour
         {
             stopButton.SetActive(false); 
         }
-        slowDownIsActive[index] = true;
+        reelsDictionary[reel].ReelState = ReelState.SlowDown;
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance + (distanceStop  * symbolHeight * symbolsCount)), timeStop, true)
             .SetEase(easeStop)
@@ -100,11 +106,6 @@ public class MovingReels : MonoBehaviour
         float correctedSymbolsDist;
         correctedSymbolsDist = Mathf.Ceil(distBeforeStopPressed / symbolHeight) * symbolHeight;
         return correctedSymbolsDist;
-    }
-
-    public bool GetSlowDownStatus(int reelId)
-    {
-            return slowDownIsActive[reelId];
     }
 }
  

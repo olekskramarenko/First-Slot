@@ -12,8 +12,11 @@ public class MovingSymbols : MonoBehaviour
     private float mainCanvasScale;
     private readonly int exitPosition = 223;
     private readonly int numberOfReels = 3;
-    private bool slowDownIsActive;
     private int[] symbolReelsCounter;
+    private ReelState reelState = ReelState.Stop;
+
+    internal ReelState ReelState { get => reelState; set => reelState = value; }
+    public int ReelId => reelId; 
 
     void Start()
     {
@@ -28,7 +31,7 @@ public class MovingSymbols : MonoBehaviour
             symbolReelsCounter[i] = 0;
         }
     }
-    void ChangeSymbolAndSprite(bool slowDownIsActive)
+    void ChangeSymbolAndSprite(ReelState reelState)
     {
         for (int i = 0; i < allSymbols.Length; i++)
         {
@@ -36,7 +39,7 @@ public class MovingSymbols : MonoBehaviour
             if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
             {
                 symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
-                if (slowDownIsActive)
+                if (reelState == ReelState.SlowDown)
                 {
                     int symbolFinalId = symbolReelsCounter[reelId];
                     if (symbolFinalId < 3) symbolReelsCounter[reelId]++;
@@ -53,8 +56,6 @@ public class MovingSymbols : MonoBehaviour
     }
     void Update()
     {
-        slowDownIsActive = MovingReels.GetSlowDownStatus(reelId);
-
-        ChangeSymbolAndSprite(slowDownIsActive);
+        ChangeSymbolAndSprite(reelState);
     }
 }
