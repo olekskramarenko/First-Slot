@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
@@ -11,7 +12,8 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private float delay;
     [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
     [SerializeField] private Ease easeStart, easeWay, easeStop;
-    [SerializeField] private GameObject playButton, stopButton;
+    [SerializeField] private Button playButton, stopButton;
+    [SerializeField] private RectTransform playButtonRT, stopButtonRT;
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount;
     private readonly float distanceStart = 2;
@@ -22,7 +24,8 @@ public class MovingReels : MonoBehaviour
 
     private void Start()
     {
-        stopButton.SetActive(false);
+        stopButton.interactable = false;
+        stopButtonRT.localScale = Vector3.zero;
         reelsDictionary = new Dictionary<RectTransform, MovingSymbols>();
         for (int i = 0; i < allReelsRT.Length; i++)
         {
@@ -31,7 +34,9 @@ public class MovingReels : MonoBehaviour
     }
     public void MovingStart()
     {
-        playButton.SetActive(false);
+        playButton.interactable = false;
+        playButtonRT.localScale = Vector3.zero;
+        stopButtonRT.localScale = Vector3.one;
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];
@@ -45,7 +50,7 @@ public class MovingReels : MonoBehaviour
     }
     private void MovingWay(RectTransform reel)
     {
-        stopButton.SetActive(true);
+        stopButton.interactable = true;
         float previousDistance = (distanceWay + distanceStart) * symbolHeight * symbolsCount;
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + previousDistance), timeWay)
@@ -54,10 +59,7 @@ public class MovingReels : MonoBehaviour
     }
     private void MovingSlowDown(RectTransform reel, float previousDistance)
     {
-        if (!playButton.activeSelf)
-        {
-            stopButton.SetActive(false);
-        }
+        stopButton.interactable = false;
         reelsDictionary[reel].ReelState = ReelState.SlowDown;
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + previousDistance + (distanceStop * symbolHeight * symbolsCount)), timeStop, true)
@@ -72,15 +74,16 @@ public class MovingReels : MonoBehaviour
         reelsDictionary[reel].ResetSymbolReelsCounter();
         if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
         {
-            playButton.SetActive(true);
-            stopButton.SetActive(false);
+            stopButtonRT.localScale = Vector3.zero;
+            playButtonRT.localScale = Vector3.one;
+            playButton.interactable = true;
             FinalResult.SetNextFinalScreen();
         }
     }
 
     public void MovingStop()
     {
-        stopButton.SetActive(false);
+        stopButton.interactable = false;
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];

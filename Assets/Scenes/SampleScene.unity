@@ -2386,26 +2386,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20e3d8e88f6a0a41a7d5db8459073d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  easeStart: 8
-  easeWay: 1
-  easeStop: 9
   allReelsRT:
   - {fileID: 1358926810}
   - {fileID: 1734438611}
   - {fileID: 1371388542}
+  MovingSymbols:
+  - {fileID: 1388201200}
+  - {fileID: 405764448}
+  - {fileID: 1888169812}
   FinalResult: {fileID: 168947666}
   delay: 0.4
   timeStart: 1
   timeWay: 2.01
   timeStop: 0.43
-  playButton: {fileID: 1194259401}
-  stopButton: {fileID: 1207686633}
+  easeStart: 8
+  easeWay: 1
+  easeStop: 9
+  playButton: {fileID: 1194259403}
+  stopButton: {fileID: 1207686634}
+  playButtonRT: {fileID: 1194259402}
+  stopButtonRT: {fileID: 1207686637}
   symbolHeight: 200
   symbolsCount: 4
-  MovingSymbols:
-  - {fileID: 1388201200}
-  - {fileID: 405764448}
-  - {fileID: 1888169812}
 --- !u!114 &2067729592
 MonoBehaviour:
   m_ObjectHideFlags: 0
