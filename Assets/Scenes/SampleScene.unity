@@ -1048,8 +1048,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1194259402}
   - {fileID: 1207686637}
+  - {fileID: 1194259402}
   m_Father: {fileID: 1670087919}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1261,7 +1261,7 @@ RectTransform:
   m_Children:
   - {fileID: 1589725698}
   m_Father: {fileID: 752443418}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8554795, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -1488,11 +1488,11 @@ RectTransform:
   m_Children:
   - {fileID: 1080475481}
   m_Father: {fileID: 752443418}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8554795, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -1.5, y: 0.0000009536743}
+  m_AnchoredPosition: {x: -1.5, y: 0}
   m_SizeDelta: {x: -33.119995, y: 84.921}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1358926810 stripped

@@ -18,7 +18,6 @@ public class MovingSymbols : MonoBehaviour
     void Start()
     {
         symbolReelsCounter = new int[numberOfReels];
-        //slowDownIsActive = new bool[numberOfReels];
         mainCanvasScale = mainCanvas.lossyScale.y;
     }
 
@@ -34,25 +33,20 @@ public class MovingSymbols : MonoBehaviour
         for (int i = 0; i < allSymbols.Length; i++)
         {
             var symbol = allSymbols[i];
-            if (!slowDownIsActive)
+            if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
             {
-                if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
+                symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
+                if (slowDownIsActive)
                 {
-                    symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
-                    symbol.SymbolImage.sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
-                };
-            }
-            if (slowDownIsActive)
-            {
-                if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
-                {
-                    symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
                     int symbolFinalId = symbolReelsCounter[reelId];
-                    
                     if (symbolFinalId < 3) symbolReelsCounter[reelId]++;
                     int symbolId = (reelId * allSymbols.Length) + symbolFinalId;
                     int finalImageId = FinalResult.GetFinalImageId(symbolId);
                     symbol.SymbolImage.sprite = allSymbolImages[finalImageId];
+                }
+                else
+                {
+                    symbol.SymbolImage.sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
                 }
             }
         }

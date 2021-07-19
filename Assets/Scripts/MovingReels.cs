@@ -17,7 +17,7 @@ public class MovingReels : MonoBehaviour
     private float[] startReelPosition, fullReelDistance;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
-    private readonly float distanceStop = 1; // Важно, при значении 1, будут показываться верные финальные экраны
+    private readonly float distanceStop = 1; // Important, value 1 nedded for correct showing final screens
 
     private void Start()
     {
@@ -32,7 +32,7 @@ public class MovingReels : MonoBehaviour
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];
-            var index = i; // Для корректной работы счетчика циклов вне цикла
+            var index = i; // For correct work cycle counter outside of the cycle
             slowDownIsActive[index] = false;
             startReelPosition[index] = reel.localPosition.y;
             reel.DOAnchorPosY(-(fullReelDistance[index]+(distanceStart * symbolHeight * symbolsCount)), timeStart)
@@ -107,3 +107,4 @@ public class MovingReels : MonoBehaviour
             return slowDownIsActive[reelId];
     }
 }
+ 
