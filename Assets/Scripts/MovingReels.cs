@@ -96,7 +96,7 @@ public class MovingReels : MonoBehaviour
             .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist));
         }
     }
-
+ 
     private float CalculateCorrectSymbolsDist(float distBeforeStopPressed)
     {
         float correctedSymbolsDist;

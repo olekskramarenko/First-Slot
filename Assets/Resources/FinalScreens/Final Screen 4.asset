@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee04d616e35aa8946b25a11957c834a9, type: 3}
-  m_Name: Symbol_3_3
+  m_Script: {fileID: 11500000, guid: ca9ddb03017768941bcd29c2b3f80141, type: 3}
+  m_Name: Final Screen 4
   m_EditorClassIdentifier: 
-  symbolId: 11
-  symbolImage: {fileID: 21300000, guid: b8a379625aa830e4592c7932afca7334, type: 3}
-  reelId: 2
+  finalSymbols: 050000000400000003000000030000000500000004000000030000000300000005000000040000000300000003000000

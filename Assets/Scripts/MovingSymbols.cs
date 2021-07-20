@@ -3,7 +3,8 @@ using UnityEngine;
 public class MovingSymbols : MonoBehaviour
 {
     [SerializeField] private Symbol[] allSymbols;
-    [SerializeField] private Sprite[] allSymbolImages;
+    //[SerializeField] private Sprite[] allSymbolImages;
+    [SerializeField] private GameConfig gameConfig;
     [SerializeField] private MovingReels MovingReels;
     [SerializeField] private FinalResult FinalResult;
     [SerializeField] private float symbolHeight;
@@ -48,11 +49,12 @@ public class MovingSymbols : MonoBehaviour
                     if (symbolFinalId < 3) symbolReelsCounter[reelId]++;
                     int symbolId = (reelId * allSymbols.Length) + symbolFinalId;
                     int finalImageId = FinalResult.GetFinalImageId(symbolId);
-                    symbol.SymbolImage.sprite = allSymbolImages[finalImageId];
+                    symbol.SymbolImage.sprite = gameConfig.Symbols[finalImageId].SymbolImage;
                 }
                 else
                 {
-                    symbol.SymbolImage.sprite = allSymbolImages[Random.Range(0, allSymbolImages.Length)];
+                    var random = Random.Range(0, gameConfig.Symbols.Length);
+                    symbol.SymbolImage.sprite = gameConfig.Symbols[random].SymbolImage;
                 }
             }
         }

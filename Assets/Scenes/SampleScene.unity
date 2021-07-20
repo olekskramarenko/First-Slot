@@ -293,6 +293,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2067729591}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: gameConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: mainCanvas
       value: 
       objectReference: {fileID: 1670087919}
@@ -545,6 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccee2a22aeaec25409f579adc624da69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameConfig: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
 --- !u!114 &168947667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,6 +866,10 @@ PrefabInstance:
       propertyPath: AllReels
       value: 
       objectReference: {fileID: 2067729591}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: gameConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: mainCanvas
       value: 
@@ -2038,6 +2047,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2067729591}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: gameConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: mainCanvas
       value: 
       objectReference: {fileID: 1670087919}
@@ -2397,7 +2410,7 @@ MonoBehaviour:
   FinalResult: {fileID: 168947666}
   delay: 0.4
   timeStart: 1
-  timeWay: 2.01
+  timeWay: 2.29
   timeStop: 0.43
   easeStart: 8
   easeWay: 1
