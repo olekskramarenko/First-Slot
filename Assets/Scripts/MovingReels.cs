@@ -18,7 +18,7 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private int symbolsCount;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
-    private readonly float distanceStop = 1; // Important, value 1 nedded for correct showing final screens
+    private readonly float distanceStop = 0.75f; // Important, value 0.75 nedded for correct showing final screens
     private Dictionary<RectTransform, MovingSymbols> reelsDictionary;
 
 
@@ -91,7 +91,7 @@ public class MovingReels : MonoBehaviour
             DOTween.Kill(reel);
             var distBeforeStopPressed = -(reel.localPosition.y - reelsDictionary[reel].StartReelPos);
             var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeStopPressed);
-            reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist), 0.1f)
+            reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist), 0)
             .SetEase(easeWay)
             .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist));
         }
