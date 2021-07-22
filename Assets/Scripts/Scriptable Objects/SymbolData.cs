@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "New SymbolData", menuName = "Symbol Data", order = 51)]
 public class SymbolData : ScriptableObject
 {

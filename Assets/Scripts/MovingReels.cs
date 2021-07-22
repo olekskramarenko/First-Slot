@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class MovingReels : MonoBehaviour
 {
-
     [SerializeField] private RectTransform[] allReelsRT;
     [SerializeField] private MovingSymbols[] MovingSymbols;
     [SerializeField] private FinalResult FinalResult;
@@ -21,7 +20,6 @@ public class MovingReels : MonoBehaviour
     private readonly float distanceWay = 12;
     private readonly float distanceStop = 0.75f; // Important, value 0.75 nedded for correct showing final screens
     private Dictionary<RectTransform, MovingSymbols> reelsDictionary;
-
 
     private void Start()
     {
@@ -76,10 +74,10 @@ public class MovingReels : MonoBehaviour
         if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
         {
             winLinesChecker.CheckWinLine();
+            FinalResult.SetNextFinalScreen();
             stopButtonRT.localScale = Vector3.zero;
             playButtonRT.localScale = Vector3.one;
-            playButton.interactable = true;
-            FinalResult.SetNextFinalScreen();
+            playButton.interactable = true; 
         }
     }
 
@@ -98,11 +96,12 @@ public class MovingReels : MonoBehaviour
             .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist));
         }
     }
- 
+
     private float CalculateCorrectSymbolsDist(float distBeforeStopPressed)
     {
         float correctedSymbolsDist;
         correctedSymbolsDist = Mathf.Ceil(distBeforeStopPressed / symbolHeight) * symbolHeight;
         return correctedSymbolsDist;
     }
+
 }

@@ -1232,6 +1232,7 @@ MonoBehaviour:
   - {fileID: 21525469}
   - {fileID: 189261201}
   - {fileID: 2068943522}
+  winLine: 020000000500000008000000
 --- !u!114 &843869190
 MonoBehaviour:
   m_ObjectHideFlags: 0

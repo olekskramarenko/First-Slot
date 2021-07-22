@@ -5,7 +5,7 @@ using UnityEngine;
 public class WinLinesChecker : MonoBehaviour
 {
     [SerializeField] private Symbol[] symbols;
-    private int[] winline = new int[3] { 2, 5, 8};
+    [SerializeField] private int[] winLine;
     List<Symbol> otherSymbols = new List<Symbol>();
     List<Symbol> winSymbolsLine = new List<Symbol>();
 
@@ -20,7 +20,7 @@ public class WinLinesChecker : MonoBehaviour
     private void SeparateAndSetSymbols ( Symbol symbol)
     {
         bool coincidence = false;
-        foreach (var value in winline)
+        foreach (var value in winLine)
         {
             if (symbol.SymbolFinalId == value)
             {
