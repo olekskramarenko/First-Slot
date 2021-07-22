@@ -2,6 +2,12 @@
 
 enum SymbolType 
 {
-    common,
-    extra
+    anchor,
+    boots,
+    helmet,
+    iceAxe,
+    iceOrc,
+    rockClimber,
+    santa,
+    tent
 }

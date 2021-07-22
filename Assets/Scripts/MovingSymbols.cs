@@ -48,9 +48,11 @@ public class MovingSymbols : MonoBehaviour
                     if (symbolFinalId < 3) symbolReelsCounter[reelId]++;
                     int symbolId = (reelId * allSymbols.Length) + symbolFinalId;
                     symbol.SymbolFinalId = symbolId;
-                    print("### symbol.SymbolFinalId = " + symbol.SymbolFinalId + " symbol = " + symbol );
+                    //print("### symbol.SymbolFinalId = " + symbol.SymbolFinalId + " symbol = " + symbol );
                     int finalImageId = FinalResult.GetFinalImageId(symbolId);
                     symbol.SymbolImage.sprite = gameConfig.Symbols[finalImageId].SymbolImage;
+                    symbol.SymbolType = gameConfig.Symbols[finalImageId].SymbolType;
+                    //print("### symbol.SymbolType = " + symbol.SymbolType + " symbol = " + symbol);
                 }
                 else
                 {

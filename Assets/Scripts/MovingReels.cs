@@ -16,6 +16,7 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private RectTransform playButtonRT, stopButtonRT;
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount;
+    [SerializeField] private WinLinesChecker winLinesChecker;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
     private readonly float distanceStop = 0.75f; // Important, value 0.75 nedded for correct showing final screens
@@ -74,6 +75,7 @@ public class MovingReels : MonoBehaviour
         reelsDictionary[reel].ResetSymbolReelsCounter();
         if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
         {
+            winLinesChecker.CheckWinLine();
             stopButtonRT.localScale = Vector3.zero;
             playButtonRT.localScale = Vector3.one;
             playButton.interactable = true;
