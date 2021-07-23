@@ -4,53 +4,62 @@ using UnityEngine;
 
 public class WinLinesChecker : MonoBehaviour
 {
-    [SerializeField] private Symbol[] symbols;
-    [SerializeField] private int[] winLine;
-    List<Symbol> otherSymbols = new List<Symbol>();
-    List<Symbol> winSymbolsLine = new List<Symbol>();
+    [SerializeField] private Symbol[] symbols; // 12 symbols
+    //[SerializeField] private int[] winLine; // always 3 items { LIst, List, List}
+    [SerializeField] private List<int[]> winLineList;
+    //private List<Symbol> otherSymbolsLine = new List<Symbol>();
+    //private List<Symbol> winSymbolsLine = new List<Symbol>();
 
-    private void GetWinSymbols()
+    private ResultsLists GetWinSymbols(int[] winLine)
     {
+        var resultsList = new ResultsLists();
         foreach (Symbol symbol in symbols)
         {
-            SeparateAndSetSymbols(symbol);
+            SeparateAndSetSymbols(symbol, winLine, resultsList);
         }
+        return resultsList;
     }
 
-    private void SeparateAndSetSymbols ( Symbol symbol)
+    private ResultsLists SeparateAndSetSymbols(Symbol symbol, int[] winLine, ResultsLists resultsList)
     {
         bool coincidence = false;
         foreach (var value in winLine)
         {
             if (symbol.SymbolFinalId == value)
             {
-                winSymbolsLine.Add(symbol);
+                resultsList.WinSymbolsLineList.Add(symbol);
                 coincidence = true;
-                //return; 
+                /*return;*/ // Todo: problem with double values of winLines
             }
         }
-        if ( !coincidence)
+        if (!coincidence)
         {
-            otherSymbols.Add(symbol);
-        } 
+            resultsList.OtherSymbolsLineList.Add(symbol);
+        }
+        return resultsList;
     }
     public void CheckWinLine()
     {
-        GetWinSymbols();
-        if ( winSymbolsLine[0].SymbolType == winSymbolsLine[1].SymbolType && winSymbolsLine[1].SymbolType == winSymbolsLine[2].SymbolType)
+        foreach (var winLine in winLineList)
         {
-            print("### WINLINE FOUND " + winSymbolsLine[0] + winSymbolsLine[1] + winSymbolsLine[2]);
-            foreach (Symbol winSymbol in winSymbolsLine)
+
+            var resultsList = GetWinSymbols(winLine);
+            if (winSymbolsLine[0].SymbolType == winSymbolsLine[1].SymbolType && winSymbolsLine[1].SymbolType == winSymbolsLine[2].SymbolType)
             {
-                winSymbol.SymbolAnimation.Play("pulse");
+                print("### WINLINE FOUND " + winSymbolsLine[0] + winSymbolsLine[1] + winSymbolsLine[2]);
+                foreach (Symbol winSymbol in winSymbolsLine)
+                {
+                    winSymbol.SymbolAnimation.Play("pulse");
+                }
+                foreach (Symbol otherSymbol in otherSymbolsLine)
+                {
+                    otherSymbol.SymbolAnimation.Play("shadow");
+                    //otherSymbol.SymbolAnimation.isPlaying;
+                }
             }
-            foreach ( Symbol otherSymbol in otherSymbols)
-            {
-                otherSymbol.SymbolAnimation.Play("shadow");
-            }
+            winSymbolsLine.Clear();
+            otherSymbolsLine.Clear();
         }
-        winSymbolsLine.Clear();
-        otherSymbols.Clear();
+
     }
 }
- 
