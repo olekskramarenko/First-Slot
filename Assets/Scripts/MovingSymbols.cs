@@ -61,17 +61,8 @@ public class MovingSymbols : MonoBehaviour
         }
     }
 
-    private void ChangeBtnsStatus(ReelState reelState)
-    {
-
-    }
-
     void Update()
     {
         ChangeSymbolAndSprite(reelState);
-        if (reelId == 2)
-        {
-            ChangeBtnsStatus(reelState);
-        }
     }
 }

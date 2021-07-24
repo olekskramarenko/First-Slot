@@ -36,6 +36,7 @@ public class MovingReels : MonoBehaviour
         playButton.interactable = false;
         playButtonRT.localScale = Vector3.zero;
         stopButtonRT.localScale = Vector3.one;
+        //winLinesChecker.StopSymbolsAnimation();
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];

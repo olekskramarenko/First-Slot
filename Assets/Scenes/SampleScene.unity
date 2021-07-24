@@ -1198,7 +1198,6 @@ GameObject:
   - component: {fileID: 843869193}
   - component: {fileID: 843869192}
   - component: {fileID: 843869191}
-  - component: {fileID: 843869190}
   - component: {fileID: 843869189}
   m_Layer: 5
   m_Name: WinLinesChecker
@@ -1232,19 +1231,6 @@ MonoBehaviour:
   - {fileID: 21525469}
   - {fileID: 189261201}
   - {fileID: 2068943522}
-  winLine: 020000000500000008000000
---- !u!114 &843869190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843869188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccee2a22aeaec25409f579adc624da69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   gameConfig: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
 --- !u!114 &843869191
 MonoBehaviour:

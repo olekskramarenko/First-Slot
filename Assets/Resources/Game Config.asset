@@ -28,3 +28,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e604ebadcaea69428971208fb354ee3, type: 2}
   - {fileID: 11400000, guid: ad241d66a1c433b47a1285abd4333eea, type: 2}
   - {fileID: 11400000, guid: ae9fe67cd34daa94babbd4e14efb0f08, type: 2}
+  winLines:
+  - {fileID: 11400000, guid: c85b0905121bb384f936d4c5b4e349f5, type: 2}
+  - {fileID: 11400000, guid: b131eca35da92f34cbdc44f4c8c350bf, type: 2}

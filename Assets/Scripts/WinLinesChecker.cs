@@ -5,10 +5,7 @@ using UnityEngine;
 public class WinLinesChecker : MonoBehaviour
 {
     [SerializeField] private Symbol[] symbols; // 12 symbols
-    //[SerializeField] private int[] winLine; // always 3 items { LIst, List, List}
-    [SerializeField] private List<int[]> winLineList;
-    //private List<Symbol> otherSymbolsLine = new List<Symbol>();
-    //private List<Symbol> winSymbolsLine = new List<Symbol>();
+    [SerializeField] private GameConfig gameConfig;
 
     private ResultsLists GetWinSymbols(int[] winLine)
     {
@@ -38,28 +35,59 @@ public class WinLinesChecker : MonoBehaviour
         }
         return resultsList;
     }
+
+    private void PlayAnimation( List<Symbol> winSymbolsLineList, List<Symbol> otherSymbolsLineList)
+    {
+        foreach (Symbol winSymbol in winSymbolsLineList)
+        {
+            winSymbol.SymbolAnimation.Play("pulse");
+        }
+        foreach (Symbol otherSymbol in otherSymbolsLineList)
+        {
+            otherSymbol.SymbolAnimation.Play("shadow");
+            //otherSymbol.SymbolAnimation.isPlaying;
+        }
+    }
+
     public void CheckWinLine()
     {
-        foreach (var winLine in winLineList)
+        var winLines = gameConfig.WinLines;
+        foreach (var winLine in winLines)
         {
+            var resultsList = GetWinSymbols(winLine.WinLine);
+            var winSymbol1 = resultsList.WinSymbolsLineList[0];
+            var winSymbol2 = resultsList.WinSymbolsLineList[1];
+            var winSymbol3 = resultsList.WinSymbolsLineList[2];
 
-            var resultsList = GetWinSymbols(winLine);
-            if (winSymbolsLine[0].SymbolType == winSymbolsLine[1].SymbolType && winSymbolsLine[1].SymbolType == winSymbolsLine[2].SymbolType)
+            if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
             {
-                print("### WINLINE FOUND " + winSymbolsLine[0] + winSymbolsLine[1] + winSymbolsLine[2]);
-                foreach (Symbol winSymbol in winSymbolsLine)
-                {
-                    winSymbol.SymbolAnimation.Play("pulse");
-                }
-                foreach (Symbol otherSymbol in otherSymbolsLine)
-                {
-                    otherSymbol.SymbolAnimation.Play("shadow");
-                    //otherSymbol.SymbolAnimation.isPlaying;
-                }
+                print("### WINLINE FOUND " + winSymbol1 + winSymbol2 + winSymbol3);
+                PlayAnimation(resultsList.WinSymbolsLineList, resultsList.OtherSymbolsLineList);
+                //foreach (Symbol winSymbol in resultsList.WinSymbolsLineList)
+                //{
+                //    winSymbol.SymbolAnimation.Play("pulse");
+                //}
+                //foreach (Symbol otherSymbol in resultsList.OtherSymbolsLineList)
+                //{
+                //    otherSymbol.SymbolAnimation.Play("shadow");
+                //    //otherSymbol.SymbolAnimation.isPlaying;
+                //}
             }
-            winSymbolsLine.Clear();
-            otherSymbolsLine.Clear();
         }
-
     }
+
+    //public void StopSymbolsAnimation()
+    //{
+    //    foreach (Symbol symbol in symbols)
+    //    {
+    //        symbol.SymbolAnimation.enabled = false;
+    //    }
+    //}
+    //public void EnableSymbolsAnimation()
+    //{
+    //    foreach (Symbol symbol in symbols)
+    //    {
+    //        symbol.SymbolAnimation.enabled = true;
+    //    }
+    //}
 }
