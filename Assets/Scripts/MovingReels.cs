@@ -74,7 +74,7 @@ public class MovingReels : MonoBehaviour
         reelsDictionary[reel].ResetSymbolReelsCounter();
         if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
         {
-            winLinesChecker.CheckWinLine();
+            winLinesChecker.ShowResult();
             FinalResult.SetNextFinalScreen();
             stopButtonRT.localScale = Vector3.zero;
             playButtonRT.localScale = Vector3.one;

@@ -51,7 +51,7 @@ public class MovingSymbols : MonoBehaviour
                     int finalImageId = FinalResult.GetFinalImageId(symbolId);
                     symbol.SymbolImage.sprite = gameConfig.Symbols[finalImageId].SymbolImage;
                     symbol.SymbolType = gameConfig.Symbols[finalImageId].SymbolType;
-                }
+                } 
                 else
                 {
                     var random = Random.Range(0, gameConfig.Symbols.Length);

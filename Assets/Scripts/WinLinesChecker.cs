@@ -36,10 +36,17 @@ public class WinLinesChecker : MonoBehaviour
         return resultsList;
     }
 
-    private void PlayAnimation( List<Symbol> winSymbolsLineList, List<Symbol> otherSymbolsLineList)
+    private void PlayAnimation(ResultsLists resultList)
     {
+        var winSymbolsLineList = resultList.WinSymbolsLineList;
+        var otherSymbolsLineList = resultList.OtherSymbolsLineList;
         foreach (Symbol winSymbol in winSymbolsLineList)
         {
+            //if (winSymbol.SymbolAnimation.isPlaying)
+            //{
+
+            //    winSymbol.SymbolAnimation.Play("pulse");
+            //}
             winSymbol.SymbolAnimation.Play("pulse");
         }
         foreach (Symbol otherSymbol in otherSymbolsLineList)
@@ -49,30 +56,32 @@ public class WinLinesChecker : MonoBehaviour
         }
     }
 
-    public void CheckWinLine()
+    public void ShowResult()
     {
         var winLines = gameConfig.WinLines;
+        StartCoroutine(WaitAndCheckLines(winLines));
+    }
+
+    private void WinLineCheck( WinLinesData winLine)
+    {
+        var resultsList = GetWinSymbols(winLine.WinLine);
+        var winSymbol1 = resultsList.WinSymbolsLineList[0];
+        var winSymbol2 = resultsList.WinSymbolsLineList[1];
+        var winSymbol3 = resultsList.WinSymbolsLineList[2];
+        if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
+        {
+            print("### WINLINE FOUND " + winSymbol1 + winSymbol2 + winSymbol3);
+            PlayAnimation(resultsList);
+        }
+    }
+
+    IEnumerator WaitAndCheckLines( WinLinesData[] winLines)
+    {
+        //yield return new WaitForSeconds(3);
         foreach (var winLine in winLines)
         {
-            var resultsList = GetWinSymbols(winLine.WinLine);
-            var winSymbol1 = resultsList.WinSymbolsLineList[0];
-            var winSymbol2 = resultsList.WinSymbolsLineList[1];
-            var winSymbol3 = resultsList.WinSymbolsLineList[2];
-
-            if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
-            {
-                print("### WINLINE FOUND " + winSymbol1 + winSymbol2 + winSymbol3);
-                PlayAnimation(resultsList.WinSymbolsLineList, resultsList.OtherSymbolsLineList);
-                //foreach (Symbol winSymbol in resultsList.WinSymbolsLineList)
-                //{
-                //    winSymbol.SymbolAnimation.Play("pulse");
-                //}
-                //foreach (Symbol otherSymbol in resultsList.OtherSymbolsLineList)
-                //{
-                //    otherSymbol.SymbolAnimation.Play("shadow");
-                //    //otherSymbol.SymbolAnimation.isPlaying;
-                //}
-            }
+            yield return new WaitUntil(() => !symbols[11].SymbolAnimation.isPlaying);
+            WinLineCheck(winLine);
         }
     }
 
