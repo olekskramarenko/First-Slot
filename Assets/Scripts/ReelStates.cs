@@ -1,5 +1,6 @@
-enum ReelState
+enum ReelStates
 {
+    ReadyForSpin,
     StartSpin,
     Spin,
     SlowDown,

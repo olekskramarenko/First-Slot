@@ -13,10 +13,10 @@ public class MovingSymbols : MonoBehaviour
     private readonly int exitPosition = 223;
     private readonly int numberOfReels = 3;
     private int[] symbolReelsCounter;
-    private ReelState reelState = ReelState.Stop;
+    private ReelStates state = ReelStates.Stop;
     private float startReelPos, fullSpinDistance;
 
-    internal ReelState ReelState { get => reelState; set => reelState = value; }
+    internal ReelStates State { get => state; set => state = value; }
     public int ReelId => reelId;
     public float StartReelPos { get => startReelPos; set => startReelPos = value; }
     public float FullSpinDistance { get => fullSpinDistance; set => fullSpinDistance = value; }
@@ -34,7 +34,7 @@ public class MovingSymbols : MonoBehaviour
             symbolReelsCounter[i] = 0;
         }
     }
-    private void ChangeSymbolAndSprite(ReelState reelState)
+    private void ChangeSymbolAndSprite(ReelStates reelState)
     {
         for (int i = 0; i < allSymbols.Length; i++)
         {
@@ -42,7 +42,7 @@ public class MovingSymbols : MonoBehaviour
             if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
             {
                 symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
-                if (reelState == ReelState.SlowDown)
+                if (reelState == ReelStates.SlowDown)
                 {
                     int symbolFinalId = symbolReelsCounter[reelId];
                     if (symbolFinalId < 3) symbolReelsCounter[reelId]++;
@@ -63,6 +63,6 @@ public class MovingSymbols : MonoBehaviour
 
     void Update()
     {
-        ChangeSymbolAndSprite(reelState);
+        ChangeSymbolAndSprite(state);
     }
 }

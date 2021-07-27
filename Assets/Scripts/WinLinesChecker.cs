@@ -6,6 +6,7 @@ public class WinLinesChecker : MonoBehaviour
 {
     [SerializeField] private Symbol[] symbols; // 12 symbols
     [SerializeField] private GameConfig gameConfig;
+    [SerializeField] private ReelsStateController reelsStateController;
 
     private ResultsLists GetWinSymbols(int[] winLine)
     {
@@ -77,21 +78,22 @@ public class WinLinesChecker : MonoBehaviour
 
     IEnumerator WaitAndCheckLines( WinLinesData[] winLines)
     {
-        //yield return new WaitForSeconds(3);
         foreach (var winLine in winLines)
         {
             yield return new WaitUntil(() => !symbols[11].SymbolAnimation.isPlaying);
             WinLineCheck(winLine);
         }
+        yield return new WaitUntil(() => !symbols[11].SymbolAnimation.isPlaying);
+        reelsStateController.StartGame();
     }
 
-    //public void StopSymbolsAnimation()
-    //{
-    //    foreach (Symbol symbol in symbols)
-    //    {
-    //        symbol.SymbolAnimation.enabled = false;
-    //    }
-    //}
+    public void StopSymbolsAnimation()
+    { 
+        foreach (Symbol symbol in symbols)
+        {
+            symbol.SymbolAnimation.Stop();
+        }
+    }
     //public void EnableSymbolsAnimation()
     //{
     //    foreach (Symbol symbol in symbols)
