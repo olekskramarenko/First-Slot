@@ -1441,6 +1441,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonsView: {fileID: 822517418}
+  movingSymbols:
+  - {fileID: 1388201200}
+  - {fileID: 405764448}
+  - {fileID: 1888169812}
 --- !u!114 &1065915704
 MonoBehaviour:
   m_ObjectHideFlags: 0

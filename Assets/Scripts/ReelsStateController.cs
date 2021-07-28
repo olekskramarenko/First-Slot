@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ReelsStateController : MonoBehaviour
 {
-    private ReelStates reelState = ReelStates.Stop;
+    private ReelStates reelState;
     [SerializeField] private ButtonsView buttonsView;
-     
+    [SerializeField] private MovingSymbols[] movingSymbols;
+
     internal ReelStates ReelState { get => reelState; set => reelState = value; }
 
     public void StartGame()
@@ -32,15 +31,17 @@ public class ReelsStateController : MonoBehaviour
         reelState = ReelStates.SlowDown;
         buttonsView.SetStopBtnNonInteractable();
     }
-    public void EndOfSpinning()
-    {
-        reelState = ReelStates.Stop;
-    }
     public void ForceStopped()
     {
         reelState = ReelStates.ForceStop;
         buttonsView.SetStopBtnNonInteractable();
     }
 
-
+    void Update()
+    {
+        foreach ( MovingSymbols movingSymbol in movingSymbols)
+        {
+            movingSymbol.ChangeSymbolAndSprite();
+        }
+    }
 }

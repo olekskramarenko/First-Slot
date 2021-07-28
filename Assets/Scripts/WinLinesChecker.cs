@@ -27,7 +27,7 @@ public class WinLinesChecker : MonoBehaviour
             {
                 resultsList.WinSymbolsLineList.Add(symbol);
                 coincidence = true;
-                /*return;*/ // Todo: problem with double values of winLines
+                /*return;*/ // Todo: may be problem with double values of winLines
             }
         }
         if (!coincidence)
@@ -43,17 +43,11 @@ public class WinLinesChecker : MonoBehaviour
         var otherSymbolsLineList = resultList.OtherSymbolsLineList;
         foreach (Symbol winSymbol in winSymbolsLineList)
         {
-            //if (winSymbol.SymbolAnimation.isPlaying)
-            //{
-
-            //    winSymbol.SymbolAnimation.Play("pulse");
-            //}
             winSymbol.SymbolAnimation.Play("pulse");
         }
         foreach (Symbol otherSymbol in otherSymbolsLineList)
         {
             otherSymbol.SymbolAnimation.Play("shadow");
-            //otherSymbol.SymbolAnimation.isPlaying;
         }
     }
 
@@ -63,7 +57,7 @@ public class WinLinesChecker : MonoBehaviour
         StartCoroutine(WaitAndCheckLines(winLines));
     }
 
-    private void WinLineCheck( WinLinesData winLine)
+    private void WinLineCheck(WinLinesData winLine)
     {
         var resultsList = GetWinSymbols(winLine.WinLine);
         var winSymbol1 = resultsList.WinSymbolsLineList[0];
@@ -71,34 +65,18 @@ public class WinLinesChecker : MonoBehaviour
         var winSymbol3 = resultsList.WinSymbolsLineList[2];
         if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
         {
-            print("### WINLINE FOUND " + winSymbol1 + winSymbol2 + winSymbol3);
             PlayAnimation(resultsList);
         }
     }
 
-    IEnumerator WaitAndCheckLines( WinLinesData[] winLines)
+    IEnumerator WaitAndCheckLines(WinLinesData[] winLines)
     {
         foreach (var winLine in winLines)
         {
-            yield return new WaitUntil(() => !symbols[11].SymbolAnimation.isPlaying);
+            yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
             WinLineCheck(winLine);
         }
-        yield return new WaitUntil(() => !symbols[11].SymbolAnimation.isPlaying);
+        yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
         reelsStateController.StartGame();
     }
-
-    public void StopSymbolsAnimation()
-    { 
-        foreach (Symbol symbol in symbols)
-        {
-            symbol.SymbolAnimation.Stop();
-        }
-    }
-    //public void EnableSymbolsAnimation()
-    //{
-    //    foreach (Symbol symbol in symbols)
-    //    {
-    //        symbol.SymbolAnimation.enabled = true;
-    //    }
-    //}
 }
