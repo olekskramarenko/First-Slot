@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "New SymbolData", menuName = "Symbol Data", order = 51)]
 public class SymbolData : ScriptableObject
 {
-    [SerializeField] private int symbolId;
-    [SerializeField] private int reelId;
+    [SerializeField] private Sprite symbolImage;
+    [SerializeField] private float symbolCost;
+    [SerializeField] private SymbolType symbolType;
 
-    public int ReelId { get => reelId;}
-    public int SymbolId { get => symbolId;}
+    public Sprite SymbolImage => symbolImage;
+
+    public float SymbolCost => symbolCost;
+
+    internal SymbolType SymbolType => symbolType;
 }

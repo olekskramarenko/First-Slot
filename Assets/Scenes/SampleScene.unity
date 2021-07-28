@@ -293,6 +293,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2067729591}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: gameConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: mainCanvas
       value: 
       objectReference: {fileID: 1670087919}
@@ -545,6 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccee2a22aeaec25409f579adc624da69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameConfig: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
 --- !u!114 &168947667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,6 +867,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2067729591}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: gameConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: mainCanvas
       value: 
       objectReference: {fileID: 1670087919}
@@ -1048,8 +1057,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1194259402}
   - {fileID: 1207686637}
+  - {fileID: 1194259402}
   m_Father: {fileID: 1670087919}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1261,7 +1270,7 @@ RectTransform:
   m_Children:
   - {fileID: 1589725698}
   m_Father: {fileID: 752443418}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8554795, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -1488,11 +1497,11 @@ RectTransform:
   m_Children:
   - {fileID: 1080475481}
   m_Father: {fileID: 752443418}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8554795, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -1.5, y: 0.0000009536743}
+  m_AnchoredPosition: {x: -1.5, y: 0}
   m_SizeDelta: {x: -33.119995, y: 84.921}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1358926810 stripped
@@ -2038,6 +2047,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2067729591}
     - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+      propertyPath: gameConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: a8e39592ecc73a34da7a41f36fe5b2fd, type: 2}
+    - target: {fileID: 2824316113199055312, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
       propertyPath: mainCanvas
       value: 
       objectReference: {fileID: 1670087919}
@@ -2386,26 +2399,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20e3d8e88f6a0a41a7d5db8459073d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  easeStart: 8
-  easeWay: 1
-  easeStop: 9
   allReelsRT:
   - {fileID: 1358926810}
   - {fileID: 1734438611}
   - {fileID: 1371388542}
-  FinalResult: {fileID: 168947666}
-  delay: 0.4
-  timeStart: 1
-  timeWay: 2.01
-  timeStop: 0.43
-  playButton: {fileID: 1194259401}
-  stopButton: {fileID: 1207686633}
-  symbolHeight: 200
-  symbolsCount: 4
   MovingSymbols:
   - {fileID: 1388201200}
   - {fileID: 405764448}
   - {fileID: 1888169812}
+  FinalResult: {fileID: 168947666}
+  delay: 0.4
+  timeStart: 1
+  timeWay: 2.29
+  timeStop: 0.43
+  easeStart: 8
+  easeWay: 1
+  easeStop: 9
+  playButton: {fileID: 1194259403}
+  stopButton: {fileID: 1207686634}
+  playButtonRT: {fileID: 1194259402}
+  stopButtonRT: {fileID: 1207686637}
+  symbolHeight: 200
+  symbolsCount: 4
 --- !u!114 &2067729592
 MonoBehaviour:
   m_ObjectHideFlags: 0

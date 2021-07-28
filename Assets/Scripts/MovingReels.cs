@@ -1,109 +1,106 @@
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
-
+using System.Collections.Generic;
 
 public class MovingReels : MonoBehaviour
 {
-    [SerializeField] private Ease easeStart, easeWay, easeStop;
-    [SerializeField] private RectTransform[] allReelsRT; 
+
+    [SerializeField] private RectTransform[] allReelsRT;
+    [SerializeField] private MovingSymbols[] MovingSymbols;
     [SerializeField] private FinalResult FinalResult;
     [SerializeField] private float delay;
     [Range(0, 10)] [SerializeField] private float timeStart, timeWay, timeStop;
-    [SerializeField] private GameObject playButton, stopButton;
+    [SerializeField] private Ease easeStart, easeWay, easeStop;
+    [SerializeField] private Button playButton, stopButton;
+    [SerializeField] private RectTransform playButtonRT, stopButtonRT;
     [SerializeField] private float symbolHeight;
     [SerializeField] private int symbolsCount;
-    [SerializeField] private MovingSymbols[] MovingSymbols;
-    private bool[] slowDownIsActive;
-    private float[] startReelPosition, fullReelDistance;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
-    private readonly float distanceStop = 1; // Важно, при значении 1, будут показываться верные финальные экраны
+    private readonly float distanceStop = 1; // Important, value 1 nedded for correct showing final screens
+    private Dictionary<RectTransform, MovingSymbols> reelsDictionary;
+
 
     private void Start()
     {
-        stopButton.SetActive(false);
-        startReelPosition = new float[allReelsRT.Length];
-        fullReelDistance = new float[allReelsRT.Length];
-        slowDownIsActive = new bool[allReelsRT.Length];
+        stopButton.interactable = false;
+        stopButtonRT.localScale = Vector3.zero;
+        reelsDictionary = new Dictionary<RectTransform, MovingSymbols>();
+        for (int i = 0; i < allReelsRT.Length; i++)
+        {
+            reelsDictionary.Add(allReelsRT[i], MovingSymbols[i]);
+        }
     }
     public void MovingStart()
     {
-        playButton.SetActive(false);
+        playButton.interactable = false;
+        playButtonRT.localScale = Vector3.zero;
+        stopButtonRT.localScale = Vector3.one;
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];
-            var index = i; // Для корректной работы счетчика циклов вне цикла
-            slowDownIsActive[index] = false;
-            startReelPosition[index] = reel.localPosition.y;
-            reel.DOAnchorPosY(-(fullReelDistance[index]+(distanceStart * symbolHeight * symbolsCount)), timeStart)
+            reelsDictionary[reel].ReelState = ReelState.Spin;
+            reelsDictionary[reel].StartReelPos = reel.localPosition.y;
+            reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + (distanceStart * symbolHeight * symbolsCount)), timeStart)
                 .SetDelay(i * delay)
                 .SetEase(easeStart)
-                .OnComplete(() => MovingWay(reel, index));
+                .OnComplete(() => MovingWay(reel));
         }
     }
-    private void MovingWay(RectTransform reel, int index)
+    private void MovingWay(RectTransform reel)
     {
-        stopButton.SetActive(true);
+        stopButton.interactable = true;
         float previousDistance = (distanceWay + distanceStart) * symbolHeight * symbolsCount;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance), timeWay)
+        reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + previousDistance), timeWay)
             .SetEase(easeWay)
-            .OnComplete(() => MovingSlowDown(reel, index, previousDistance));
+            .OnComplete(() => MovingSlowDown(reel, previousDistance));
     }
-    private void MovingSlowDown(RectTransform reel, int index, float previousDistance)
+    private void MovingSlowDown(RectTransform reel, float previousDistance)
     {
-        if (!playButton.activeSelf)
-        {
-            stopButton.SetActive(false); 
-        }
-        slowDownIsActive[index] = true;
+        stopButton.interactable = false;
+        reelsDictionary[reel].ReelState = ReelState.SlowDown;
         DOTween.Kill(reel);
-        reel.DOAnchorPosY(-(fullReelDistance[index] + previousDistance + (distanceStop  * symbolHeight * symbolsCount)), timeStop, true)
+        reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + previousDistance + (distanceStop * symbolHeight * symbolsCount)), timeStop, true)
             .SetEase(easeStop)
-            .OnComplete(() => SetSymbolDefaultPosition(reel, index));
+            .OnComplete(() => SetSymbolDefaultPosition(reel));
     }
-    private void SetSymbolDefaultPosition(RectTransform reel, int index)
+    private void SetSymbolDefaultPosition(RectTransform reel)
     {
         var finalReelPosition = reel.localPosition.y;
-        var lastSpinDistance = -(finalReelPosition - startReelPosition[index]);
-        fullReelDistance[index] += lastSpinDistance;
-        MovingSymbols[index].ResetSymbolReelsCounter();
-        if (!playButton.activeSelf && index == 2)
+        var lastSpinDistance = -(finalReelPosition - reelsDictionary[reel].StartReelPos);
+        reelsDictionary[reel].FullSpinDistance += lastSpinDistance;
+        reelsDictionary[reel].ResetSymbolReelsCounter();
+        if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
         {
-            playButton.SetActive(true);
-            stopButton.SetActive(false);
-        }
-        if (index == allReelsRT.Length-1)
-        {
+            stopButtonRT.localScale = Vector3.zero;
+            playButtonRT.localScale = Vector3.one;
+            playButton.interactable = true;
             FinalResult.SetNextFinalScreen();
         }
     }
 
     public void MovingStop()
     {
-        stopButton.SetActive(false);
+        stopButton.interactable = false;
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];
             var index = i;
             DOTween.Kill(reel);
-            var distBeforeStopPressed = -(reel.localPosition.y - startReelPosition[index]);
+            var distBeforeStopPressed = -(reel.localPosition.y - reelsDictionary[reel].StartReelPos);
             var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeStopPressed);
-            reel.DOAnchorPosY(-(fullReelDistance[index] + correctedSymbolsDist), 0.1f)
+            reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist), 0.1f)
             .SetEase(easeWay)
-            .OnComplete(() => MovingSlowDown(reel, index, correctedSymbolsDist));
-        } 
+            .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist));
+        }
     }
-
-    private float CalculateCorrectSymbolsDist(float distBeforeStopPressed) 
+ 
+    private float CalculateCorrectSymbolsDist(float distBeforeStopPressed)
     {
         float correctedSymbolsDist;
         correctedSymbolsDist = Mathf.Ceil(distBeforeStopPressed / symbolHeight) * symbolHeight;
         return correctedSymbolsDist;
-    }
-
-    public bool GetSlowDownStatus(int reelId)
-    {
-            return slowDownIsActive[reelId];
     }
 }
