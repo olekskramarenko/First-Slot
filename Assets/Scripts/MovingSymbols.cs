@@ -47,6 +47,7 @@ public class MovingSymbols : MonoBehaviour
                     int finalImageId = FinalResult.GetFinalImageId(symbolId);
                     symbol.SymbolImage.sprite = gameConfig.Symbols[finalImageId].SymbolImage;
                     symbol.SymbolType = gameConfig.Symbols[finalImageId].SymbolType;
+                    symbol.SymbolCost = gameConfig.Symbols[finalImageId].SymbolCost;
                 }
                 else
                 {

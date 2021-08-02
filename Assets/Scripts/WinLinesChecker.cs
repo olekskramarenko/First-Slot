@@ -7,6 +7,8 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private Symbol[] symbols; // 12 symbols
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private ReelsStateController reelsStateController;
+    [SerializeField] private PrizeCalculation prizeCalculation;
+    [SerializeField] private PrizeAnimator prizeAnimator;
 
     private ResultsLists GetWinSymbols(int[] winLine)
     {
@@ -66,6 +68,7 @@ public class WinLinesChecker : MonoBehaviour
         if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
         {
             PlayAnimation(resultsList);
+            prizeCalculation.CalculatePrize(resultsList.WinSymbolsLineList);
         }
     }
 
@@ -77,6 +80,7 @@ public class WinLinesChecker : MonoBehaviour
             WinLineCheck(winLine);
         }
         yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
+        prizeAnimator.UpdatePrizeCounter();
         reelsStateController.StartGame();
     }
 }
