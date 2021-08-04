@@ -6,6 +6,7 @@ public class Symbol : MonoBehaviour
     [SerializeField] private Image symbolImage;
     [SerializeField] private RectTransform symbolRT;
     [SerializeField] private Animation symbolAnimation;
+    [SerializeField] private new ParticleSystem particleSystem;
     private int symbolFinalId;
     private SymbolType symbolType;
     private int symbolCost;
@@ -15,5 +16,6 @@ public class Symbol : MonoBehaviour
     public int SymbolFinalId { get => symbolFinalId; set => symbolFinalId = value; }
     public Animation SymbolAnimation { get => symbolAnimation; set => symbolAnimation = value; }
     public int SymbolCost { get => symbolCost; set => symbolCost = value; }
+    public ParticleSystem ParticleSystem { get => particleSystem; set => particleSystem = value; }
     internal SymbolType SymbolType { get => symbolType; set => symbolType = value; }
 }

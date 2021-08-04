@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class PrizeCalculation : MonoBehaviour
 {
-    //[SerializeField] private WinLinesChecker winLinesChecker;
-    //[SerializeField] private Text counterText;
     private int totalPrize;
 
     public int TotalPrize => totalPrize;
@@ -15,7 +13,6 @@ public class PrizeCalculation : MonoBehaviour
     {
         var prize = winSymbols[0].SymbolCost;
         totalPrize += prize;
-        print("### totalPrize = " + totalPrize);
     }
 } 
 

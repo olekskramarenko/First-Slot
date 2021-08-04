@@ -46,6 +46,7 @@ public class WinLinesChecker : MonoBehaviour
         foreach (Symbol winSymbol in winSymbolsLineList)
         {
             winSymbol.SymbolAnimation.Play("pulse");
+            winSymbol.ParticleSystem.Play();
         }
         foreach (Symbol otherSymbol in otherSymbolsLineList)
         {
