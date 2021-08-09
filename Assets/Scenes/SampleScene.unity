@@ -4814,6 +4814,7 @@ MonoBehaviour:
   movingReels: {fileID: 2067729591}
   popUpsController: {fileID: 408439595}
   reelsStateController: {fileID: 1065915703}
+  numberOfFreeSpins: 4
 --- !u!4 &2085124570
 Transform:
   m_ObjectHideFlags: 0

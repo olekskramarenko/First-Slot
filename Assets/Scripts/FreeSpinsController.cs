@@ -6,11 +6,13 @@ public class FreeSpinsController : MonoBehaviour
     [SerializeField] private MovingReels movingReels;
     [SerializeField] private PopUpsController popUpsController;
     [SerializeField] private ReelsStateController reelsStateController;
-    private int freeSpinsCounter = 3;
+    [SerializeField] private int numberOfFreeSpins;
+    private int freeSpinsCounter;
 
     public void StartFreeSpins()
     {
         popUpsController.ShowFreeSpinsStart();
+        freeSpinsCounter = numberOfFreeSpins;
         popUpsController.CounterText.text = freeSpinsCounter.ToString();
         reelsStateController.FreeSpinsGame = true;
     }
@@ -21,25 +23,25 @@ public class FreeSpinsController : MonoBehaviour
     } 
 
     IEnumerator WaitAndStartAutoSpin()
-    {
-        
+    { 
         while ( freeSpinsCounter > 0)
         {
             yield return new WaitUntil(() => reelsStateController.ReelState == ReelStates.ReadyForSpin);
             movingReels.MovingStart();
             freeSpinsCounter--;
             popUpsController.CounterText.text = freeSpinsCounter.ToString();
-            if ( freeSpinsCounter == 0 )
-            {
-                FinishFreeSpins();
-            }
-        } 
+        }
+        if (freeSpinsCounter == 0)
+        {
+            reelsStateController.FreeSpinsGame = false;
+            yield return new WaitUntil(() => reelsStateController.ReelState == ReelStates.ReadyForSpin);
+            FinishFreeSpins();
+        }
     }
 
     private void FinishFreeSpins()
     {
-        reelsStateController.FreeSpinsGame = false;
         popUpsController.CloseSpinsCounter();
+        freeSpinsCounter = numberOfFreeSpins;
     }
-
 }
