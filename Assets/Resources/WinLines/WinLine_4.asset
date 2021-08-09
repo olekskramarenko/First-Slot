@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca9ddb03017768941bcd29c2b3f80141, type: 3}
-  m_Name: Final Screen 2
+  m_Script: {fileID: 11500000, guid: 9fd0680055828814284de7324b08c77c, type: 3}
+  m_Name: WinLine_4
   m_EditorClassIdentifier: 
-  finalSymbols: 080000000600000003000000030000000400000002000000080000000300000008000000020000000100000003000000
+  winLine: 02000000060000000a000000

@@ -7,5 +7,6 @@ enum SymbolType
     iceOrc,
     rockClimber,
     santa,
-    tent
+    tent,
+    scatter
 }

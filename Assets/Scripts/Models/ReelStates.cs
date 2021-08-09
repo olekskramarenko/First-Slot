@@ -5,5 +5,5 @@ enum ReelStates
     Spin,
     SlowDown,
     ForceStop,
-    Stop
+    Stop,
 }

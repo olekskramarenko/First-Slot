@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class ReelsStateController : MonoBehaviour
 {
-    private ReelStates reelState;
+
     [SerializeField] private ButtonsView buttonsView;
     [SerializeField] private MovingSymbols[] movingSymbols;
+    private ReelStates reelState;
+    private bool freeSpinsGame;
 
     internal ReelStates ReelState { get => reelState; set => reelState = value; }
+    public bool FreeSpinsGame { get => freeSpinsGame; set => freeSpinsGame = value; }
 
     public void StartGame()
     {
         reelState = ReelStates.ReadyForSpin;
+        if (freeSpinsGame)
+        {
+            return;
+        }
         buttonsView.DeactivateStopBtn();
         buttonsView.ActivatePlayBtn();
     }
