@@ -44,6 +44,12 @@ public class ReelsStateController : MonoBehaviour
         buttonsView.SetStopBtnNonInteractable();
     }
 
+    public void ResultShowing()
+    {
+        reelState = ReelStates.ResultShowing;
+        buttonsView.SetStopBtnInteractable();
+    }
+
     void Update()
     {
         foreach ( MovingSymbols movingSymbol in movingSymbols)

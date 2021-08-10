@@ -23,7 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 714c2c0ad7ab5504285817b278881c2a, type: 2}
   - {fileID: 11400000, guid: bffd1da2648d58940868c9cdccd16018, type: 2}
   finalScreens:
-  - {fileID: 11400000, guid: e9013e8e3b201954893dfec94cf2002c, type: 2}
+  - {fileID: 11400000, guid: 0fc750ebdc023744999460e392f5337e, type: 2}
   - {fileID: 11400000, guid: 0fc750ebdc023744999460e392f5337e, type: 2}
   - {fileID: 11400000, guid: a9a28522cb6096d43b821e244a78cbff, type: 2}
   - {fileID: 11400000, guid: 7e604ebadcaea69428971208fb354ee3, type: 2}

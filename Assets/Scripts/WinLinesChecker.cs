@@ -42,20 +42,30 @@ public class WinLinesChecker : MonoBehaviour
         return resultsList;
     }
 
-    private void PlayAnimation(ResultsLists resultList)
-    {
-        var winSymbolsLineList = resultList.WinSymbolsLineList;
-        var otherSymbolsLineList = resultList.OtherSymbolsLineList;
-        foreach (Symbol winSymbol in winSymbolsLineList)
-        {
-            winSymbol.SymbolAnimation.Play("pulse");
-            winSymbol.ParticleSystem.Play();
-        }
-        foreach (Symbol otherSymbol in otherSymbolsLineList)
-        {
-            otherSymbol.SymbolAnimation.Play("shadow");
-        }
-    }
+    //private void PlayAnimation(ResultsLists resultList)
+    //{
+    //    var winSymbolsLineList = resultList.WinSymbolsLineList;
+    //    var otherSymbolsLineList = resultList.OtherSymbolsLineList;
+    //    foreach (Symbol winSymbol in winSymbolsLineList)
+    //    {
+    //        winSymbol.SymbolAnimation.Play("pulse");
+    //        winSymbol.ParticleSystem.Play();
+    //    }
+    //    foreach (Symbol otherSymbol in otherSymbolsLineList)
+    //    {
+    //        otherSymbol.SymbolAnimation.Play("shadow");
+    //    }
+    //}
+
+    //public void StopAnimation()
+    //{
+    //    foreach ( Symbol symbol in symbols)
+    //    {
+    //        symbol.SymbolAnimation.Stop("pulse");
+    //        symbol.SymbolAnimation.Stop("shadow");
+    //        symbol.ParticleSystem.Stop();
+    //    }
+    //}
 
     public void ShowResult()
     {
@@ -71,7 +81,8 @@ public class WinLinesChecker : MonoBehaviour
         var winSymbol3 = resultsList.WinSymbolsLineList[2];
         if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
         {
-            PlayAnimation(resultsList);
+            //PlayAnimation(resultsList);
+            prizeAnimator.PlayWinAnimation(resultsList);
             prizeCalculation.CalculatePrize(resultsList.WinSymbolsLineList);
         }
     }
@@ -80,13 +91,13 @@ public class WinLinesChecker : MonoBehaviour
     {
         foreach (var winLine in winLines)
         {
-            yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
+            yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying);
             WinLineCheck(winLine);
         }
-        yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
+        yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying);
         prizeAnimator.UpdatePrizeCounter();
-        reelsStateController.StartGame();
         CheckScatters();
+        reelsStateController.StartGame();
     }
 
     private void CheckScatters()

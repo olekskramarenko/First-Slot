@@ -74,12 +74,13 @@ public class MovingReels : MonoBehaviour
         reelsDictionary[reel].ResetSymbolReelsCounter();
         if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
         {
+            reelStateController.ResultShowing();
             winLinesChecker.ShowResult();
             FinalResult.SetNextFinalScreen();
         }
     }
 
-    public void MovingStop()
+    private void MovingStop()
     {
         reelStateController.ForceStopped();
         for (int i = 0; i < allReelsRT.Length; i++)
@@ -91,6 +92,25 @@ public class MovingReels : MonoBehaviour
             reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist), 0)
             .SetEase(easeWay)
             .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist));
+        }
+    }
+
+    public void DoForceStop()
+    {
+        if (!reelStateController.FreeSpinsGame)
+        {
+            MovingStop();
+        }
+        else
+        {
+            if ( reelStateController.ReelState == ReelStates.Spin)
+            {
+                MovingStop();
+            }
+            else if ( reelStateController.ReelState == ReelStates.ResultShowing)
+            {
+                //winLinesChecker.StopAnimation();
+            }
         }
     }
 

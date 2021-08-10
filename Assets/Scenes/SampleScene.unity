@@ -149,7 +149,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4293523084630455741, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
   m_PrefabInstance: {fileID: 689955432}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 413116583}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d4710f34027c8a4aa572d5564994049, type: 3}
@@ -1275,28 +1275,6 @@ MonoBehaviour:
   freeSpinsStartRT: {fileID: 1582400118}
   counterText: {fileID: 678062215}
   freeSpinsController: {fileID: 2085124569}
---- !u!1 &413116583 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3528661528081101861, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
-  m_PrefabInstance: {fileID: 689955432}
-  m_PrefabAsset: {fileID: 0}
---- !u!111 &413116585
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 413116583}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: e249830c0ce97c74ca12a48adce0f44c, type: 2}
-  - {fileID: 7400000, guid: 7fbedecf5e948504586f6ade34840fd2, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,6 +1466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prizeText: {fileID: 1379560231}
   prizeCalculation: {fileID: 1403948314}
+  symbols: []
 --- !u!1 &645839343
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,6 +2200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5726373671805788014, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
+    - {fileID: 6742072085395788284, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
 --- !u!114 &702795870 stripped
 MonoBehaviour:
@@ -3043,7 +3023,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2067729591}
         m_TargetAssemblyTypeName: MovingReels, Assembly-CSharp
-        m_MethodName: MovingStop
+        m_MethodName: DoForceStop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3496,7 +3476,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4293523084630455741, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
   m_PrefabInstance: {fileID: 1781685460}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862088432}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d4710f34027c8a4aa572d5564994049, type: 3}
@@ -3732,7 +3712,7 @@ Animation:
   - {fileID: 7400000, guid: e249830c0ce97c74ca12a48adce0f44c, type: 2}
   - {fileID: 7400000, guid: 7fbedecf5e948504586f6ade34840fd2, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1 &1670087913
@@ -4504,28 +4484,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2320888377644153366, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
   m_PrefabInstance: {fileID: 1781685460}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1862088432 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3528661528081101861, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}
-  m_PrefabInstance: {fileID: 1781685460}
-  m_PrefabAsset: {fileID: 0}
---- !u!111 &1862088434
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862088432}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: e249830c0ce97c74ca12a48adce0f44c, type: 2}
-  - {fileID: 7400000, guid: 7fbedecf5e948504586f6ade34840fd2, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!224 &1871307278 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 154669764630066994, guid: eb6e5411c8080b048897f004a73e9d46, type: 3}

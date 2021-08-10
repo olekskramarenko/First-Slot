@@ -6,4 +6,5 @@ enum ReelStates
     SlowDown,
     ForceStop,
     Stop,
+    ResultShowing
 }

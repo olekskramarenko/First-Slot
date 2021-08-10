@@ -11,10 +11,10 @@ public class FreeSpinsController : MonoBehaviour
 
     public void StartFreeSpins()
     {
+        reelsStateController.FreeSpinsGame = true;
         popUpsController.ShowFreeSpinsStart();
         freeSpinsCounter = numberOfFreeSpins;
         popUpsController.CounterText.text = freeSpinsCounter.ToString();
-        reelsStateController.FreeSpinsGame = true;
     }
 
     public void StartAutoSpins()
