@@ -103,11 +103,11 @@ public class MovingReels : MonoBehaviour
         }
         else
         {
-            if ( reelStateController.ReelState == ReelStates.Spin)
+            if (reelStateController.ReelState == ReelStates.Spin)
             {
                 MovingStop();
             }
-            else if ( reelStateController.ReelState == ReelStates.ResultShowing)
+            else if (reelStateController.ReelState == ReelStates.ResultShowing)
             {
                 winLinesChecker.StopAnimation();
             }

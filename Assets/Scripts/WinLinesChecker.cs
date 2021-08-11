@@ -1,6 +1,5 @@
 using System.Collections;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WinLinesChecker : MonoBehaviour
@@ -42,21 +41,6 @@ public class WinLinesChecker : MonoBehaviour
         return resultsList;
     }
 
-    //private void PlayAnimation(ResultsLists resultList)
-    //{
-    //    var winSymbolsLineList = resultList.WinSymbolsLineList;
-    //    var otherSymbolsLineList = resultList.OtherSymbolsLineList;
-    //    foreach (Symbol winSymbol in winSymbolsLineList)
-    //    {
-    //        winSymbol.SymbolAnimation.Play("pulse");
-    //        winSymbol.ParticleSystem.Play();
-    //    }
-    //    foreach (Symbol otherSymbol in otherSymbolsLineList)
-    //    {
-    //        otherSymbol.SymbolAnimation.Play("shadow");
-    //    }
-    //}
-
     public void StopAnimation()
     {
         prizeAnimator.StopWinAnimation();
@@ -76,7 +60,6 @@ public class WinLinesChecker : MonoBehaviour
         var winSymbol3 = resultsList.WinSymbolsLineList[2];
         if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
         {
-            //PlayAnimation(resultsList);
             prizeAnimator.PlayWinAnimation(resultsList);
             prizeCalculation.CalculatePrize(resultsList.WinSymbolsLineList);
         }
@@ -102,9 +85,7 @@ public class WinLinesChecker : MonoBehaviour
         bool threeScattersFound = Array.TrueForAll(scatterOnReels, value => value == true);
         if (threeScattersFound)
         {
-            print("### threeScattersFound " + scatterOnReels);
             freeSpinsController.StartFreeSpins();
-
         };
 
     }

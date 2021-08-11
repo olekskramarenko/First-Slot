@@ -8,10 +8,11 @@ public class PopUpsController : MonoBehaviour
     [SerializeField] private Image shadowImage;
     [SerializeField] private RectTransform freeSpinsCounterRT;
     [SerializeField] private RectTransform freeSpinsStartRT;
-    [SerializeField] private Text counterText;
+    [SerializeField] private RectTransform freeSpinsResultRT;
+    [SerializeField] private Text spinsLeftText, prizeForFSText;
     [SerializeField] private FreeSpinsController freeSpinsController;
 
-    public Text CounterText { get => counterText; set => counterText = value; }
+    public Text CounterText { get => spinsLeftText; set => spinsLeftText = value; }
 
     public void ShowFreeSpinsStart()
     {

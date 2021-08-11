@@ -7,6 +7,7 @@ public class PrizeAnimator : MonoBehaviour
     [SerializeField] private Text prizeText;
     [SerializeField] private PrizeCalculation prizeCalculation;
     [SerializeField] private Symbol[] symbols;
+    [SerializeField] private float forwardScale, pulseScale, symbolsFade, animTime;
     private int prevPrize = 0;
     private bool isAnimPlaying;
     private bool isStopPushed;
@@ -33,26 +34,25 @@ public class PrizeAnimator : MonoBehaviour
             isAnimPlaying = true;
             winSymbol.ParticleSystem.Play();
             var symbolRT = winSymbol.SymbolRT;
-            symbolRT.DOScale(1.2f, 0.8f).OnComplete(() =>
-            {
-                symbolRT.DOScale(1.06f, 0.4f).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
-                {
-                    symbolRT.DOScale(1, 0.8f).OnComplete(() =>
-                    {
-                        isAnimPlaying = false;
-                    });
-                });
-            });
+            symbolRT.DOScale(forwardScale, animTime / 3).OnComplete(() =>
+              {
+                  symbolRT.DOScale(pulseScale, animTime / 6).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
+                  {
+                      symbolRT.DOScale(1, animTime / 3).OnComplete(() =>
+                      {
+                          isAnimPlaying = false;
+                      });
+                  });
+              });
         }
         foreach (Symbol otherSymbol in otherSymbolsLineList)
         {
-            //otherSymbol.SymbolAnimation.Play("shadow");
             var image = otherSymbol.SymbolImage;
-            image.DOFade( 0.31f, 0.4f).OnComplete(()=> 
+            image.DOFade(symbolsFade, animTime / 6).OnComplete(() =>
             {
-                image.DOFade(0.31f, 1.5f).OnComplete(() => 
+                image.DOFade(symbolsFade, animTime / 1.6f).OnComplete(() =>
                 {
-                    image.DOFade(1, 0.4f);
+                    image.DOFade(1, animTime / 6);
                 });
             });
         }
@@ -61,7 +61,7 @@ public class PrizeAnimator : MonoBehaviour
     public void StopWinAnimation()
     {
         isStopPushed = true;
-        foreach ( Symbol symbol in symbols)
+        foreach (Symbol symbol in symbols)
         {
             DOTween.Kill(symbol.SymbolRT);
             DOTween.Kill(symbol.SymbolImage);
