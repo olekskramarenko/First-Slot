@@ -1466,7 +1466,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prizeText: {fileID: 1379560231}
   prizeCalculation: {fileID: 1403948314}
-  symbols: []
+  symbols:
+  - {fileID: 1143518021}
+  - {fileID: 44906411}
+  - {fileID: 1472917547}
+  - {fileID: 1871307279}
+  - {fileID: 1732964137}
+  - {fileID: 1557078818}
+  - {fileID: 981358612}
+  - {fileID: 314935300}
+  - {fileID: 1736550928}
+  - {fileID: 21525469}
+  - {fileID: 189261201}
+  - {fileID: 2068943522}
 --- !u!1 &645839343
 GameObject:
   m_ObjectHideFlags: 0

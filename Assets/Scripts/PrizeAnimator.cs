@@ -9,8 +9,10 @@ public class PrizeAnimator : MonoBehaviour
     [SerializeField] private Symbol[] symbols;
     private int prevPrize = 0;
     private bool isAnimPlaying;
+    private bool isStopPushed;
 
     public bool IsAnimPlaying { get => isAnimPlaying; set => isAnimPlaying = value; }
+    public bool IsStopPushed { get => isStopPushed; set => isStopPushed = value; }
 
     public void UpdatePrizeCounter()
     {
@@ -21,14 +23,13 @@ public class PrizeAnimator : MonoBehaviour
             prevPrize = prize;
         }
     }
-
     public void PlayWinAnimation(ResultsLists resultList)
     {
+        if (isStopPushed) return;
         var winSymbolsLineList = resultList.WinSymbolsLineList;
         var otherSymbolsLineList = resultList.OtherSymbolsLineList;
         foreach (Symbol winSymbol in winSymbolsLineList)
         {
-            //winSymbol.SymbolAnimation.Play("pulse");
             isAnimPlaying = true;
             winSymbol.ParticleSystem.Play();
             var symbolRT = winSymbol.SymbolRT;
@@ -57,5 +58,17 @@ public class PrizeAnimator : MonoBehaviour
         }
     }
 
-
+    public void StopWinAnimation()
+    {
+        isStopPushed = true;
+        foreach ( Symbol symbol in symbols)
+        {
+            DOTween.Kill(symbol.SymbolRT);
+            DOTween.Kill(symbol.SymbolImage);
+            symbol.SymbolRT.DOScale(1, 0.1f);
+            symbol.SymbolImage.DOFade(1, 0.1f);
+            symbol.ParticleSystem.Stop();
+        }
+        isAnimPlaying = false;
+    }
 }

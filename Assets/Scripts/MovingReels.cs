@@ -97,7 +97,7 @@ public class MovingReels : MonoBehaviour
 
     public void DoForceStop()
     {
-        if (!reelStateController.FreeSpinsGame)
+        if (!reelStateController.FreeSpinsGame & reelStateController.ReelState != ReelStates.ResultShowing)
         {
             MovingStop();
         }
@@ -109,7 +109,7 @@ public class MovingReels : MonoBehaviour
             }
             else if ( reelStateController.ReelState == ReelStates.ResultShowing)
             {
-                //winLinesChecker.StopAnimation();
+                winLinesChecker.StopAnimation();
             }
         }
     }

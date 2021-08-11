@@ -57,15 +57,10 @@ public class WinLinesChecker : MonoBehaviour
     //    }
     //}
 
-    //public void StopAnimation()
-    //{
-    //    foreach ( Symbol symbol in symbols)
-    //    {
-    //        symbol.SymbolAnimation.Stop("pulse");
-    //        symbol.SymbolAnimation.Stop("shadow");
-    //        symbol.ParticleSystem.Stop();
-    //    }
-    //}
+    public void StopAnimation()
+    {
+        prizeAnimator.StopWinAnimation();
+    }
 
     public void ShowResult()
     {
@@ -91,13 +86,14 @@ public class WinLinesChecker : MonoBehaviour
     {
         foreach (var winLine in winLines)
         {
-            yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying);
+            yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
             WinLineCheck(winLine);
         }
-        yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying);
+        yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
         prizeAnimator.UpdatePrizeCounter();
         CheckScatters();
         reelsStateController.StartGame();
+        prizeAnimator.IsStopPushed = false;
     }
 
     private void CheckScatters()
