@@ -1274,10 +1274,11 @@ MonoBehaviour:
   shadowImage: {fileID: 115828436}
   freeSpinsCounterRT: {fileID: 1709907066}
   freeSpinsStartRT: {fileID: 1582400118}
-  freeSpinsResultRT: {fileID: 0}
+  freeSpinsResultRT: {fileID: 660293777}
   spinsLeftText: {fileID: 678062215}
   prizeForFSText: {fileID: 1427549020}
   freeSpinsController: {fileID: 2085124569}
+  prizeCalculation: {fileID: 1403948314}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3473,6 +3474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82625f71af9d514980145aa437fa28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reelsStateController: {fileID: 1065915703}
 --- !u!114 &1403948315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5026,7 +5028,8 @@ MonoBehaviour:
   movingReels: {fileID: 2067729591}
   popUpsController: {fileID: 408439595}
   reelsStateController: {fileID: 1065915703}
-  numberOfFreeSpins: 4
+  numberOfFreeSpins: 10
+  prizeCalculation: {fileID: 1403948314}
 --- !u!4 &2085124570
 Transform:
   m_ObjectHideFlags: 0

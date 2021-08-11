@@ -7,6 +7,7 @@ public class FreeSpinsController : MonoBehaviour
     [SerializeField] private PopUpsController popUpsController;
     [SerializeField] private ReelsStateController reelsStateController;
     [SerializeField] private int numberOfFreeSpins;
+    [SerializeField] private PrizeCalculation prizeCalculation;
     private int freeSpinsCounter;
 
     public void StartFreeSpins()
@@ -42,6 +43,8 @@ public class FreeSpinsController : MonoBehaviour
     private void FinishFreeSpins()
     {
         popUpsController.CloseSpinsCounter();
+        popUpsController.ShowAndCloseResultPopUp();
         freeSpinsCounter = numberOfFreeSpins;
+        prizeCalculation.ResetFreeSpinsPrize();
     }
 }
