@@ -119,6 +119,4 @@ public class WinLinesChecker : MonoBehaviour
         }
         return scatterOnReels;
     }
-
-
 }

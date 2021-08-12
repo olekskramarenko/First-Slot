@@ -21,11 +21,11 @@ public class FreeSpinsController : MonoBehaviour
     public void StartAutoSpins()
     {
         StartCoroutine(WaitAndStartAutoSpin());
-    } 
+    }
 
     IEnumerator WaitAndStartAutoSpin()
-    { 
-        while ( freeSpinsCounter > 0)
+    {
+        while (freeSpinsCounter > 0)
         {
             yield return new WaitUntil(() => reelsStateController.ReelState == ReelStates.ReadyForSpin);
             movingReels.MovingStart();

@@ -120,5 +120,4 @@ public class MovingReels : MonoBehaviour
         correctedSymbolsDist = Mathf.Ceil(distBeforeStopPressed / symbolHeight) * symbolHeight;
         return correctedSymbolsDist;
     }
-
 }

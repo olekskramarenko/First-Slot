@@ -52,7 +52,7 @@ public class ReelsStateController : MonoBehaviour
 
     void Update()
     {
-        foreach ( MovingSymbols movingSymbol in movingSymbols)
+        foreach (MovingSymbols movingSymbol in movingSymbols)
         {
             movingSymbol.ChangeSymbolAndSprite();
         }

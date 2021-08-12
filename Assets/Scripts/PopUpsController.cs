@@ -12,6 +12,7 @@ public class PopUpsController : MonoBehaviour
     [SerializeField] private Text spinsLeftText, prizeForFSText;
     [SerializeField] private FreeSpinsController freeSpinsController;
     [SerializeField] private PrizeCalculation prizeCalculation;
+    private float fadeValue = 0.65f;
 
     public Text CounterText { get => spinsLeftText; set => spinsLeftText = value; }
 
@@ -23,7 +24,7 @@ public class PopUpsController : MonoBehaviour
     private void ShowAndCloseStartPopUp()
     {
         freeSpinsStartRT.DOScale(1, 1);
-        shadowImage.DOFade(0.65f, 1);
+        shadowImage.DOFade(fadeValue, 1);
         shadowImage.raycastTarget = true;
         StartCoroutine(ShowStartPopUpAndWait());
     }
@@ -49,7 +50,7 @@ public class PopUpsController : MonoBehaviour
 
     private void ShowSpinsCounter()
     {
-        freeSpinsCounterRT.DOScale(1, 1).OnComplete(() => 
+        freeSpinsCounterRT.DOScale(1, 1).OnComplete(() =>
         {
             freeSpinsController.StartAutoSpins();
         });
@@ -58,11 +59,11 @@ public class PopUpsController : MonoBehaviour
     public void ShowAndCloseResultPopUp()
     {
         freeSpinsResultRT.DOScale(1, 1);
-        shadowImage.DOFade(0.65f, 1);
+        shadowImage.DOFade(fadeValue, 1);
         shadowImage.raycastTarget = true;
         var prizeFS = prizeCalculation.FreeSpinsPrize;
         prizeForFSText.DOCounter(0, prizeFS, 1.4f);
-        StartCoroutine( ShowResultPopUpAndWait());
+        StartCoroutine(ShowResultPopUpAndWait());
     }
 
     IEnumerator ShowResultPopUpAndWait()
