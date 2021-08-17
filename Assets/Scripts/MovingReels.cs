@@ -64,15 +64,22 @@ public class MovingReels : MonoBehaviour
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + previousDistance + (distanceStop * symbolHeight * symbolsCount)), timeStop, true)
             .SetEase(easeStop)
-            .OnComplete(() => SetSymbolDefaultPosition(reel));
+            .OnComplete(() => 
+            SetSymbolDefaultPosition(reel));
     }
     private void SetSymbolDefaultPosition(RectTransform reel)
     {
+        var reelId = reelsDictionary[reel].ReelId;
+        if ( reelId == 0 | reelId == 1)
+        {
+            winLinesChecker.CheckAnticipation(reelId);
+        }
         var finalReelPosition = reel.localPosition.y;
         var lastSpinDistance = -(finalReelPosition - reelsDictionary[reel].StartReelPos);
         reelsDictionary[reel].FullSpinDistance += lastSpinDistance;
         reelsDictionary[reel].ResetSymbolReelsCounter();
-        if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
+        
+        if (reelId == allReelsRT.Length - 1)
         {
             reelStateController.ResultShowing();
             winLinesChecker.ShowResult();

@@ -10,7 +10,58 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private PrizeCalculation prizeCalculation;
     [SerializeField] private PrizeAnimator prizeAnimator;
     [SerializeField] private FreeSpinsController freeSpinsController;
-    int numberOfReels = 3;
+    private int numberOfReels = 3;
+    private Symbol[] symbolsReelOne = new Symbol[4];
+    private Symbol[] symbolsReelTwo = new Symbol[4];
+    bool[] scattersOnTwoReels = new bool[2];
+
+
+    public void CheckAnticipation(int reelId)
+    {
+        SeparateSymbolsOnReels();
+        scattersOnTwoReels[reelId] = CheckScattersOnTwoReels(reelId);
+        bool twoScattersFound = Array.TrueForAll(scattersOnTwoReels, value => value == true);
+        if (twoScattersFound)
+        {
+            print("### two SCATTERS FOUND!");
+        }
+    }
+    private bool CheckScattersOnTwoReels(int reelId)
+    {
+        if (reelId == 0)
+        {
+            foreach (Symbol symbol in symbolsReelOne)
+            {
+                if (symbol.SymbolFinalId == 0 | symbol.SymbolFinalId == 1 | symbol.SymbolFinalId == 2)
+                {
+                    if (symbol.SymbolType == SymbolType.scatter)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        else if (reelId == 1)
+        {
+            foreach (Symbol symbol in symbolsReelTwo)
+            {
+                if (symbol.SymbolFinalId == 4 | symbol.SymbolFinalId == 5 | symbol.SymbolFinalId == 6)
+                {
+                    if (symbol.SymbolType == SymbolType.scatter)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void SeparateSymbolsOnReels()
+    {
+        Array.Copy(symbols, 0, symbolsReelOne, 0, 4);
+        Array.Copy(symbols, 4, symbolsReelTwo, 0, 4);
+    }
 
     private ResultsLists GetWinSymbols(int[] winLine)
     {
