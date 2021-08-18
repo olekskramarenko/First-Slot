@@ -10,20 +10,24 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private PrizeCalculation prizeCalculation;
     [SerializeField] private PrizeAnimator prizeAnimator;
     [SerializeField] private FreeSpinsController freeSpinsController;
+    [SerializeField] private MovingReels movingReels;
     private int numberOfReels = 3;
     private Symbol[] symbolsReelOne = new Symbol[4];
     private Symbol[] symbolsReelTwo = new Symbol[4];
     bool[] scattersOnTwoReels = new bool[2];
+    private bool twoScattersFound;
 
+    public bool TwoScattersFound => twoScattersFound; 
 
     public void CheckAnticipation(int reelId)
     {
         SeparateSymbolsOnReels();
         scattersOnTwoReels[reelId] = CheckScattersOnTwoReels(reelId);
-        bool twoScattersFound = Array.TrueForAll(scattersOnTwoReels, value => value == true);
+        twoScattersFound = Array.TrueForAll(scattersOnTwoReels, value => value == true);
         if (twoScattersFound)
         {
-            print("### two SCATTERS FOUND!");
+            print("### TWO SCATTERS FOUND");
+            movingReels.DoLongSpin();  
         }
     }
     private bool CheckScattersOnTwoReels(int reelId)

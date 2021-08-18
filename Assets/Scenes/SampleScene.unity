@@ -2534,6 +2534,7 @@ MonoBehaviour:
   prizeCalculation: {fileID: 1403948314}
   prizeAnimator: {fileID: 645714882}
   freeSpinsController: {fileID: 2085124569}
+  movingReels: {fileID: 2067729591}
 --- !u!114 &843869191
 MonoBehaviour:
   m_ObjectHideFlags: 0

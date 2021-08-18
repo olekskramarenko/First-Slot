@@ -16,6 +16,8 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private ReelsStateController reelStateController;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
+    private readonly float distanceLongSpin = 10400;
+    private readonly float timeLongSpin = 3;
     private readonly float distanceStop = 0.75f; // Important, value 0.75 nedded for correct showing final screens
     private Dictionary<RectTransform, MovingSymbols> reelsDictionary;
 
@@ -78,13 +80,26 @@ public class MovingReels : MonoBehaviour
         var lastSpinDistance = -(finalReelPosition - reelsDictionary[reel].StartReelPos);
         reelsDictionary[reel].FullSpinDistance += lastSpinDistance;
         reelsDictionary[reel].ResetSymbolReelsCounter();
-        
         if (reelId == allReelsRT.Length - 1)
         {
             reelStateController.ResultShowing();
             winLinesChecker.ShowResult();
             FinalResult.SetNextFinalScreen();
         }
+    }
+
+    public void DoLongSpin()
+    {
+        var reel = allReelsRT[allReelsRT.Length - 1];
+        DOTween.Kill(reel);
+        reelsDictionary[reel].SlowDownStatus = false;
+        reelsDictionary[reel].ResetSymbolReelsCounter();
+        var distBeforeScattersFound = -(reel.localPosition.y - reelsDictionary[reel].StartReelPos);
+        var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeScattersFound);
+        reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist + distanceLongSpin), timeLongSpin)
+            .SetEase(easeWay)
+            .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist+ distanceLongSpin));
+
     }
 
     private void MovingStop()
