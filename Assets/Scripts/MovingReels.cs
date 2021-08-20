@@ -16,8 +16,8 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private ReelsStateController reelStateController;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
-    private readonly float distanceLongSpin = 10400;
-    private readonly float timeLongSpin = 3;
+    private readonly float distanceLongSpin = 12000;
+    private readonly float timeLongSpin = 4;
     private readonly float distanceStop = 0.75f; // Important, value 0.75 nedded for correct showing final screens
     private Dictionary<RectTransform, MovingSymbols> reelsDictionary;
 
@@ -113,6 +113,7 @@ public class MovingReels : MonoBehaviour
             var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeStopPressed);
             reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist), 0)
             .SetEase(easeWay)
+            .SetDelay(i * 0.02f)
             .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist));
         }
     }
