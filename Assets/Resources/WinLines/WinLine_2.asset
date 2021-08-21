@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee04d616e35aa8946b25a11957c834a9, type: 3}
-  m_Name: Tent
+  m_Script: {fileID: 11500000, guid: 9fd0680055828814284de7324b08c77c, type: 3}
+  m_Name: WinLine_2
   m_EditorClassIdentifier: 
-  symbolImage: {fileID: 21300000, guid: 218e710dfdc13d14c8f27805682c1df9, type: 3}
-  symbolCost: 0
-  symbolType: 7
+  winLine: 000000000400000008000000

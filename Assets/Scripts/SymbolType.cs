@@ -1,7 +1,0 @@
-
-
-enum SymbolType 
-{
-    common,
-    extra
-}

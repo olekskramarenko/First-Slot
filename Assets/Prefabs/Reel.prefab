@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7806323680530626351}
   - component: {fileID: 1141673798014490095}
   - component: {fileID: 3609528989683121147}
+  - component: {fileID: 6742072085395788284}
   m_Layer: 5
   m_Name: Symbol_0
   m_TagString: Untagged
@@ -36,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 400}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7806323680530626351
 CanvasRenderer:
@@ -88,6 +89,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4710f34027c8a4aa572d5564994049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  symbolImage: {fileID: 0}
+  symbolRT: {fileID: 0}
+  symbolAnimation: {fileID: 6742072085395788284}
+--- !u!111 &6742072085395788284
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039779832303611255}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: e249830c0ce97c74ca12a48adce0f44c, type: 2}
+  - {fileID: 7400000, guid: 7fbedecf5e948504586f6ade34840fd2, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &3528661528081101861
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +121,7 @@ GameObject:
   - component: {fileID: 2735200279476197358}
   - component: {fileID: 3574019360480514602}
   - component: {fileID: 4293523084630455741}
+  - component: {fileID: 8942218351054780985}
   m_Layer: 5
   m_Name: Symbol_1
   m_TagString: Untagged
@@ -124,7 +146,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2735200279476197358
 CanvasRenderer:
@@ -176,6 +198,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4710f34027c8a4aa572d5564994049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  symbolImage: {fileID: 0}
+  symbolRT: {fileID: 0}
+  symbolAnimation: {fileID: 8942218351054780985}
+--- !u!111 &8942218351054780985
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3528661528081101861}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: e249830c0ce97c74ca12a48adce0f44c, type: 2}
+  - {fileID: 7400000, guid: 7fbedecf5e948504586f6ade34840fd2, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &3866212484249465346
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +230,7 @@ GameObject:
   - component: {fileID: 6031716401398022346}
   - component: {fileID: 4236763714999476074}
   - component: {fileID: 5492973649236984493}
+  - component: {fileID: 8996288700202957993}
   m_Layer: 5
   m_Name: Symbol_3
   m_TagString: Untagged
@@ -212,7 +255,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6031716401398022346
 CanvasRenderer:
@@ -264,6 +307,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4710f34027c8a4aa572d5564994049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  symbolImage: {fileID: 0}
+  symbolRT: {fileID: 0}
+  symbolAnimation: {fileID: 8996288700202957993}
+--- !u!111 &8996288700202957993
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3866212484249465346}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: e249830c0ce97c74ca12a48adce0f44c, type: 2}
+  - {fileID: 7400000, guid: 7fbedecf5e948504586f6ade34840fd2, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5409146953456335435
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,22 +420,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allSymbols:
-  - {fileID: 2039779832303611255}
-  - {fileID: 3528661528081101861}
-  - {fileID: 8891747929151839144}
-  - {fileID: 3866212484249465346}
-  allSymbolImages:
-  - {fileID: 21300000, guid: 9437459bcaa0e2e43820efe2aad02147, type: 3}
-  - {fileID: 21300000, guid: b8a379625aa830e4592c7932afca7334, type: 3}
-  - {fileID: 21300000, guid: 713378fc907ff7041a5e3e2b72b51dfe, type: 3}
-  - {fileID: 21300000, guid: 194357d6c477eb64bbb2a8d18018cdda, type: 3}
-  - {fileID: 21300000, guid: 0a7151eb0ac5b9f46845c967657495b8, type: 3}
-  - {fileID: 21300000, guid: 218e710dfdc13d14c8f27805682c1df9, type: 3}
-  - {fileID: 21300000, guid: f03becc3df6a9a24ab418bb56b45ae29, type: 3}
-  - {fileID: 21300000, guid: 3d992524bb8f0494a9a5bdbf053fd91e, type: 3}
-  AllReels: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gameConfig: {fileID: 0}
+  MovingReels: {fileID: 0}
+  FinalResult: {fileID: 0}
   symbolHeight: 200
   symbolsCount: 4
+  reelId: 0
+  mainCanvas: {fileID: 0}
 --- !u!1 &6873028963509626478
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,6 +633,7 @@ GameObject:
   - component: {fileID: 1656506636212954414}
   - component: {fileID: 6637119205488496340}
   - component: {fileID: 691078572227566488}
+  - component: {fileID: 615134036994690102}
   m_Layer: 5
   m_Name: Symbol_2
   m_TagString: Untagged
@@ -599,7 +658,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1656506636212954414
 CanvasRenderer:
@@ -651,3 +710,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4710f34027c8a4aa572d5564994049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  symbolImage: {fileID: 0}
+  symbolRT: {fileID: 0}
+  symbolAnimation: {fileID: 615134036994690102}
+--- !u!111 &615134036994690102
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8891747929151839144}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: e249830c0ce97c74ca12a48adce0f44c, type: 2}
+  - {fileID: 7400000, guid: 7fbedecf5e948504586f6ade34840fd2, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0

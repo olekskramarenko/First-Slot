@@ -6,7 +6,7 @@ public class FinalResult : MonoBehaviour
     [SerializeField] private GameConfig gameConfig;
     private int[] finalScreen;
 
-    public int CurrentFinalScreen => currentFinalScreen; 
+    public int CurrentFinalScreen => currentFinalScreen;
 
     public int GetFinalImageId(int symbolId)
     {

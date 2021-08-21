@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MovingSymbols : MonoBehaviour
+public class MovingSymbols : MonoBehaviour, IUpdatable
 {
     [SerializeField] private Symbol[] allSymbols;
     [SerializeField] private GameConfig gameConfig;
@@ -11,30 +11,26 @@ public class MovingSymbols : MonoBehaviour
     [SerializeField] private RectTransform mainCanvas;
     private float mainCanvasScale;
     private readonly int exitPosition = 223;
-    private readonly int numberOfReels = 3;
-    private int[] symbolReelsCounter;
-    private ReelState reelState = ReelState.Stop;
+    private int symbolsCounter;
+    private bool slowDownStatus;
     private float startReelPos, fullSpinDistance;
 
-    internal ReelState ReelState { get => reelState; set => reelState = value; }
     public int ReelId => reelId;
     public float StartReelPos { get => startReelPos; set => startReelPos = value; }
     public float FullSpinDistance { get => fullSpinDistance; set => fullSpinDistance = value; }
+    public bool SlowDownStatus { get => slowDownStatus; set => slowDownStatus = value; }
 
     void Start()
     {
-        symbolReelsCounter = new int[numberOfReels];
+        symbolsCounter = 0;
         mainCanvasScale = mainCanvas.lossyScale.y;
     }
 
     public void ResetSymbolReelsCounter()
     {
-        for (int i = 0; i < symbolReelsCounter.Length; i++)
-        {
-            symbolReelsCounter[i] = 0;
-        }
+        symbolsCounter = 0;
     }
-    void ChangeSymbolAndSprite(ReelState reelState)
+    private void ChangeSymbolAndSprite()
     {
         for (int i = 0; i < allSymbols.Length; i++)
         {
@@ -42,13 +38,15 @@ public class MovingSymbols : MonoBehaviour
             if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
             {
                 symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
-                if (reelState == ReelState.SlowDown)
+                if (slowDownStatus)
                 {
-                    int symbolFinalId = symbolReelsCounter[reelId];
-                    if (symbolFinalId < 3) symbolReelsCounter[reelId]++;
+                    int symbolFinalId = symbolsCounter;
+                    if (symbolFinalId < 3) symbolsCounter++;
                     int symbolId = (reelId * allSymbols.Length) + symbolFinalId;
+                    symbol.SymbolFinalId = symbolId;
                     int finalImageId = FinalResult.GetFinalImageId(symbolId);
                     symbol.SymbolImage.sprite = gameConfig.Symbols[finalImageId].SymbolImage;
+                    symbol.SymbolType = gameConfig.Symbols[finalImageId].SymbolType;
                 }
                 else
                 {
@@ -58,8 +56,19 @@ public class MovingSymbols : MonoBehaviour
             }
         }
     }
-    void Update()
+
+    public void GiveToUpdate()
     {
-        ChangeSymbolAndSprite(reelState);
+        ChangeSymbolAndSprite();
     }
+    void OnEnable()
+    {
+        UpdateManager.Register(this);
+    }
+
+    void OnDisable()
+    {
+        UpdateManager.Unregister(this);
+    }
+
 }
