@@ -8,6 +8,9 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private ReelsStateController reelsStateController;
 
+    public delegate void ChangeStateEvent(ReelStates reelState);
+    public static event ChangeStateEvent OnStateChanged;
+
     private ResultsLists GetWinSymbols(int[] winLine)
     {
         var resultsList = new ResultsLists();
@@ -77,6 +80,6 @@ public class WinLinesChecker : MonoBehaviour
             WinLineCheck(winLine);
         }
         yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
-        reelsStateController.StartGame();
+        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
     }
 }
