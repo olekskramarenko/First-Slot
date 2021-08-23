@@ -7,6 +7,8 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private Symbol[] symbols; // 12 symbols
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private ReelsStateController reelsStateController;
+    [SerializeField] private PrizeCalculation prizeCalculation;
+    [SerializeField] private PrizeAnimator prizeAnimator;
 
     public delegate void ChangeStateEvent(ReelStates reelState);
     public static event ChangeStateEvent OnStateChanged;
@@ -47,6 +49,7 @@ public class WinLinesChecker : MonoBehaviour
         foreach (Symbol winSymbol in winSymbolsLineList)
         {
             winSymbol.SymbolAnimation.Play("pulse");
+            winSymbol.ParticleSystem.Play();
         }
         foreach (Symbol otherSymbol in otherSymbolsLineList)
         {
@@ -69,6 +72,7 @@ public class WinLinesChecker : MonoBehaviour
         if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
         {
             PlayAnimation(resultsList);
+            prizeCalculation.CalculatePrize(resultsList.WinSymbolsLineList);
         }
     }
 
@@ -80,6 +84,11 @@ public class WinLinesChecker : MonoBehaviour
             WinLineCheck(winLine);
         }
         yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
+
         if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
+
+        prizeAnimator.UpdatePrizeCounter();
+        
+
     }
 }
