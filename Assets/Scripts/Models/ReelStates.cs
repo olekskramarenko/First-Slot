@@ -1,4 +1,4 @@
-enum ReelStates
+public enum ReelStates
 {
     ReadyForSpin, 
     StartSpin,

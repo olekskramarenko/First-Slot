@@ -10,6 +10,9 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private PrizeCalculation prizeCalculation;
     [SerializeField] private PrizeAnimator prizeAnimator;
 
+    public delegate void ChangeStateEvent(ReelStates reelState);
+    public static event ChangeStateEvent OnStateChanged;
+
     private ResultsLists GetWinSymbols(int[] winLine)
     {
         var resultsList = new ResultsLists();
@@ -81,7 +84,11 @@ public class WinLinesChecker : MonoBehaviour
             WinLineCheck(winLine);
         }
         yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
+
+        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
+
         prizeAnimator.UpdatePrizeCounter();
-        reelsStateController.StartGame();
+        
+
     }
 }
