@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RockClimber
   m_EditorClassIdentifier: 
   symbolImage: {fileID: 21300000, guid: f03becc3df6a9a24ab418bb56b45ae29, type: 3}
-  symbolCost: 150
+  symbolCost: 0
   symbolType: 5

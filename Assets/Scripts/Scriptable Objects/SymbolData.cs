@@ -4,12 +4,12 @@ using UnityEngine;
 public class SymbolData : ScriptableObject
 {
     [SerializeField] private Sprite symbolImage;
-    [SerializeField] private int symbolCost;
+    [SerializeField] private float symbolCost;
     [SerializeField] private SymbolType symbolType;
 
     public Sprite SymbolImage => symbolImage;
 
-    public int SymbolCost => symbolCost;
+    public float SymbolCost => symbolCost;
 
     internal SymbolType SymbolType => symbolType;
 }

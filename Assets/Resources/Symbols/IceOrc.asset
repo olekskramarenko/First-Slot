@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: IceOrc
   m_EditorClassIdentifier: 
   symbolImage: {fileID: 21300000, guid: 3d992524bb8f0494a9a5bdbf053fd91e, type: 3}
-  symbolCost: 140
+  symbolCost: 0
   symbolType: 4

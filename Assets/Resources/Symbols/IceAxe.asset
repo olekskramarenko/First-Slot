@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: IceAxe
   m_EditorClassIdentifier: 
   symbolImage: {fileID: 21300000, guid: b8a379625aa830e4592c7932afca7334, type: 3}
-  symbolCost: 130
+  symbolCost: 0
   symbolType: 3

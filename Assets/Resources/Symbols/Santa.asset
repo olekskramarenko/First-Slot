@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Santa
   m_EditorClassIdentifier: 
   symbolImage: {fileID: 21300000, guid: 713378fc907ff7041a5e3e2b72b51dfe, type: 3}
-  symbolCost: 160
+  symbolCost: 0
   symbolType: 6
