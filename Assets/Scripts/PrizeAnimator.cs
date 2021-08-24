@@ -13,8 +13,6 @@ public class PrizeAnimator : MonoBehaviour
     public void UpdatePrizeCounter()
     {
         var prize = prizeCalculation.TotalPrize;
-        //var prizeString = prize.ToString("#");
-        //prizeText.text = prizeString;
         if (prevPrize != prize) 
         {
             prizeText.DOCounter(prevPrize, prize, 1);

@@ -32,7 +32,6 @@ public class WinLinesChecker : MonoBehaviour
             {
                 resultsList.WinSymbolsLineList.Add(symbol);
                 coincidence = true;
-                /*return;*/ // Todo: may be problem with double values of winLines
             }
         }
         if (!coincidence)
@@ -85,5 +84,6 @@ public class WinLinesChecker : MonoBehaviour
         }
         yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
         if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
+        prizeAnimator.UpdatePrizeCounter();
     }
 }
