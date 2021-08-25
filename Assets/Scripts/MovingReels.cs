@@ -14,6 +14,7 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private int symbolsCount;
     [SerializeField] private WinLinesChecker winLinesChecker;
     [SerializeField] private ReelsStateController reelStateController;
+    [SerializeField] private AnticipationController anticipationController;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
     private readonly float distanceLongSpin = 12000;
@@ -85,6 +86,7 @@ public class MovingReels : MonoBehaviour
             reelStateController.ResultShowing();
             winLinesChecker.ShowResult();
             FinalResult.SetNextFinalScreen();
+            anticipationController.StopLonSpinAnimation();
         }
     }
 
@@ -94,12 +96,12 @@ public class MovingReels : MonoBehaviour
         DOTween.Kill(reel);
         reelsDictionary[reel].SlowDownStatus = false;
         reelsDictionary[reel].ResetSymbolReelsCounter();
+        anticipationController.PlayLongSpinAnimation();
         var distBeforeScattersFound = -(reel.localPosition.y - reelsDictionary[reel].StartReelPos);
         var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeScattersFound);
         reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist + distanceLongSpin), timeLongSpin)
             .SetEase(easeWay)
-            .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist+ distanceLongSpin));
-
+            .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist + distanceLongSpin));
     }
 
     private void MovingStop()

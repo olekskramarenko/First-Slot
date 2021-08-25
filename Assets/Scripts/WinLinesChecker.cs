@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using UnityEngine;
 
@@ -14,8 +15,10 @@ public class WinLinesChecker : MonoBehaviour
     private int numberOfReels = 3;
     private Symbol[] symbolsReelOne = new Symbol[4];
     private Symbol[] symbolsReelTwo = new Symbol[4];
-    bool[] scattersOnTwoReels = new bool[2];
+    private bool[] scattersOnTwoReels = new bool[2];
     private bool twoScattersFound;
+    private List<Symbol> twoScattersList = new List<Symbol>();
+    private List<Symbol> threeScattersList = new List<Symbol>();
 
     public bool TwoScattersFound => twoScattersFound; 
 
@@ -26,8 +29,9 @@ public class WinLinesChecker : MonoBehaviour
         twoScattersFound = Array.TrueForAll(scattersOnTwoReels, value => value == true);
         if (twoScattersFound)
         {
-            print("### TWO SCATTERS FOUND");
-            movingReels.DoLongSpin();  
+            movingReels.DoLongSpin();
+            prizeAnimator.PLaySmallAnimation(twoScattersList);
+            twoScattersList.Clear();
         }
     }
     private bool CheckScattersOnTwoReels(int reelId)
@@ -40,6 +44,7 @@ public class WinLinesChecker : MonoBehaviour
                 {
                     if (symbol.SymbolType == SymbolType.scatter)
                     {
+                        twoScattersList.Add(symbol);
                         return true;
                     }
                 }
@@ -53,6 +58,7 @@ public class WinLinesChecker : MonoBehaviour
                 {
                     if (symbol.SymbolType == SymbolType.scatter)
                     {
+                        twoScattersList.Add(symbol);
                         return true;
                     }
                 }
@@ -141,6 +147,8 @@ public class WinLinesChecker : MonoBehaviour
         if (threeScattersFound)
         {
             freeSpinsController.StartFreeSpins();
+            prizeAnimator.PLaySmallAnimation(threeScattersList);
+            threeScattersList.Clear();
         };
 
     }
@@ -155,6 +163,7 @@ public class WinLinesChecker : MonoBehaviour
                 if (symbol.SymbolType == SymbolType.scatter)
                 {
                     scatterOnReels[0] = true;
+                    threeScattersList.Add(symbol);
                 }
             }
             else if (symbol.SymbolFinalId == 4 | symbol.SymbolFinalId == 5 | symbol.SymbolFinalId == 6)
@@ -162,6 +171,7 @@ public class WinLinesChecker : MonoBehaviour
                 if (symbol.SymbolType == SymbolType.scatter)
                 {
                     scatterOnReels[1] = true;
+                    threeScattersList.Add(symbol);
                 }
             }
             else if (symbol.SymbolFinalId == 8 | symbol.SymbolFinalId == 9 | symbol.SymbolFinalId == 10)
@@ -169,6 +179,7 @@ public class WinLinesChecker : MonoBehaviour
                 if (symbol.SymbolType == SymbolType.scatter)
                 {
                     scatterOnReels[2] = true;
+                    threeScattersList.Add(symbol);
                 }
             }
         }

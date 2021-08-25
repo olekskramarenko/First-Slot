@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class PrizeAnimator : MonoBehaviour
 {
@@ -58,6 +59,20 @@ public class PrizeAnimator : MonoBehaviour
         }
     }
 
+    public void PLaySmallAnimation(List<Symbol> symbolsList)
+    {
+        foreach (Symbol symbol in symbolsList)
+        {
+            var symbolRT = symbol.SymbolRT;
+            symbolRT.DOScale(forwardScale, animTime / 3).OnComplete(() =>
+            {
+                symbolRT.DOScale(pulseScale, animTime / 6).SetLoops(1, LoopType.Yoyo).OnComplete(() =>
+                {
+                    symbolRT.DOScale(1, animTime / 3);
+                });
+            });
+        }
+    }
     public void StopWinAnimation()
     {
         isStopPushed = true;
