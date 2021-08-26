@@ -11,38 +11,17 @@ public class ReelsStateController : MonoBehaviour
     internal ReelStates ReelState { get => reelState; set => reelState = value; }
     public bool FreeSpinsGame { get => freeSpinsGame; set => freeSpinsGame = value; }
 
-    public void StartGame()
+    void OnEnable()
     {
-        reelState = ReelStates.ReadyForSpin;
-        if (freeSpinsGame)
-        {
-            return;
-        }
-        buttonsView.DeactivateStopBtn();
-        buttonsView.ActivatePlayBtn();
+        MovingReels.OnStateChanged += ChangeStateAndBtns;
+        WinLinesChecker.OnStateChanged += ChangeStateAndBtns;
+    }
+    void OnDisable()
+    {
+        MovingReels.OnStateChanged -= ChangeStateAndBtns;
+        WinLinesChecker.OnStateChanged -= ChangeStateAndBtns;
     }
 
-    public void StartSpinning()
-    {
-        reelState = ReelStates.StartSpin;
-        buttonsView.DeactivatePlayBtn();
-    }
-
-    public void MainWaySpinning()
-    {
-        reelState = ReelStates.Spin;
-        buttonsView.SetStopBtnInteractable();
-    }
-    public void SlowDownSpinning()
-    {
-        reelState = ReelStates.SlowDown;
-        buttonsView.SetStopBtnNonInteractable();
-    }
-    public void ForceStopped()
-    {
-        reelState = ReelStates.ForceStop;
-        buttonsView.SetStopBtnNonInteractable();
-    }
 
     public void ResultShowing()
     {
@@ -50,11 +29,29 @@ public class ReelsStateController : MonoBehaviour
         buttonsView.SetStopBtnInteractable();
     }
 
-    void Update()
+    private void ChangeStateAndBtns(ReelStates state)
     {
-        foreach (MovingSymbols movingSymbol in movingSymbols)
+        reelState = state;
+        if (state == ReelStates.ReadyForSpin)
         {
-            movingSymbol.ChangeSymbolAndSprite();
+            buttonsView.DeactivateStopBtn();
+            buttonsView.ActivatePlayBtn();
+        }
+        else if (state == ReelStates.StartSpin)
+        {
+            buttonsView.DeactivatePlayBtn();
+        }
+        else if (state == ReelStates.Spin)
+        {
+            buttonsView.SetStopBtnInteractable();
+        }
+        else if (state == ReelStates.SlowDown)
+        {
+            buttonsView.SetStopBtnNonInteractable();
+        }
+        else if (state == ReelStates.ForceStop)
+        {
+            buttonsView.SetStopBtnNonInteractable();
         }
     }
 }

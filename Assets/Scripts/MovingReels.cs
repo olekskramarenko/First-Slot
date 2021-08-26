@@ -22,9 +22,13 @@ public class MovingReels : MonoBehaviour
     private readonly float distanceStop = 0.75f; // Important, value 0.75 nedded for correct showing final screens
     private Dictionary<RectTransform, MovingSymbols> reelsDictionary;
 
+    public delegate void ChangeStateEvent(ReelStates reelState);
+    public static event ChangeStateEvent OnStateChanged;
+
+
     private void Start()
     {
-        reelStateController.StartGame();
+        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
         reelsDictionary = new Dictionary<RectTransform, MovingSymbols>();
         for (int i = 0; i < allReelsRT.Length; i++)
         {
@@ -33,7 +37,7 @@ public class MovingReels : MonoBehaviour
     }
     public void MovingStart()
     {
-        reelStateController.StartSpinning();
+        if (OnStateChanged != null) OnStateChanged(ReelStates.StartSpin);
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];
@@ -49,7 +53,7 @@ public class MovingReels : MonoBehaviour
     {
         if (reelsDictionary[reel].ReelId == 0)
         {
-            reelStateController.MainWaySpinning();
+            if (OnStateChanged != null) OnStateChanged(ReelStates.Spin);
         }
         float previousDistance = (distanceWay + distanceStart) * symbolHeight * symbolsCount;
         DOTween.Kill(reel);
@@ -61,7 +65,7 @@ public class MovingReels : MonoBehaviour
     {
         if (reelsDictionary[reel].ReelId == 0)
         {
-            reelStateController.SlowDownSpinning();
+            if (OnStateChanged != null) OnStateChanged(ReelStates.SlowDown);
         }
         reelsDictionary[reel].SlowDownStatus = true;
         DOTween.Kill(reel);
@@ -106,7 +110,7 @@ public class MovingReels : MonoBehaviour
 
     private void MovingStop()
     {
-        reelStateController.ForceStopped();
+        if (OnStateChanged != null) OnStateChanged(ReelStates.ForceStop);
         for (int i = 0; i < allReelsRT.Length; i++)
         {
             var reel = allReelsRT[i];

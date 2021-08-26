@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MovingSymbols : MonoBehaviour
+public class MovingSymbols : MonoBehaviour, IUpdatable
 {
     [SerializeField] private Symbol[] allSymbols;
     [SerializeField] private GameConfig gameConfig;
@@ -30,7 +30,7 @@ public class MovingSymbols : MonoBehaviour
     {
         symbolsCounter = 0;
     }
-    public void ChangeSymbolAndSprite()
+    private void ChangeSymbolAndSprite()
     {
         for (int i = 0; i < allSymbols.Length; i++)
         {
@@ -57,4 +57,19 @@ public class MovingSymbols : MonoBehaviour
             }
         }
     }
+
+    public void GiveToUpdate()
+    {
+        ChangeSymbolAndSprite();
+    }
+    void OnEnable()
+    {
+        UpdateManager.Register(this);
+    }
+
+    void OnDisable()
+    {
+        UpdateManager.Unregister(this);
+    }
+
 }

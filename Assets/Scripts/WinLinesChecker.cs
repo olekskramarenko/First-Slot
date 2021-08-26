@@ -73,6 +73,9 @@ public class WinLinesChecker : MonoBehaviour
         Array.Copy(symbols, 4, symbolsReelTwo, 0, 4);
     }
 
+    public delegate void ChangeStateEvent(ReelStates reelState);
+    public static event ChangeStateEvent OnStateChanged;
+
     private ResultsLists GetWinSymbols(int[] winLine)
     {
         var resultsList = new ResultsLists();
@@ -92,7 +95,6 @@ public class WinLinesChecker : MonoBehaviour
             {
                 resultsList.WinSymbolsLineList.Add(symbol);
                 coincidence = true;
-                /*return;*/ // Todo: may be problem with double values of winLines
             }
         }
         if (!coincidence)
@@ -133,10 +135,11 @@ public class WinLinesChecker : MonoBehaviour
             yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
             WinLineCheck(winLine);
         }
-        yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
+        yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
         prizeAnimator.UpdatePrizeCounter();
         CheckScatters();
-        reelsStateController.StartGame();
+        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
+        prizeAnimator.UpdatePrizeCounter();
         prizeAnimator.IsStopPushed = false;
     }
 
