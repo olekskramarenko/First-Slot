@@ -1,22 +1,18 @@
 using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 
 public class AnticipationController : MonoBehaviour
 {
-    [SerializeField] private Image lightBox, leftLight, rightLight;
-    [SerializeField] private RectTransform antisipationRT, lightBoxRT, leftLightRT, rightLightRT;
-    [SerializeField] private float fadeTime, fadeIntensity;
-    [SerializeField] private int loops;
+    [SerializeField] private RectTransform antisipationRT;
+    private float animationTime = 0.2f;
     public void PlayLongSpinAnimation()
     {
-        antisipationRT.DOScale(1, 1);
-        //lightBox.DOFade(fadeIntensity, fadeTime).SetLoops(loops, LoopType.Yoyo);
+        antisipationRT.DOScale(1, animationTime);
     }
 
     public void StopLonSpinAnimation()
     {
-        antisipationRT.DOScale(0, 0);
+        antisipationRT.DOScale(0, animationTime);
     }
 
 }

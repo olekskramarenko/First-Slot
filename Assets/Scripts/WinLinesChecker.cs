@@ -20,7 +20,7 @@ public class WinLinesChecker : MonoBehaviour
     private List<Symbol> twoScattersList = new List<Symbol>();
     private List<Symbol> threeScattersList = new List<Symbol>();
 
-    public bool TwoScattersFound => twoScattersFound; 
+    public bool TwoScattersFound => twoScattersFound;
 
     public void CheckAnticipation(int reelId)
     {
@@ -153,6 +153,7 @@ public class WinLinesChecker : MonoBehaviour
             prizeAnimator.PLaySmallAnimation(threeScattersList);
             threeScattersList.Clear();
         };
+        threeScattersList.Clear();
 
     }
 
