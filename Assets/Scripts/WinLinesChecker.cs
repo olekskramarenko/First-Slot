@@ -75,10 +75,9 @@ public class WinLinesChecker : MonoBehaviour
             WinLineCheck(winLine);
         }
         yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
-        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
         prizeAnimator.UpdatePrizeCounter();
         CheckScatters();
-        reelsStateController.StartGame();
+        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
         prizeAnimator.IsStopPushed = false;
     }
 
