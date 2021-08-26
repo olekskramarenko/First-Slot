@@ -87,7 +87,7 @@ public class MovingReels : MonoBehaviour
         reelsDictionary[reel].ResetSymbolReelsCounter();
         if (reelId == allReelsRT.Length - 1)
         {
-            reelStateController.ResultShowing();
+            if (OnStateChanged != null) OnStateChanged(ReelStates.ResultShowing);
             winLinesChecker.ShowResult();
             FinalResult.SetNextFinalScreen();
             anticipationController.StopLonSpinAnimation();

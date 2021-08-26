@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class ReelsStateController : MonoBehaviour
 {
@@ -7,9 +9,22 @@ public class ReelsStateController : MonoBehaviour
     [SerializeField] private MovingSymbols[] movingSymbols;
     private ReelStates reelState;
     private bool freeSpinsGame;
-
+    private Dictionary<ReelStates, Action> stateChangesDictionary;
     internal ReelStates ReelState { get => reelState; set => reelState = value; }
     public bool FreeSpinsGame { get => freeSpinsGame; set => freeSpinsGame = value; }
+
+    private void Awake()
+    {
+        stateChangesDictionary = new Dictionary<ReelStates, Action>
+        {
+            { ReelStates.ReadyForSpin, () => { buttonsView.DeactivateStopBtn(); buttonsView.ActivatePlayBtn(); } },
+            { ReelStates.StartSpin, buttonsView.DeactivatePlayBtn},
+            { ReelStates.Spin, buttonsView.SetStopBtnInteractable},
+            { ReelStates.SlowDown, buttonsView.SetStopBtnNonInteractable},
+            { ReelStates.ForceStop, buttonsView.SetStopBtnNonInteractable},
+            { ReelStates.ResultShowing, buttonsView.SetStopBtnInteractable}
+        };
+    }
 
     void OnEnable()
     {
@@ -22,36 +37,9 @@ public class ReelsStateController : MonoBehaviour
         WinLinesChecker.OnStateChanged -= ChangeStateAndBtns;
     }
 
-
-    public void ResultShowing()
-    {
-        reelState = ReelStates.ResultShowing;
-        buttonsView.SetStopBtnInteractable();
-    }
-
     private void ChangeStateAndBtns(ReelStates state)
     {
         reelState = state;
-        if (state == ReelStates.ReadyForSpin)
-        {
-            buttonsView.DeactivateStopBtn();
-            buttonsView.ActivatePlayBtn();
-        }
-        else if (state == ReelStates.StartSpin)
-        {
-            buttonsView.DeactivatePlayBtn();
-        }
-        else if (state == ReelStates.Spin)
-        {
-            buttonsView.SetStopBtnInteractable();
-        }
-        else if (state == ReelStates.SlowDown)
-        {
-            buttonsView.SetStopBtnNonInteractable();
-        }
-        else if (state == ReelStates.ForceStop)
-        {
-            buttonsView.SetStopBtnNonInteractable();
-        }
+        stateChangesDictionary[state]();
     }
 }
