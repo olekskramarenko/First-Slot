@@ -18,7 +18,7 @@ public class PrizeAnimator : MonoBehaviour
     public void UpdatePrizeCounter()
     {
         var prize = prizeCalculation.TotalPrize;
-        if (prevPrize != prize)
+        if (prevPrize != prize) 
         {
             prizeText.DOCounter(prevPrize, prize, 1);
             prevPrize = prize;

@@ -12,6 +12,9 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private FreeSpinsController freeSpinsController;
     int numberOfReels = 3;
 
+    public delegate void ChangeStateEvent(ReelStates reelState);
+    public static event ChangeStateEvent OnStateChanged;
+
     private ResultsLists GetWinSymbols(int[] winLine)
     {
         var resultsList = new ResultsLists();
@@ -31,7 +34,6 @@ public class WinLinesChecker : MonoBehaviour
             {
                 resultsList.WinSymbolsLineList.Add(symbol);
                 coincidence = true;
-                /*return;*/ // Todo: may be problem with double values of winLines
             }
         }
         if (!coincidence)
@@ -73,6 +75,7 @@ public class WinLinesChecker : MonoBehaviour
             WinLineCheck(winLine);
         }
         yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
+        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
         prizeAnimator.UpdatePrizeCounter();
         CheckScatters();
         reelsStateController.StartGame();
