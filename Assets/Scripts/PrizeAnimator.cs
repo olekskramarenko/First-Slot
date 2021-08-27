@@ -16,18 +16,23 @@ public class PrizeAnimator : MonoBehaviour
     public bool IsAnimPlaying { get => isAnimPlaying; set => isAnimPlaying = value; }
     public bool IsStopPushed { get => isStopPushed; set => isStopPushed = value; }
 
+    public delegate void PlaySoundEvent(SoundType sound);
+    public static event PlaySoundEvent OnSoundPLayed;
+
     public void UpdatePrizeCounter()
     {
         var prize = prizeCalculation.TotalPrize;
         if (prevPrize != prize) 
         {
             prizeText.DOCounter(prevPrize, prize, 1);
+            if (OnSoundPLayed != null) OnSoundPLayed(SoundType.prizeCounter);
             prevPrize = prize;
         }
     }
     public void PlayWinAnimation(ResultsLists resultList)
     {
         if (isStopPushed) return;
+        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.prize);
         var winSymbolsLineList = resultList.WinSymbolsLineList;
         var otherSymbolsLineList = resultList.OtherSymbolsLineList;
         foreach (Symbol winSymbol in winSymbolsLineList)
@@ -59,10 +64,9 @@ public class PrizeAnimator : MonoBehaviour
         }
     }
 
-    public void PLaySmallAnimation(List<Symbol> symbolsList)
+    public void PLaySmallAnimation(Symbol symbol)
     {
-        foreach (Symbol symbol in symbolsList)
-        {
+        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.scatter);
             var symbolRT = symbol.SymbolRT;
             symbolRT.DOScale(forwardScale, animTime / 3).OnComplete(() =>
             {
@@ -71,7 +75,6 @@ public class PrizeAnimator : MonoBehaviour
                     symbolRT.DOScale(1, animTime / 3);
                 });
             });
-        }
     }
     public void StopWinAnimation()
     {

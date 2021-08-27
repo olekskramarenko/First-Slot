@@ -16,6 +16,12 @@ public class PopUpsController : MonoBehaviour
 
     public Text CounterText { get => spinsLeftText; set => spinsLeftText = value; }
 
+    public delegate void PlaySoundEvent(SoundType sound);
+    public static event PlaySoundEvent OnSoundPLayed;
+
+    public delegate void StopSoundEvent(SoundType sound);
+    public static event StopSoundEvent OnSoundStopped;
+
     public void ShowFreeSpinsStart()
     {
         ShowAndCloseStartPopUp();
@@ -74,6 +80,8 @@ public class PopUpsController : MonoBehaviour
 
     private void CloseResultPopUp()
     {
+        if (OnSoundPLayed != null) OnSoundStopped(SoundType.freeSpins);
+        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.background);
         freeSpinsResultRT.DOScale(0, 0.5f);
         shadowImage.DOFade(0, 1);
         shadowImage.raycastTarget = false;

@@ -30,7 +30,7 @@ public class WinLinesChecker : MonoBehaviour
         if (twoScattersFound)
         {
             movingReels.DoLongSpin();
-            prizeAnimator.PLaySmallAnimation(twoScattersList);
+
             twoScattersList.Clear();
         }
     }
@@ -45,6 +45,7 @@ public class WinLinesChecker : MonoBehaviour
                     if (symbol.SymbolType == SymbolType.scatter)
                     {
                         twoScattersList.Add(symbol);
+                        prizeAnimator.PLaySmallAnimation(symbol);
                         return true;
                     }
                 }
@@ -59,6 +60,7 @@ public class WinLinesChecker : MonoBehaviour
                     if (symbol.SymbolType == SymbolType.scatter)
                     {
                         twoScattersList.Add(symbol);
+                        prizeAnimator.PLaySmallAnimation(symbol);
                         return true;
                     }
                 }
@@ -150,7 +152,6 @@ public class WinLinesChecker : MonoBehaviour
         if (threeScattersFound)
         {
             freeSpinsController.StartFreeSpins();
-            prizeAnimator.PLaySmallAnimation(threeScattersList);
             threeScattersList.Clear();
         };
         threeScattersList.Clear();
@@ -184,6 +185,7 @@ public class WinLinesChecker : MonoBehaviour
                 {
                     scatterOnReels[2] = true;
                     threeScattersList.Add(symbol);
+                    prizeAnimator.PLaySmallAnimation(symbol);
                 }
             }
         }

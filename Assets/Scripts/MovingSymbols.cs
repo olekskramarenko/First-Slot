@@ -20,6 +20,8 @@ public class MovingSymbols : MonoBehaviour, IUpdatable
     public float FullSpinDistance { get => fullSpinDistance; set => fullSpinDistance = value; }
     public bool SlowDownStatus { get => slowDownStatus; set => slowDownStatus = value; }
 
+    public delegate void PlaySoundEvent(SoundType sound);
+    public static event PlaySoundEvent OnSoundPLayed;
     void Start()
     {
         symbolsCounter = 0;
@@ -38,6 +40,7 @@ public class MovingSymbols : MonoBehaviour, IUpdatable
             if (symbol.transform.position.y <= exitPosition * mainCanvasScale)
             {
                 symbol.transform.position += Vector3.up * symbolHeight * symbolsCount * mainCanvasScale;
+                if (OnSoundPLayed != null & reelId == 0) OnSoundPLayed(SoundType.reelChanged);
                 if (slowDownStatus)
                 {
                     int symbolFinalId = symbolsCounter;

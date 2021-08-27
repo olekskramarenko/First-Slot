@@ -10,8 +10,17 @@ public class FreeSpinsController : MonoBehaviour
     [SerializeField] private PrizeCalculation prizeCalculation;
     private int freeSpinsCounter;
 
+    public delegate void PlaySoundEvent(SoundType sound);
+    public static event PlaySoundEvent OnSoundPLayed;
+
+    public delegate void StopSoundEvent(SoundType sound);
+    public static event StopSoundEvent OnSoundStopped;
+
+
     public void StartFreeSpins()
     {
+        if (OnSoundPLayed != null) OnSoundStopped(SoundType.background);
+        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.freeSpins);
         reelsStateController.FreeSpinsGame = true;
         popUpsController.ShowFreeSpinsStart();
         freeSpinsCounter = numberOfFreeSpins;

@@ -6,7 +6,6 @@ public class ReelsStateController : MonoBehaviour
 {
 
     [SerializeField] private ButtonsView buttonsView;
-    [SerializeField] private MovingSymbols[] movingSymbols;
     private ReelStates reelState;
     private bool freeSpinsGame;
     private Dictionary<ReelStates, Action> stateChangesDictionary;

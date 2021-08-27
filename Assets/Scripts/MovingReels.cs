@@ -25,6 +25,9 @@ public class MovingReels : MonoBehaviour
     public delegate void ChangeStateEvent(ReelStates reelState);
     public static event ChangeStateEvent OnStateChanged;
 
+    public delegate void PlaySoundEvent(SoundType sound);
+    public static event PlaySoundEvent OnSoundPLayed;
+
 
     private void Start()
     {
@@ -77,6 +80,7 @@ public class MovingReels : MonoBehaviour
     private void SetSymbolDefaultPosition(RectTransform reel)
     {
         var reelId = reelsDictionary[reel].ReelId;
+        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.reelStop);
         if ( reelId == 0 | reelId == 1)
         {
             winLinesChecker.CheckAnticipation(reelId);
