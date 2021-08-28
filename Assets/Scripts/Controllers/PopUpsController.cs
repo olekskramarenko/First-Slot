@@ -68,7 +68,8 @@ public class PopUpsController : MonoBehaviour
         shadowImage.DOFade(fadeValue, 1);
         shadowImage.raycastTarget = true;
         var prizeFS = prizeCalculation.FreeSpinsPrize;
-        prizeForFSText.DOCounter(0, prizeFS, 1.4f);
+        prizeForFSText.DOCounter(0, prizeFS, 1.2f);
+        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.prizeCounter);
         StartCoroutine(ShowResultPopUpAndWait());
     }
 
