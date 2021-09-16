@@ -12,13 +12,14 @@ public class PrizeAnimator : MonoBehaviour
     private bool isAnimPlaying;
     private bool isStopPushed;
 
+
     public bool IsAnimPlaying { get => isAnimPlaying; set => isAnimPlaying = value; }
     public bool IsStopPushed { get => isStopPushed; set => isStopPushed = value; }
 
     public void UpdatePrizeCounter()
     {
         var prize = prizeCalculation.TotalPrize;
-        if (prevPrize != prize) 
+        if (prevPrize != prize)
         {
             prizeText.DOCounter(prevPrize, prize, 1);
             prevPrize = prize;
@@ -29,16 +30,19 @@ public class PrizeAnimator : MonoBehaviour
         if (isStopPushed) return;
         var winSymbolsLineList = resultList.WinSymbolsLineList;
         var otherSymbolsLineList = resultList.OtherSymbolsLineList;
+        var putForwardTime = animTime / 3;
+        var pulseTime = animTime / 6;
+        var stayFadeTime = animTime / 1.6f;
         foreach (Symbol winSymbol in winSymbolsLineList)
         {
             isAnimPlaying = true;
             winSymbol.ParticleSystem.Play();
             var symbolRT = winSymbol.SymbolRT;
-            symbolRT.DOScale(forwardScale, animTime / 3).OnComplete(() =>
+            symbolRT.DOScale(forwardScale, putForwardTime).OnComplete(() =>
               {
-                  symbolRT.DOScale(pulseScale, animTime / 6).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
+                  symbolRT.DOScale(pulseScale, pulseTime).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
                   {
-                      symbolRT.DOScale(1, animTime / 3).OnComplete(() =>
+                      symbolRT.DOScale(1, putForwardTime).OnComplete(() =>
                       {
                           isAnimPlaying = false;
                       });
@@ -48,11 +52,11 @@ public class PrizeAnimator : MonoBehaviour
         foreach (Symbol otherSymbol in otherSymbolsLineList)
         {
             var image = otherSymbol.SymbolImage;
-            image.DOFade(symbolsFade, animTime / 6).OnComplete(() =>
+            image.DOFade(symbolsFade, pulseTime).OnComplete(() =>
             {
-                image.DOFade(symbolsFade, animTime / 1.6f).OnComplete(() =>
+                image.DOFade(symbolsFade, stayFadeTime).OnComplete(() =>
                 {
-                    image.DOFade(1, animTime / 6);
+                    image.DOFade(1, pulseTime);
                 });
             });
         }
