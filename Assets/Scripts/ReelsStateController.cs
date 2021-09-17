@@ -42,4 +42,10 @@ public class ReelsStateController : MonoBehaviour
         reelState = state;
         stateChangesDictionary[state]();
     }
+    public void ResultShowing()
+    {
+        reelState = ReelStates.ResultShowing;
+        buttonsView.SetStopBtnInteractable();
+    }
+
 }
