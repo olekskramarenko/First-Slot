@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class ReelsStateController : MonoBehaviour
 {
-    private ReelStates reelState;
+
     [SerializeField] private ButtonsView buttonsView;
     [SerializeField] private MovingSymbols[] movingSymbols;
+    private ReelStates reelState;
+    private bool freeSpinsGame;
 
     internal ReelStates ReelState { get => reelState; set => reelState = value; }
+    public bool FreeSpinsGame { get => freeSpinsGame; set => freeSpinsGame = value; }
 
     void OnEnable()
     {
@@ -18,6 +21,14 @@ public class ReelsStateController : MonoBehaviour
         MovingReels.OnStateChanged -= ChangeStateAndBtns;
         WinLinesChecker.OnStateChanged -= ChangeStateAndBtns;
     }
+
+
+    public void ResultShowing()
+    {
+        reelState = ReelStates.ResultShowing;
+        buttonsView.SetStopBtnInteractable();
+    }
+
 
     private void ChangeStateAndBtns(ReelStates state)
     {
@@ -31,7 +42,7 @@ public class ReelsStateController : MonoBehaviour
         {
             buttonsView.DeactivatePlayBtn();
         }
-        else if (state == ReelStates.Spin)
+        else if (state == ReelStates.Spin | state == ReelStates.ResultShowing)
         {
             buttonsView.SetStopBtnInteractable();
         }

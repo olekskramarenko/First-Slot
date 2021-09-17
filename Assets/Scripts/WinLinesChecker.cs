@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class WinLinesChecker : MonoBehaviour
@@ -9,6 +9,8 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private ReelsStateController reelsStateController;
     [SerializeField] private PrizeCalculation prizeCalculation;
     [SerializeField] private PrizeAnimator prizeAnimator;
+    [SerializeField] private FreeSpinsController freeSpinsController;
+    int numberOfReels = 3;
 
     public delegate void ChangeStateEvent(ReelStates reelState);
     public static event ChangeStateEvent OnStateChanged;
@@ -41,19 +43,9 @@ public class WinLinesChecker : MonoBehaviour
         return resultsList;
     }
 
-    private void PlayAnimation(ResultsLists resultList)
+    public void StopAnimation()
     {
-        var winSymbolsLineList = resultList.WinSymbolsLineList;
-        var otherSymbolsLineList = resultList.OtherSymbolsLineList;
-        foreach (Symbol winSymbol in winSymbolsLineList)
-        {
-            winSymbol.SymbolAnimation.Play("pulse");
-            winSymbol.ParticleSystem.Play();
-        }
-        foreach (Symbol otherSymbol in otherSymbolsLineList)
-        {
-            otherSymbol.SymbolAnimation.Play("shadow");
-        }
+        prizeAnimator.StopWinAnimation();
     }
 
     public void ShowResult()
@@ -70,7 +62,7 @@ public class WinLinesChecker : MonoBehaviour
         var winSymbol3 = resultsList.WinSymbolsLineList[2];
         if (winSymbol1.SymbolType == winSymbol2.SymbolType && winSymbol2.SymbolType == winSymbol3.SymbolType)
         {
-            PlayAnimation(resultsList);
+            prizeAnimator.PlayWinAnimation(resultsList);
             prizeCalculation.CalculatePrize(resultsList.WinSymbolsLineList);
         }
     }
@@ -79,11 +71,54 @@ public class WinLinesChecker : MonoBehaviour
     {
         foreach (var winLine in winLines)
         {
-            yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
+            yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
             WinLineCheck(winLine);
         }
-        yield return new WaitUntil(() => !symbols[symbols.Length - 1].SymbolAnimation.isPlaying);
-        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
+        yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
         prizeAnimator.UpdatePrizeCounter();
+        CheckScatters();
+        if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
+        prizeAnimator.IsStopPushed = false;
+    }
+
+    private void CheckScatters()
+    {
+        bool[] scatterOnReels = CheckScattersOnEachReel();
+        bool threeScattersFound = Array.TrueForAll(scatterOnReels, value => value == true);
+        if (threeScattersFound)
+        {
+            freeSpinsController.StartFreeSpins();
+        };
+
+    }
+
+    private bool[] CheckScattersOnEachReel()
+    {
+        bool[] scatterOnReels = new bool[numberOfReels];
+        foreach (Symbol symbol in symbols)
+        {
+            if (symbol.SymbolFinalId == 0 | symbol.SymbolFinalId == 1 | symbol.SymbolFinalId == 2)
+            {
+                if (symbol.SymbolType == SymbolType.scatter)
+                {
+                    scatterOnReels[0] = true;
+                }
+            }
+            else if (symbol.SymbolFinalId == 4 | symbol.SymbolFinalId == 5 | symbol.SymbolFinalId == 6)
+            {
+                if (symbol.SymbolType == SymbolType.scatter)
+                {
+                    scatterOnReels[1] = true;
+                }
+            }
+            else if (symbol.SymbolFinalId == 8 | symbol.SymbolFinalId == 9 | symbol.SymbolFinalId == 10)
+            {
+                if (symbol.SymbolType == SymbolType.scatter)
+                {
+                    scatterOnReels[2] = true;
+                }
+            }
+        }
+        return scatterOnReels;
     }
 }
