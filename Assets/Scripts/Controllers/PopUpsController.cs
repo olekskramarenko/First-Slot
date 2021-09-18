@@ -1,18 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using System.Collections;
 
 public class PopUpsController : MonoBehaviour
 {
-    [SerializeField] private Image shadowImage;
-    [SerializeField] private RectTransform freeSpinsCounterRT;
-    [SerializeField] private RectTransform freeSpinsStartRT;
-    [SerializeField] private RectTransform freeSpinsResultRT;
-    [SerializeField] private Text spinsLeftText, prizeForFSText;
-    [SerializeField] private FreeSpinsController freeSpinsController;
-    [SerializeField] private PrizeCalculation prizeCalculation;
-    private float fadeValue = 0.65f;
+    [SerializeField] private Text spinsLeftText;
+    [SerializeField] private StartPopUp startPopUp;
+    [SerializeField] private ResultPopUp resultPopUp;
+    [SerializeField] private SpinsCounterPopUp spinsCounterPopUp;
 
     public Text CounterText { get => spinsLeftText; set => spinsLeftText = value; }
 
@@ -24,68 +18,20 @@ public class PopUpsController : MonoBehaviour
 
     public void ShowFreeSpinsStart()
     {
-        ShowAndCloseStartPopUp();
+        startPopUp.ShowPopUp();
     }
 
-    private void ShowAndCloseStartPopUp()
+    public void ShowSpinsCounter()
     {
-        freeSpinsStartRT.DOScale(1, 1);
-        shadowImage.DOFade(fadeValue, 1);
-        shadowImage.raycastTarget = true;
-        StartCoroutine(ShowStartPopUpAndWait());
+        spinsCounterPopUp.ShowPopUp();
     }
-
-    IEnumerator ShowStartPopUpAndWait()
-    {
-        yield return new WaitForSecondsRealtime(2);
-        CloseStartPopUp();
-        ShowSpinsCounter();
-    }
-
-    private void CloseStartPopUp()
-    {
-        freeSpinsStartRT.DOScale(0, 1);
-        shadowImage.DOFade(0, 1);
-        shadowImage.raycastTarget = false;
-    }
-
     public void CloseSpinsCounter()
     {
-        freeSpinsCounterRT.DOScale(0, 0.5f);
-    }
-
-    private void ShowSpinsCounter()
-    {
-        freeSpinsCounterRT.DOScale(1, 1).OnComplete(() =>
-        {
-            freeSpinsController.StartAutoSpins();
-        });
+        spinsCounterPopUp.ClosePopUp();
     }
 
     public void ShowAndCloseResultPopUp()
     {
-        freeSpinsResultRT.DOScale(1, 1);
-        shadowImage.DOFade(fadeValue, 1);
-        shadowImage.raycastTarget = true;
-        var prizeFS = prizeCalculation.FreeSpinsPrize;
-        prizeForFSText.DOCounter(0, prizeFS, 1.2f);
-        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.prizeCounter);
-        StartCoroutine(ShowResultPopUpAndWait());
-    }
-
-    IEnumerator ShowResultPopUpAndWait()
-    {
-        yield return new WaitForSecondsRealtime(3);
-        CloseResultPopUp();
-    }
-
-    private void CloseResultPopUp()
-    {
-        if (OnSoundPLayed != null) OnSoundStopped(SoundType.freeSpins);
-        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.background);
-        freeSpinsResultRT.DOScale(0, 0.5f);
-        shadowImage.DOFade(0, 1);
-        shadowImage.raycastTarget = false;
-        prizeCalculation.ResetFreeSpinsPrize();
+        resultPopUp.ShowPopUp();
     }
 }

@@ -12,6 +12,7 @@ public class WinLinesChecker : MonoBehaviour
     [SerializeField] private PrizeAnimator prizeAnimator;
     [SerializeField] private FreeSpinsController freeSpinsController;
     [SerializeField] private MovingReels movingReels;
+
     private int numberOfReels = 3;
     private Symbol[] symbolsReelOne = new Symbol[4];
     private Symbol[] symbolsReelTwo = new Symbol[4];
@@ -20,6 +21,15 @@ public class WinLinesChecker : MonoBehaviour
     private List<Symbol> twoScattersList = new List<Symbol>();
     private List<Symbol> threeScattersList = new List<Symbol>();
 
+    private int firstSymbolReelOne = 0;
+    private int secondSymbolReelOne = 1;
+    private int thirdSymbolReelOne = 2;
+    private int firstSymbolReelTwo = 4;
+    private int secondSymbolReelTwo = 5;
+    private int thirdSymbolReelTwo = 6;
+    private int firstSymbolReelThree = 8;
+    private int secondSymbolReelThree = 9;
+    private int thirdSymbolReelThree = 10;
     public bool TwoScattersFound => twoScattersFound;
 
     public void CheckAnticipation(int reelId)
@@ -40,7 +50,9 @@ public class WinLinesChecker : MonoBehaviour
         {
             foreach (Symbol symbol in symbolsReelOne)
             {
-                if (symbol.SymbolFinalId == 0 | symbol.SymbolFinalId == 1 | symbol.SymbolFinalId == 2)
+                if (symbol.SymbolFinalId == firstSymbolReelOne |
+                    symbol.SymbolFinalId == secondSymbolReelOne |
+                    symbol.SymbolFinalId == thirdSymbolReelOne)
                 {
                     if (symbol.SymbolType == SymbolType.scatter)
                     {
@@ -55,7 +67,9 @@ public class WinLinesChecker : MonoBehaviour
         {
             foreach (Symbol symbol in symbolsReelTwo)
             {
-                if (symbol.SymbolFinalId == 4 | symbol.SymbolFinalId == 5 | symbol.SymbolFinalId == 6)
+                if (symbol.SymbolFinalId == firstSymbolReelTwo |
+                    symbol.SymbolFinalId == secondSymbolReelTwo |
+                    symbol.SymbolFinalId == thirdSymbolReelTwo)
                 {
                     if (symbol.SymbolType == SymbolType.scatter)
                     {
@@ -137,11 +151,10 @@ public class WinLinesChecker : MonoBehaviour
             yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
             WinLineCheck(winLine);
         }
-        yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying);
+        yield return new WaitUntil(() => !prizeAnimator.IsAnimPlaying | prizeAnimator.IsStopPushed);
         prizeAnimator.UpdatePrizeCounter();
         CheckScatters();
         if (OnStateChanged != null) OnStateChanged(ReelStates.ReadyForSpin);
-        prizeAnimator.UpdatePrizeCounter();
         prizeAnimator.IsStopPushed = false;
     }
 
@@ -163,7 +176,9 @@ public class WinLinesChecker : MonoBehaviour
         bool[] scatterOnReels = new bool[numberOfReels];
         foreach (Symbol symbol in symbols)
         {
-            if (symbol.SymbolFinalId == 0 | symbol.SymbolFinalId == 1 | symbol.SymbolFinalId == 2)
+            if (symbol.SymbolFinalId == firstSymbolReelOne |
+                symbol.SymbolFinalId == secondSymbolReelOne |
+                symbol.SymbolFinalId == thirdSymbolReelOne)
             {
                 if (symbol.SymbolType == SymbolType.scatter)
                 {
@@ -171,7 +186,9 @@ public class WinLinesChecker : MonoBehaviour
                     threeScattersList.Add(symbol);
                 }
             }
-            else if (symbol.SymbolFinalId == 4 | symbol.SymbolFinalId == 5 | symbol.SymbolFinalId == 6)
+            else if (symbol.SymbolFinalId == firstSymbolReelTwo |
+                     symbol.SymbolFinalId == secondSymbolReelTwo |
+                     symbol.SymbolFinalId == thirdSymbolReelTwo)
             {
                 if (symbol.SymbolType == SymbolType.scatter)
                 {
@@ -179,7 +196,9 @@ public class WinLinesChecker : MonoBehaviour
                     threeScattersList.Add(symbol);
                 }
             }
-            else if (symbol.SymbolFinalId == 8 | symbol.SymbolFinalId == 9 | symbol.SymbolFinalId == 10)
+            else if (symbol.SymbolFinalId == firstSymbolReelThree |
+                     symbol.SymbolFinalId == secondSymbolReelThree |
+                     symbol.SymbolFinalId == thirdSymbolReelThree)
             {
                 if (symbol.SymbolType == SymbolType.scatter)
                 {
