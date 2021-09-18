@@ -14,6 +14,12 @@ public class ResultPopUp : MonoBehaviour, IPopUp
     private int showingTime = 3;
     private float countingTime = 1.4f;
 
+    public delegate void PlaySoundEvent(SoundType sound);
+    public static event PlaySoundEvent OnSoundPLayed;
+
+    public delegate void StopSoundEvent(SoundType sound);
+    public static event StopSoundEvent OnSoundStopped;
+
     public void ShowPopUp()
     {
         freeSpinsResultRT.DOScale(1, 1);
@@ -21,6 +27,7 @@ public class ResultPopUp : MonoBehaviour, IPopUp
         shadowImage.raycastTarget = true;
         var prizeFS = prizeCalculation.FreeSpinsPrize;
         prizeForFSText.DOCounter(0, prizeFS, countingTime);
+        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.prizeCounter);
         StartCoroutine(ShowPopUpAndWait());
     }
     IEnumerator ShowPopUpAndWait()
@@ -30,6 +37,8 @@ public class ResultPopUp : MonoBehaviour, IPopUp
     }
     public void ClosePopUp()
     {
+        if (OnSoundPLayed != null) OnSoundStopped(SoundType.freeSpins);
+        if (OnSoundPLayed != null) OnSoundPLayed(SoundType.background);
         freeSpinsResultRT.DOScale(0, 1);
         shadowImage.DOFade(0, 1);
         shadowImage.raycastTarget = false;
