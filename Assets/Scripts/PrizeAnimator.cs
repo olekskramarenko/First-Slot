@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class PrizeAnimator : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PrizeAnimator : MonoBehaviour
     private int prevPrize = 0;
     private bool isAnimPlaying;
     private bool isStopPushed;
+    
 
 
     public bool IsAnimPlaying { get => isAnimPlaying; set => isAnimPlaying = value; }
@@ -18,10 +20,11 @@ public class PrizeAnimator : MonoBehaviour
 
     public void UpdatePrizeCounter()
     {
+        int duration = 1;
         var prize = prizeCalculation.TotalPrize;
-        if (prevPrize != prize)
+        if (prevPrize != prize) 
         {
-            prizeText.DOCounter(prevPrize, prize, 1);
+            prizeText.DOCounter(prevPrize, prize, duration);
             prevPrize = prize;
         }
     }
@@ -33,6 +36,9 @@ public class PrizeAnimator : MonoBehaviour
         var putForwardTime = animTime / 3;
         var pulseTime = animTime / 6;
         var stayFadeTime = animTime / 1.6f;
+        int loops = 2;
+        int fullScale = 1;
+        int fullFade = 1;
         foreach (Symbol winSymbol in winSymbolsLineList)
         {
             isAnimPlaying = true;
@@ -40,9 +46,9 @@ public class PrizeAnimator : MonoBehaviour
             var symbolRT = winSymbol.SymbolRT;
             symbolRT.DOScale(forwardScale, putForwardTime).OnComplete(() =>
               {
-                  symbolRT.DOScale(pulseScale, pulseTime).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
+                  symbolRT.DOScale(pulseScale, pulseTime).SetLoops(loops, LoopType.Yoyo).OnComplete(() =>
                   {
-                      symbolRT.DOScale(1, putForwardTime).OnComplete(() =>
+                      symbolRT.DOScale(fullScale, putForwardTime).OnComplete(() =>
                       {
                           isAnimPlaying = false;
                       });
@@ -56,21 +62,42 @@ public class PrizeAnimator : MonoBehaviour
             {
                 image.DOFade(symbolsFade, stayFadeTime).OnComplete(() =>
                 {
-                    image.DOFade(1, pulseTime);
+                    image.DOFade(fullFade, pulseTime);
                 });
             });
         }
     }
 
+    public void PLaySmallAnimation(List<Symbol> symbolsList)
+    {
+        var putForwardTime = animTime / 3;
+        var pulseTime = animTime / 6;
+        int fullScale = 1;
+        int loops = 2;
+        foreach (Symbol symbol in symbolsList)
+        {
+            var symbolRT = symbol.SymbolRT;
+            symbolRT.DOScale(forwardScale, putForwardTime).OnComplete(() =>
+            {
+                symbolRT.DOScale(pulseScale, pulseTime).SetLoops(loops, LoopType.Yoyo).OnComplete(() =>
+                {
+                    symbolRT.DOScale(fullScale, putForwardTime);
+                });
+            });
+        }
+    }
     public void StopWinAnimation()
     {
+        int fullScale = 1;
+        int fullFade = 1;
+        float time = 0.1f;
         isStopPushed = true;
         foreach (Symbol symbol in symbols)
         {
             DOTween.Kill(symbol.SymbolRT);
             DOTween.Kill(symbol.SymbolImage);
-            symbol.SymbolRT.DOScale(1, 0.1f);
-            symbol.SymbolImage.DOFade(1, 0.1f);
+            symbol.SymbolRT.DOScale(fullScale, time);
+            symbol.SymbolImage.DOFade(fullFade, time);
             symbol.ParticleSystem.Stop();
         }
         isAnimPlaying = false;

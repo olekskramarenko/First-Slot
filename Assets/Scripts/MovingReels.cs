@@ -14,8 +14,11 @@ public class MovingReels : MonoBehaviour
     [SerializeField] private int symbolsCount;
     [SerializeField] private WinLinesChecker winLinesChecker;
     [SerializeField] private ReelsStateController reelStateController;
+    [SerializeField] private AnticipationController anticipationController;
     private readonly float distanceStart = 2;
     private readonly float distanceWay = 12;
+    private readonly float distanceLongSpin = 12000;
+    private readonly float timeLongSpin = 4;
     private readonly float distanceStop = 0.75f; // Important, value 0.75 nedded for correct showing final screens
     private Dictionary<RectTransform, MovingSymbols> reelsDictionary;
 
@@ -68,20 +71,41 @@ public class MovingReels : MonoBehaviour
         DOTween.Kill(reel);
         reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + previousDistance + (distanceStop * symbolHeight * symbolsCount)), timeStop, true)
             .SetEase(easeStop)
-            .OnComplete(() => SetSymbolDefaultPosition(reel));
+            .OnComplete(() => 
+            SetSymbolDefaultPosition(reel));
     }
     private void SetSymbolDefaultPosition(RectTransform reel)
     {
+        var reelId = reelsDictionary[reel].ReelId;
+        if ( reelId == 0 | reelId == 1)
+        {
+            winLinesChecker.CheckAnticipation(reelId);
+        }
         var finalReelPosition = reel.localPosition.y;
         var lastSpinDistance = -(finalReelPosition - reelsDictionary[reel].StartReelPos);
         reelsDictionary[reel].FullSpinDistance += lastSpinDistance;
         reelsDictionary[reel].ResetSymbolReelsCounter();
-        if (reelsDictionary[reel].ReelId == allReelsRT.Length - 1)
+        if (reelId == allReelsRT.Length - 1)
         {
-            reelStateController.ResultShowing();
+            if (OnStateChanged != null) OnStateChanged(ReelStates.ResultShowing);
             winLinesChecker.ShowResult();
             FinalResult.SetNextFinalScreen();
+            anticipationController.StopLonSpinAnimation();
         }
+    }
+
+    public void DoLongSpin()
+    {
+        var reel = allReelsRT[allReelsRT.Length - 1];
+        DOTween.Kill(reel);
+        reelsDictionary[reel].SlowDownStatus = false;
+        reelsDictionary[reel].ResetSymbolReelsCounter();
+        anticipationController.PlayLongSpinAnimation();
+        var distBeforeScattersFound = -(reel.localPosition.y - reelsDictionary[reel].StartReelPos);
+        var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeScattersFound);
+        reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist + distanceLongSpin), timeLongSpin)
+            .SetEase(easeWay)
+            .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist + distanceLongSpin));
     }
 
     private void MovingStop()
@@ -95,6 +119,7 @@ public class MovingReels : MonoBehaviour
             var correctedSymbolsDist = CalculateCorrectSymbolsDist(distBeforeStopPressed);
             reel.DOAnchorPosY(-(reelsDictionary[reel].FullSpinDistance + correctedSymbolsDist), 0)
             .SetEase(easeWay)
+            .SetDelay(i * 0.02f)
             .OnComplete(() => MovingSlowDown(reel, correctedSymbolsDist));
         }
     }
