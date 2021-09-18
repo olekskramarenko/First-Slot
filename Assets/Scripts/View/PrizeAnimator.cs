@@ -79,16 +79,14 @@ public class PrizeAnimator : MonoBehaviour
         var pulseTime = animTime / 6;
         int fullScale = 1;
         int loops = 2;
-        foreach (Symbol symbol in symbolsList)
+        var symbolRT = symbol.SymbolRT;
+        symbolRT.DOScale(forwardScale, putForwardTime).OnComplete(() =>
         {
-            var symbolRT = symbol.SymbolRT;
-            symbolRT.DOScale(forwardScale, putForwardTime).OnComplete(() =>
+            symbolRT.DOScale(pulseScale, pulseTime).SetLoops(loops, LoopType.Yoyo).OnComplete(() =>
             {
-                symbolRT.DOScale(pulseScale, pulseTime).SetLoops(loops, LoopType.Yoyo).OnComplete(() =>
-                {
-                    symbolRT.DOScale(fullScale, putForwardTime);
-                });
+                symbolRT.DOScale(fullScale, putForwardTime);
             });
+        });
     }
     public void StopWinAnimation()
     {

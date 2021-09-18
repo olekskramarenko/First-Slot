@@ -42,8 +42,8 @@ public class AudioController : MonoBehaviour
         MovingReels.OnSoundPLayed += PlaySound;
         FreeSpinsController.OnSoundPLayed += PlaySound;
         FreeSpinsController.OnSoundStopped += StopSound;
-        PopUpsController.OnSoundPLayed += PlaySound;
-        PopUpsController.OnSoundStopped += StopSound;
+        ResultPopUp.OnSoundPLayed += PlaySound;
+        ResultPopUp.OnSoundStopped += StopSound;
         AnticipationController.OnSoundPLayed += PlaySound;
         AnticipationController.OnSoundStopped += StopSound;
 

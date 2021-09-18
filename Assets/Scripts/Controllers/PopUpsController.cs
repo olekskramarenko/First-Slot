@@ -10,12 +10,6 @@ public class PopUpsController : MonoBehaviour
 
     public Text CounterText { get => spinsLeftText; set => spinsLeftText = value; }
 
-    public delegate void PlaySoundEvent(SoundType sound);
-    public static event PlaySoundEvent OnSoundPLayed;
-
-    public delegate void StopSoundEvent(SoundType sound);
-    public static event StopSoundEvent OnSoundStopped;
-
     public void ShowFreeSpinsStart()
     {
         startPopUp.ShowPopUp();
